@@ -27,9 +27,9 @@ graph LR;
 
 ## Installation
 
-Gazebo 8 setup is included in our standard build instructions:
+Gazebo 9 setup is included in our standard build instructions:
 - **macOS:** [Development Environment on Mac](../setup/dev_env_mac.md)
-- **Linux:** [Development Environment on Linux (Ubuntu 16.04) > jMAVSim/Gazebo Simulation](../setup/dev_env_linux.md#jmavsimgazebo-simulation)
+- **Linux:** [Development Environment on Linux (Ubuntu 16.04) > jMAVSim/Gazebo Simulation](../setup/dev_env_linux_ubuntu.md#sim_nuttx)
 - **Windows:** Not supported.
 
 Additional installation instructions can be found on [gazebosim.org](http://gazebosim.org/tutorials?cat=guided_b&tut=guided_b1).
@@ -174,6 +174,17 @@ export PX4_HOME_ALT=28.5
 make px4_sitl gazebo
 ```
 
+### Change Simulation Speed
+
+The simulation speed can be increased or decreased with respect to realtime using the environment variable `PX4_SIM_SPEED_FACTOR`.
+
+```
+export PX4_SIM_SPEED_FACTOR=2
+make px4_sitl_default gazebo
+```
+
+For more information see: [Simulation > Run Simulation Faster than Realtime](../simulation/README.md#simulation_speed).
+
 ### Using a Joystick
 
 Joystick and thumb-joystick support are supported through *QGroundControl* ([setup instructions here](../simulation/README.md#joystickgamepad-integration)).
@@ -231,25 +242,15 @@ PX4 SITL for Gazebo supports UDP video streaming from a Gazebo camera sensor att
 
 ### Prerequisites
 
-Install *Gstreamer 1.0* and its dependencies:
+Ubuntu: Install *Gstreamer 1.0* and its dependencies:
 ```
 sudo apt-get install $(apt-cache --names-only search ^gstreamer1.0-* | awk '{ print $1 }' | grep -v gstreamer1.0-hybris) -y
 ```
 
-### Enable GStreamer Plugin
-
-> **Note** This step will not be required once video streaming is enabled by default.
-
-Enable the *GStreamer Plugin* (if disabled) by changing the `BUILD_GSTREAMER_PLUGIN` option to `"ON"` in [&lt;Firmware&gt;/Tools/sitl_gazebo/CMakeLists.txt](https://github.com/PX4/sitl_gazebo/blob/master/CMakeLists.txt) (as shown below):
+Mac OS:
 
 ```
-option(BUILD_GSTREAMER_PLUGIN "enable gstreamer plugin" "ON")
-```
-
-Once the plugin is enabled you can run SITL with Gazebo in the normal way:
-```
-make clean
-make px4_sitl gazebo_typhoon_h480
+brew install gstreamer gst-libav gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly
 ```
 
 ### How to View Gazebo Video

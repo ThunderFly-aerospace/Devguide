@@ -1,4 +1,5 @@
 # Modules Reference: Command
+
 ## bl_update
 Source: [systemcmds/bl_update](https://github.com/PX4/Firmware/tree/master/src/systemcmds/bl_update)
 
@@ -74,7 +75,7 @@ Tool for ESC calibration
 
 Calibration procedure (running the command will guide you through it):
 - Remove props, power off the ESC's
-- Stop attitude controllers: mc_att_control stop, fw_att_control stop
+- Stop attitude and rate controllers: mc_rate_control stop, fw_att_control stop
 - Make sure safety is off
 - Run this command
 
@@ -90,7 +91,6 @@ esc_calib [arguments...]
      [-c <val>]  select channels in the form: 1234 (1 digit per channel,
                  1=first)
      [-m <val>]  Select channels via bitmask (eg. 0xF, 3)
-                 default: 0
      [-a]        Select all channels
 ```
 ## hardfault_log
@@ -118,6 +118,16 @@ hardfault_log <command> [arguments...]
                  uncommited hardfault (returned as the exit code of the program)
 
    reset         Reset the reboot counter
+```
+## i2cdetect
+Source: [systemcmds/i2cdetect](https://github.com/PX4/Firmware/tree/master/src/systemcmds/i2cdetect)
+
+Utility to scan for I2C devices on a particular bus.
+### Usage {#i2cdetect_usage}
+```
+i2cdetect [arguments...]
+     [-b <val>]  I2C bus
+                 default: 1
 ```
 ## led_control
 Source: [systemcmds/led_control](https://github.com/PX4/Firmware/tree/master/src/systemcmds/led_control)
@@ -166,7 +176,6 @@ led_control <command> [arguments...]
                  values: red|blue|green|yellow|purple|amber|cyan|white, default:
                  white
      [-l <val>]  Which LED to control: 0, 1, 2, ... (default=all)
-                 default: -1
      [-p <val>]  Priority
                  default: 2
 ```
@@ -175,6 +184,8 @@ Source: [systemcmds/topic_listener](https://github.com/PX4/Firmware/tree/master/
 
 
 Utility to listen on uORB topics and print the data to the console.
+
+The listener can be exited any time by pressing Ctrl+C, Esc, or Q.
 
 ### Usage {#listener_usage}
 ```
@@ -216,33 +227,38 @@ Application to test motor ramp up.
 
 Before starting, make sure to stop any running attitude controller:
 ```
-mc_att_control stop
+mc_rate_control stop
 fw_att_control stop
 ```
 
 When starting, a background task is started, runs for several seconds (as specified), then exits.
 
-Note: this command currently only supports the `/dev/pwm_output0` output.
-
 ### Example
 ```
-motor_ramp sine 1100 0.5
+motor_ramp sine -a 1100 -r 0.5
 ```
 
 ### Usage {#motor_ramp_usage}
 ```
 motor_ramp [arguments...]
      ramp|sine|square mode
-     <min_pwm> <time> [<max_pwm>] pwm value in us, time in sec
+     [-d <val>]  Pwm output device
+                 default: /dev/pwm_output0
+     -a <val>    Select minimum pwm duty cycle in usec
+     [-b <val>]  Select maximum pwm duty cycle in usec
+                 default: 2000
+     [-r <val>]  Select motor ramp duration in sec
+                 default: 1.0
 
  WARNING: motors will ramp up to full speed!
 ```
 ## motor_test
 Source: [systemcmds/motor_test](https://github.com/PX4/Firmware/tree/master/src/systemcmds/motor_test)
 
+
 Utility to test motors.
 
-Note: this can only be used for drivers which support the motor_test uorb topic (currently uavcan and tap_esc)
+WARNING: remove all props before using this command.
 
 ### Usage {#motor_test_usage}
 ```
@@ -250,8 +266,11 @@ motor_test <command> [arguments...]
  Commands:
    test          Set motor(s) to a specific output value
      [-m <val>]  Motor to test (0...7, all if not specified)
-                 default: -1
      [-p <val>]  Power (0...100)
+                 default: 0
+     [-t <val>]  Timeout in seconds (default=no timeout)
+                 default: 0
+     [-i <val>]  driver instance
                  default: 0
 
    stop          Stop all motors
@@ -339,19 +358,25 @@ param <command> [arguments...]
      [<file>]    File name (use <root>/eeprom/parameters if not given)
 
    show          Show parameter values
-     [-c]        Show only changed params
+     [-a]        Show all parameters (not just used)
+     [-c]        Show only changed and used params
      [-q]        quiet mode, print only param value (name needs to be exact)
      [<filter>]  Filter by param name (wildcard at end allowed, eg. sys_*)
+
+   status        Print status of parameter system
 
    set           Set parameter to a value
      <param_name> <value> Parameter name and value to set
      [fail]      If provided, let the command fail if param is not found
 
    compare       Compare a param with a value. Command will succeed if equal
+     [-s]        If provided, silent errors if parameter doesn't exists
      <param_name> <value> Parameter name and value to compare
 
    greater       Compare a param with a value. Command will succeed if param is
                  greater than the value
+     [-s]        If provided, silent errors if parameter doesn't exists
+     <param_name> <value> Parameter name and value to compare
      <param_name> <value> Parameter name and value to compare
 
    touch         Mark a parameter as used
@@ -470,10 +495,8 @@ pwm <command> [arguments...]
      [-c <val>]  select channels in the form: 1234 (1 digit per channel,
                  1=first)
      [-m <val>]  Select channels via bitmask (eg. 0xF, 3)
-                 default: 0
      [-g <val>]  Select channels by group (eg. 0, 1, 2. use 'pwm info' to show
                  groups)
-                 default: 0
      [-a]        Select all channels
 
  These parameters apply to all commands:
@@ -558,4 +581,20 @@ ver <command> [arguments...]
    hwtypecmp     Compare hardware type (returns 0 on match)
      <hwtype> [<hwtype2>] Hardware type to compare against (eg. V2). An OR
                  comparison is used if multiple are specified
+```
+## voxlpm
+Source: [drivers/power_monitor/voxlpm](https://github.com/PX4/Firmware/tree/master/src/drivers/power_monitor/voxlpm)
+
+### Usage {#voxlpm_usage}
+```
+voxlpm [arguments...]
+   start         start monitoring
+
+   info          display info
+
+   -X            PX4_I2C_BUS_EXPANSION
+
+   -T            PX4_I2C_BUS_EXPANSION1
+
+   -R            PX4_I2C_BUS_EXPANSION2 (default)
 ```

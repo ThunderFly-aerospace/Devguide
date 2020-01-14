@@ -18,10 +18,13 @@ Fixing typos or editing an *existing page* is easy:
 1. At the bottom of the page you'll be prompted to create a separate branch and then 
    guided to submit a *pull request*.
    
-The documentation team reviews submitted pull requests and will either merge
-it or work with you to update it.
+The documentation team reviews submitted pull requests and will either merge it or work with you to update it.
 
 ## Adding New Content - Big Changes
+
+If you want to add new pages or images that can't easily be done through the Github interface.
+In this case you make changes in the same way as you would for code changes: use the *git* toolchain to get the code, modify it as needed, test that it renders properly using the Gitbook client, create a branch for your changes and create a pull request (PR) to pull it back into the documentation. 
+The following instructions explain how. 
 
 ### What Goes Where?
 
@@ -42,7 +45,8 @@ The *User Guide*, by contrast, is *primarily* for users who want to:
 
 ### Gitbook Documentation Toolchain
 
-The guide uses the [Gitbook](https://www.gitbook.com/about) toolchain. 
+The guide uses the [Legacy Gitbook Toolchain](https://legacy.gitbook.com/) toolchain.
+
 Change requests can be either done on the Gitbook website using the [Gitbook editor](https://gitbookio.gitbooks.io/documentation/content/editor/index.html) or locally (more flexible, but less user-friendly). 
 
 In order to contribute many changes to the documentation, it is recommended that you follow these steps to add the changes locally and then create a pull request:
@@ -50,58 +54,57 @@ In order to contribute many changes to the documentation, it is recommended that
 * [Sign up](https://github.com/join) for github if you haven't already
 * Fork the PX4 user guide from [here](https://github.com/PX4/px4_user_guide) or Dev guide from [here](https://github.com/PX4/Devguide). For instructions to fork a git repository, see [here](https://help.github.com/articles/fork-a-repo/#fork-an-example-repository).
 * Clone your forked repository to your local computer<br>
-```sh
-cd ~/wherever/
-git clone https://github.com/<your git name>/px4_user_guide.git
-```
+  ```sh
+  cd ~/wherever/
+  git clone https://github.com/<your git name>/px4_user_guide.git
+  ```
 * Install gitbook via NPM. At the terminal prompt, simply run the following command to install GitBook:
-```sh
-npm install gitbook-cli -g
-```
-> **Note** Everything you need to install and build Gitbook locally is also explained in the 
-[toolchain documentation](https://toolchain.gitbook.com/setup.html). 
+  ```sh
+  npm install gitbook-cli -g
+  ```
+  > **Note** Everything you need to install and build Gitbook locally is also explained in the [toolchain documentation](https://github.com/GitbookIO/gitbook/blob/master/docs/setup.md). 
 
 * Navigate to your local repository and add original upstream:
-```sh
-cd ~/wherever/px4_user_guide
-git remote add upstream https://github.com/PX4/px4_user_guide.git
-```
+  ```sh
+  cd ~/wherever/px4_user_guide
+  git remote add upstream https://github.com/PX4/px4_user_guide.git
+  ```
 * Now you can checkout a new branch and add your changes. To build your book, run:
-```sh
-gitbook build
-```
-> **Note** If you run into an error: `/usr/bin/env: node: No such file or directory`, run `ln -s /usr/bin/nodejs /usr/bin/node`
+  ```sh
+  gitbook build
+  ```
+  > **Note** If you run into an error: `/usr/bin/env: node: No such file or directory`, run `ln -s /usr/bin/nodejs /usr/bin/node`
 
 * To preview and serve your book, run:
-```sh
-gitbook serve
-```
-> **Note** run `gitbook install` to install missing plugins.
+  ```sh
+  gitbook serve
+  ```
+  > **Note** run `gitbook install` to install missing plugins.
 
 * Now you can browse your local book on http://localhost:4000/
 * Exit serving using `CTRL+c` in the terminal prompt.
 
 * You can also serve on a different port instead of 4000:
-```sh
-gitbook serve --port 4003
-```
+  ```sh
+  gitbook serve --port 4003
+  ```
 * You can also output as html, pdf, epub or mobi:
-```sh
-gitbook help
-```
+  ```sh
+  gitbook help
+  ```
 * Once you are satisfied with your changes after previewing them, you can add and commit them:
-```sh
-git add <file name>
-git commit -m "<your commit message>"
-```
-For a good commit message, please refer to [Contributing](../contribute/README.md) section.
+  ```sh
+  git add <file name>
+  git commit -m "<your commit message>"
+  ```
+  For a good commit message, please refer to [Contributing](../contribute/README.md) section.
 
 * Now you can push your local commits to your forked repository
-```sh
-git push origin <your feature branch name>
-```
+  ```sh
+  git push origin <your feature branch name>
+  ```
 * You can verify that the push was successful by going to your forked repository in your browser: ```https://github.com/<your git name>/px4_user_guide.git```<br>
-There you should see the message that a new branch has been pushed to your forked repository.
+  There you should see the message that a new branch has been pushed to your forked repository.
 * Now it's time to create a pull request (PR). On the right hand side of the "new branch message" (see one step before), you should see a green button saying "Compare & Create Pull Request". Then it should list your changes and you can (must) add a meaningful title (in case of a one commit PR, it's usually the commit message) and message (<span style="color:orange">explain what you did for what reason</span>. Check [other pull requests](https://github.com/PX4/px4_user_guide/pulls) for comparison)
 * You're done! Responsible members of PX4 guides will now have a look at your contribution and decide if they want to integrate it. Check if they have questions on your changes every once in a while.
 
@@ -109,7 +112,7 @@ In overview:
 
 * Pages are written in separate files using markdown \(almost the same syntax used by Github wiki\). 
 * The _structure_ of the book is defined in a file named **SUMMARY.md**.
-* This is a [multilingual](https://toolchain.gitbook.com/languages.html) book, 
+* This is a [multilingual](https://github.com/GitbookIO/gitbook/blob/master/docs/languages.md) book, 
   so there is a **LANGS.md** file in the root directory defining what languages are supported. 
   Pages for each language are stored in the folder named for the associated language code \(e.g. "zh" for Chinese, "en" for English\). 
 * A file named **book.json** defines any dependencies of the build.

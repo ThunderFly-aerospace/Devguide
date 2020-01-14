@@ -1,4 +1,47 @@
 # Modules Reference: Driver
+Subcategories:
+- [Distance Sensor](modules_driver_distance_sensor.md)
+
+## adc
+Source: [drivers/adc](https://github.com/PX4/Firmware/tree/master/src/drivers/adc)
+
+
+### Description
+ADC driver.
+
+
+### Usage {#adc_usage}
+```
+adc <command> [arguments...]
+ Commands:
+   start
+
+   test
+
+   stop
+
+   status        print status info
+```
+## atxxxx
+Source: [drivers/osd/atxxxx](https://github.com/PX4/Firmware/tree/master/src/drivers/osd/atxxxx)
+
+
+### Description
+OSD driver for the ATXXXX chip that is mounted on the OmnibusF4SD board for example.
+
+It can be enabled with the OSD_ATXXXX_CFG parameter.
+
+### Usage {#atxxxx_usage}
+```
+atxxxx <command> [arguments...]
+ Commands:
+   start         Start the driver
+     [-b <val>]  SPI bus (default: use board-specific bus)
+
+   stop
+
+   status        print status info
+```
 ## batt_smbus
 Source: [drivers/batt_smbus](https://github.com/PX4/Firmware/tree/master/src/drivers/batt_smbus)
 
@@ -18,20 +61,13 @@ batt_smbus -X write_flash 19069 2 27 0
 batt_smbus <command> [arguments...]
  Commands:
    start
-     [-X <val>]  ullpt
-                 default: BATT_SMBUS_BUS_I2C_EXTERNAL
-     [-T <val>]  ullpt
-                 default: BATT_SMBUS_BUS_I2C_EXTERNAL1
-     [-R <val>]  ullpt
-                 default: BATT_SMBUS_BUS_I2C_EXTERNAL2
-     [-I <val>]  ullpt
-                 default: BATT_SMBUS_BUS_I2C_INTERNAL
-     [-A <val>]  ullpt
-                 default: BATT_SMBUS_BUS_ALL
+     [-X]        BATT_SMBUS_BUS_I2C_EXTERNAL
+     [-T]        BATT_SMBUS_BUS_I2C_EXTERNAL1
+     [-R]        BATT_SMBUS_BUS_I2C_EXTERNAL2
+     [-I]        BATT_SMBUS_BUS_I2C_INTERNAL
+     [-A]        BATT_SMBUS_BUS_ALL
 
    man_info      Prints manufacturer info.
-
-   report        Prints the last report.
 
    unseal        Unseals the devices flash memory to enable write_flash
                  commands.
@@ -47,6 +83,108 @@ batt_smbus <command> [arguments...]
      [address]   The address to start writing.
      [number of bytes] Number of bytes to send.
      [data[0]...data[n]] One byte of data at a time separated by spaces.
+
+   stop
+
+   status        print status info
+```
+## dshot
+Source: [drivers/dshot](https://github.com/PX4/Firmware/tree/master/src/drivers/dshot)
+
+
+### Description
+This is the DShot output driver. It is similar to the fmu driver, and can be used as drop-in replacement
+to use DShot as ESC communication protocol instead of PWM.
+
+It supports:
+- DShot150, DShot300, DShot600, DShot1200
+- telemetry via separate UART and publishing as esc_status message
+- sending DShot commands via CLI
+
+### Examples
+Permanently reverse motor 1:
+```
+dshot reverse -m 1
+dshot save -m 1
+```
+After saving, the reversed direction will be regarded as the normal one. So to reverse again repeat the same commands.
+
+### Usage {#dshot_usage}
+```
+dshot <command> [arguments...]
+ Commands:
+   start         Start the task (without any mode set, use any of the mode_*
+                 cmds)
+
+ All of the mode_* commands will start the module if not running already
+
+   mode_gpio
+
+   mode_pwm      Select all available pins as PWM
+
+   mode_pwm8
+
+   mode_pwm6
+
+   mode_pwm5
+
+   mode_pwm5cap1
+
+   mode_pwm4
+
+   mode_pwm4cap1
+
+   mode_pwm4cap2
+
+   mode_pwm3
+
+   mode_pwm3cap1
+
+   mode_pwm2
+
+   mode_pwm2cap2
+
+   mode_pwm1
+
+   telemetry     Enable Telemetry on a UART
+     <device>    UART device
+
+   reverse       Reverse motor direction
+     [-m <val>]  Motor index (1-based, default=all)
+
+   normal        Normal motor direction
+     [-m <val>]  Motor index (1-based, default=all)
+
+   save          Save current settings
+     [-m <val>]  Motor index (1-based, default=all)
+
+   3d_on         Enable 3D mode
+     [-m <val>]  Motor index (1-based, default=all)
+
+   3d_off        Disable 3D mode
+     [-m <val>]  Motor index (1-based, default=all)
+
+   beep1         Send Beep pattern 1
+     [-m <val>]  Motor index (1-based, default=all)
+
+   beep2         Send Beep pattern 2
+     [-m <val>]  Motor index (1-based, default=all)
+
+   beep3         Send Beep pattern 3
+     [-m <val>]  Motor index (1-based, default=all)
+
+   beep4         Send Beep pattern 4
+     [-m <val>]  Motor index (1-based, default=all)
+
+   beep5         Send Beep pattern 5
+     [-m <val>]  Motor index (1-based, default=all)
+
+   esc_info      Request ESC information
+     -m <val>    Motor index (1-based)
+
+   stop
+
+   status        print status info
 ```
 ## fmu
 Source: [drivers/px4fmu](https://github.com/PX4/Firmware/tree/master/src/drivers/px4fmu)
@@ -65,11 +203,7 @@ driver. Alternatively, the fmu can be started in one of the capture modes, and t
 callback with ioctl calls.
 
 ### Implementation
-By default the module runs on the work queue, to reduce RAM usage. It can also be run in its own thread,
-specified via start flag -t, to reduce latency.
-When running on the work queue, it schedules at a fixed frequency, and the pwm rate limits the update rate of
-the actuator_controls topics. In case of running in its own thread, the module polls on the actuator_controls topic.
-Additionally the pwm rate defines the lower-level IO timer rates.
+By default the module runs on a work queue with a callback on the uORB actuator_controls topic.
 
 ### Examples
 It is typically started with:
@@ -96,7 +230,6 @@ fmu <command> [arguments...]
  Commands:
    start         Start the task (without any mode set, use any of the mode_*
                  cmds)
-     [-t]        Run as separate task instead of the work queue
 
  All of the mode_* commands will start the fmu if not running already
 
@@ -115,6 +248,8 @@ fmu <command> [arguments...]
    mode_pwm4
 
    mode_pwm4cap1
+
+   mode_pwm4cap2
 
    mode_pwm3
 
@@ -166,8 +301,16 @@ For testing it can be useful to fake a GPS signal (it will signal the system tha
 gps stop
 gps start -f
 ```
+
 Starting 2 GPS devices (the main GPS on /dev/ttyS3 and the secondary on /dev/ttyS4):
+```
 gps start -d /dev/ttyS3 -e /dev/ttyS4
+```
+
+Initiate warm restart of GPS device
+```
+gps reset warm
+```
 
 ### Usage {#gps_usage}
 ```
@@ -187,11 +330,57 @@ gps <command> [arguments...]
      [-i <val>]  GPS interface
                  values: spi|uart, default: uart
      [-p <val>]  GPS Protocol (default=auto select)
-                 values: ubx|mtk|ash
+                 values: ubx|mtk|ash|eml
 
    stop
 
    status        print status info
+
+   reset         Reset GPS device
+     cold|warm|hot Specify reset type
+```
+## ina226
+Source: [drivers/power_monitor/ina226](https://github.com/PX4/Firmware/tree/master/src/drivers/power_monitor/ina226)
+
+
+### Description
+Driver for the INA226 power monitor.
+
+Multiple instances of this driver can run simultaneously, if each instance has a separate bus OR I2C address.
+
+For example, one instance can run on Bus 2, address 0x41, and one can run on Bus 2, address 0x43.
+
+If the INA226 module is not powered, then by default, initialization of the driver will fail. To change this, use
+the -f flag. If this flag is set, then if initialization fails, the driver will keep trying to initialize again
+every 0.5 seconds. With this flag set, you can plug in a battery after the driver starts, and it will work. Without
+this flag set, the battery must be plugged in before starting the driver.
+
+
+### Usage {#ina226_usage}
+```
+ina226 <command> [arguments...]
+ Commands:
+   start         Start a new instance of the driver
+     [-a]        If set, try to start the driver on each availabe I2C bus until
+                 a module is found
+     [-f]        If initialization fails, keep retrying periodically. Ignored if
+                 the -a flag is set. See full driver documentation for more info
+     [-b <val>]  I2C bus (default: use board-specific bus)
+                 default: 0
+     [-d <val>]  I2C Address (Start with '0x' for hexadecimal)
+                 default: 65
+     [-t <val>]  Which battery calibration values should be used (1 or 2)
+                 default: 1
+
+   stop          Stop one instance of the driver
+     [-b <val>]  I2C bus (default: use board-specific bus)
+                 default: 0
+     [-d <val>]  I2C Address (Start with '0x' for hexadecimal)
+                 default: 65
+
+   status        Status of every instance of the driver
+
+   info          Status of every instance of the driver
 ```
 ## pga460
 Source: [drivers/distance_sensor/pga460](https://github.com/PX4/Firmware/tree/master/src/drivers/distance_sensor/pga460)
@@ -238,13 +427,9 @@ It is used in SITL and HITL.
 ```
 pwm_out_sim <command> [arguments...]
  Commands:
-   start         Start the task in mode_pwm16
-
- All of the mode_* commands will start the pwm sim if not running already
-
-   mode_pwm      use 8 PWM outputs
-
-   mode_pwm16    use 16 PWM outputs
+   start         Start the module
+     [-m <val>]  Mode
+                 values: hil|sim, default: sim
 
    stop
 
@@ -263,18 +448,14 @@ This module does the RC input parsing and auto-selecting the method. Supported m
 - ST24
 - TBS Crossfire (CRSF)
 
-### Implementation
-By default the module runs on the work queue, to reduce RAM usage. It can also be run in its own thread,
-specified via start flag -t, to reduce latency.
-When running on the work queue, it schedules at a fixed frequency.
 
 ### Usage {#rc_input_usage}
 ```
 rc_input <command> [arguments...]
  Commands:
-   start         Start the task (without any mode set, use any of the mode_*
-                 cmds)
-     [-t]        Run as separate task instead of the work queue
+   start
+     [-d <val>]  RC device
+                 values: <file:dev>, default: /dev/ttyS3
 
    bind          Send a DSM bind command (module must be running)
 
@@ -282,45 +463,68 @@ rc_input <command> [arguments...]
 
    status        print status info
 ```
-## sf1xx
-Source: [drivers/distance_sensor/sf1xx](https://github.com/PX4/Firmware/tree/master/src/drivers/distance_sensor/sf1xx)
+## roboclaw
+Source: [drivers/roboclaw](https://github.com/PX4/Firmware/tree/master/src/drivers/roboclaw)
 
 
 ### Description
 
-I2C bus driver for Lightware SFxx series LIDAR rangefinders: SF10/a, SF10/b, SF10/c, SF11/c, SF/LW20.
+This driver communicates over UART with the [Roboclaw motor driver](http://downloads.ionmc.com/docs/roboclaw_user_manual.pdf).
+It performs two tasks:
 
-Setup/usage information: https://docs.px4.io/en/sensor/sfxx_lidar.html
+ - Control the motors based on the `actuator_controls_0` UOrb topic.
+ - Read the wheel encoders and publish the raw data in the `wheel_encoders` UOrb topic
+
+In order to use this driver, the Roboclaw should be put into Packet Serial mode (see the linked documentation), and
+your flight controller's UART port should be connected to the Roboclaw as shown in the documentation. For Pixhawk 4,
+use the `UART & I2C B` port, which corresponds to `/dev/ttyS3`.
+
+### Implementation
+
+The main loop of this module (Located in `RoboClaw.cpp::task_main()`) performs 2 tasks:
+
+ 1. Write `actuator_controls_0` messages to the Roboclaw as they become available
+ 2. Read encoder data from the Roboclaw at a constant, fixed rate.
+
+Because of the latency of UART, this driver does not write every single `actuator_controls_0` message to the Roboclaw
+immediately. Instead, it is rate limited based on the parameter `RBCLW_WRITE_PER`.
+
+On startup, this driver will attempt to read the status of the Roboclaw to verify that it is connected. If this fails,
+the driver terminates immediately.
 
 ### Examples
 
-Attempt to start driver on any bus (start on bus where first sensor found).
-```
-sf1xx start -a
-```
-Stop driver
-```
-sf1xx stop
-```
+The command to start this driver is:
 
-### Usage {#sf1xx_usage}
+ $ roboclaw start <device> <baud>
+
+`<device>` is the name of the UART port. On the Pixhawk 4, this is `/dev/ttyS3`.
+`<baud>` is te baud rate.
+
+All available commands are:
+
+ - `$ roboclaw start <device> <baud>`
+ - `$ roboclaw status`
+ - `$ roboclaw stop`
+	
+### Usage {#roboclaw_usage}
 ```
-sf1xx <command> [arguments...]
+roboclaw <command> [arguments...]
  Commands:
-   start         Start driver
-     [-a]        Attempt to start driver on all I2C buses
-     [-b <val>]  Start driver on specific I2C bus
-                 default: 1
-     [-R <val>]  Sensor rotation - downward facing by default
-                 default: 25
+```
+## safety_button
+Source: [drivers/safety_button](https://github.com/PX4/Firmware/tree/master/src/drivers/safety_button)
 
-   stop          Stop driver
 
-   test          Test driver (basic functional tests)
+### Description
+This module is responsible for the safety button.
 
-   reset         Reset driver
 
-   info          Print driver information
+### Usage {#safety_button_usage}
+```
+safety_button <command> [arguments...]
+ Commands:
+   start         Start the safety button driver
 ```
 ## tap_esc
 Source: [drivers/tap_esc](https://github.com/PX4/Firmware/tree/master/src/drivers/tap_esc)

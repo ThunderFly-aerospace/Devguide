@@ -6,9 +6,9 @@ jMAVSim is a simple multirotor/Quad simulator that allows you to fly *copter* ty
 
 * Quad
 
-This topic shows how to set up jMAVSim to connect with a SITL version of PX4. 
+This topic shows how to set up jMAVSim to connect with a SITL version of PX4.
 
-> **Tip** jMAVSim can also be used for HITL Simulation ([as shown here](../simulation/hitl.md#using-jmavsim-quadrotor)).
+> **Tip** jMAVSim can also be used for HITL Simulation ([as shown here](../simulation/hitl.md#jmavsimgazebo-hitl-environment).
 
 
 ## Simulation Environment
@@ -80,6 +80,16 @@ export PX4_HOME_ALT=28.5
 make px4_sitl_default jmavsim
 ```
 
+### Change Simulation Speed
+
+The simulation speed can be increased or decreased with respect to realtime using the environment variable `PX4_SIM_SPEED_FACTOR`.
+
+```
+export PX4_SIM_SPEED_FACTOR=2
+make px4_sitl_default jmavsim
+```
+
+For more information see: [Simulation > Run Simulation Faster than Realtime](../simulation/README.md#simulation_speed).
 
 ### Using a Joystick {#joystick}
 
@@ -101,11 +111,18 @@ The simulator broadcasts its address on the local network as a real drone would 
 You can start JMAVSim and PX4 separately:
 
 ```
-./Tools/jmavsim_run.sh
+./Tools/jmavsim_run.sh -l
 make px4_sitl none
 ```
 
 This allows a faster testing cycle (restarting jMAVSim takes significantly more time).
+
+### Headless Mode
+
+To start jMAVSim without the GUI, set the env variable `HEADLESS=1` as shown:
+```bash
+HEADLESS=1 make px4_sitl jmavsim
+```
 
 ## Multi-Vehicle Simulation
 
@@ -123,5 +140,94 @@ The simulation can be [interfaced to ROS](../simulation/ros_interface.md) the sa
 
 ## Important Files
 
-* The startup script is in the [posix-configs/SITL/init](https://github.com/PX4/Firmware/tree/master/posix-configs/SITL/init) folder and named `rcS_SIM_AIRFRAME`, the default is `rcS_jmavsim_iris`.
-* The root file system (the equivalent of `/` as seen by the) is located inside the build directory: `build/px4_sitl_default/src/firmware/posix/rootfs/`
+* The startup scripts are discussed in [System Startup](../concept/system_startup.md).
+* The simulated root file system ("`/`" directory) is created inside the build directory here: `build/px4_sitl_default/tmp/rootfs`.
+
+## Troubleshooting
+
+### java.long.NoClassDefFoundError
+
+If you see an error similar to the one below, it's likely that you're using a Java version later than 8:
+
+```
+Exception in thread "main" java.lang.NoClassDefFoundError: javax/vecmath/Tuple3d
+at java.base/java.lang.Class.forName0(Native Method)
+at java.base/java.lang.Class.forName(Class.java:374)
+at org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader.main(JarRsrcLoader.java:56)
+Caused by: java.lang.ClassNotFoundException: javax.vecmath.Tuple3d
+at java.base/java.net.URLClassLoader.findClass(URLClassLoader.java:466)
+at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:566)
+at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:499)
+... 3 more
+Exception in thread "main" java.lang.NoClassDefFoundError: javax/vecmath/Tuple3d
+at java.base/java.lang.Class.forName0(Native Method)
+at java.base/java.lang.Class.forName(Class.java:374)
+at org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader.main(JarRsrcLoader.java:56)
+Caused by: java.lang.ClassNotFoundException: javax.vecmath.Tuple3d
+at java.base/java.net.URLClassLoader.findClass(URLClassLoader.java:466)
+at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:566)
+at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:499)
+```
+
+For more info check [this GitHub issue](https://github.com/PX4/Firmware/issues/9557).
+
+The solution is to install the Java 8, as shown in the following sections.
+
+#### Ubuntu:
+
+```
+sudo apt install openjdk-8-jdk
+sudo update-alternatives --config java # choose 8
+rm -rf Tools/jMAVSim/out
+```
+
+#### macOS
+
+Either [download Oracle Java 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) or use Brew:
+
+```
+brew tap homebrew/cask-versions
+brew cask install java8
+brew install ant
+export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+rm -rf Tools/jMAVSim/out
+```
+
+
+### java.awt.AWTError: Assistive Technology not found: org.GNOME.Accessibility.AtkWrapper
+
+```
+Exception in thread "main" java.lang.reflect.InvocationTargetException
+at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.lang.reflect.Method.invoke(Method.java:498)
+at org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader.main(JarRsrcLoader.java:58)
+Caused by: java.awt.AWTError: Assistive Technology not found: org.GNOME.Accessibility.AtkWrapper
+at java.awt.Toolkit.loadAssistiveTechnologies(Toolkit.java:807)
+at java.awt.Toolkit.getDefaultToolkit(Toolkit.java:886)
+at java.awt.Window.getToolkit(Window.java:1358)
+at java.awt.Window.init(Window.java:506)
+at java.awt.Window.(Window.java:537)
+at java.awt.Frame.(Frame.java:420)
+at java.awt.Frame.(Frame.java:385)
+at javax.swing.JFrame.(JFrame.java:189)
+at me.drton.jmavsim.Visualizer3D.(Visualizer3D.java:104)
+at me.drton.jmavsim.Simulator.(Simulator.java:157)
+at me.drton.jmavsim.Simulator.main(Simulator.java:678)
+```
+
+If you see this error, try this workaround:
+
+Edit the **accessibility.properties** file:
+```
+sudo gedit /etc/java-8-openjdk/accessibility.properties
+```
+
+and comment out the line indicated below:
+```
+#assistive_technologies=org.GNOME.Acessibility.AtkWrapper
+```
+
+For more info check [this GitHub issue](https://github.com/PX4/Firmware/issues/9557).
+The fix was found in [askubuntu.com](https://askubuntu.com/questions/695560).

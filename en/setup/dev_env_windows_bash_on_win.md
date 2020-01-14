@@ -11,15 +11,13 @@ Windows users can alternatively install a *slightly modified* Ubuntu Linux PX4 d
 
 ### Setup Environment
 
-The easiest way to setup the environment is to use the <strong><a href="https://raw.githubusercontent.com/PX4/Devguide/master/build_scripts/windows_bash_nuttx.sh" target="_blank" download>windows_bash_nuttx.sh</a></strong> script (details for script are [given below](#build_script_details)).
+The easiest way to setup the environment is to use the <strong><a href="https://raw.githubusercontent.com/PX4/Devguide/{{ book.px4_version }}/build_scripts/windows_bash_nuttx.sh" target="_blank" download>windows_bash_nuttx.sh</a></strong> script (details for script are [given below](#build_script_details)).
 
 To setup the development environment:
 1. Install [Bash on Windows](https://github.com/Microsoft/BashOnWindows).
 1. Open the bash shell. 
-1. Download the **windows_bash_nuttx.sh**:
-   ```
-   wget https://raw.githubusercontent.com/PX4/Devguide/master/build_scripts/windows_bash_nuttx.sh
-   ```
+1. Download the **windows_bash_nuttx.sh**:<br>
+   `wget https://raw.githubusercontent.com/PX4/Devguide/{{ book.px4_version }}/build_scripts/windows_bash_nuttx.sh`
 1. Run the script using the command below (acknowledging any prompts as required):
   ```sh
   source windows_bash_nuttx.sh
@@ -35,7 +33,7 @@ To build the firmware (i.e. for px4_fmu-v4):
    ```
    On successful completion you'll find the firmware here: `Firmware/build/px4_fmu-v4_default/px4_fmu-v4_default.px4`
    
-   > **Note** The `make` commands to build firmware for other boards can be found in [Building the Code](../setup/building_px4.md#nuttx--pixhawk-based-boards)
+   > **Note** The `make` commands to build firmware for other boards can be found in [Building the Code](../setup/building_px4.md#nuttx)
    
 1. You can flash the custom firmware on Windows using *QGroundControl* or *Mission Planner* (it is not possible to directly flash the firmware from within the bash shell using the `upload` command).
 
@@ -69,7 +67,7 @@ To run JMAVSim:
 
 ### Build Script Details {#build_script_details}
 
-The <a href="https://raw.githubusercontent.com/PX4/Devguide/master/build_scripts/windows_bash_nuttx.sh">windows_bash_nuttx.sh</a> build script modifies the Ubuntu build instructions to remove Ubuntu-specific and UI-dependent components, including the *Qt Creator* IDE and the simulators. 
+The <a href="https://raw.githubusercontent.com/PX4/Devguide/{{ book.px4_version }}/build_scripts/windows_bash_nuttx.sh">windows_bash_nuttx.sh</a> build script modifies the Ubuntu build instructions to remove Ubuntu-specific and UI-dependent components, including the *Qt Creator* IDE and the simulators. 
 
 In addition, it uses a [64 bit arm-none-eabi compiler](https://github.com/SolinGuo/arm-none-eabi-bash-on-win10-.git) 
 since BashOnWindows doesn't run 32 bit ELF programs (and the default compiler from `https://launchpad.net/gcc-arm-embedded` is 32 bit).

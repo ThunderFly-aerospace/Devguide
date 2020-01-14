@@ -1,95 +1,534 @@
 # 模块参考：驱动
+
+子分类
+
+- [距离传感器](modules_driver_distance_sensor.md)
+
+## atxxxx
+
+源码位置: [drivers/osd/atxxxx](https://github.com/PX4/Firmware/tree/master/src/drivers/osd/atxxxx)
+
+### 描述
+
+例如，安装在OmnibusF4SD板子上的用于OSD驱动的ATXXXX芯片
+
+他可以通过OSD_ATXXXX_CFG这个参数来使能
+
+### 用法 {#atxxxx_usage}
+
+    atxxxx <command> [arguments...]
+     Commands:
+       start         Start the driver
+         [-b <val>]  SPI bus (default: use board-specific bus)
+    
+       stop
+    
+       status        print status info
+    
+
+## batt_smbus
+
+源码位置: [drivers/batt_smbus](https://github.com/PX4/Firmware/tree/master/src/drivers/batt_smbus)
+
+### 描述
+
+用于智能电池的BQ40Z50电量统计芯片
+
+### 示例
+
+通过写入flash来设置它的参数。 地址，字节数，字节0，... ，字节N
+
+    batt_smbus -X write_flash 19069 2 27 0
+    
+
+### 用法 {#batt_smbus_usage}
+
+    batt_smbus <命令> [参数...]
+     命令列表:
+       start
+         [-X]        BATT_SMBUS_BUS_I2C_EXTERNAL
+         [-T]        BATT_SMBUS_BUS_I2C_EXTERNAL1
+         [-R]        BATT_SMBUS_BUS_I2C_EXTERNAL2
+         [-I]        BATT_SMBUS_BUS_I2C_INTERNAL
+         [-A]        BATT_SMBUS_BUS_ALL
+    
+       man_info      打印厂商信息
+    
+       unseal        解锁设备的flash来使能 write_flash 命令
+    
+       seal          锁住设备的flash来失能 write_flash 命令.
+    
+       suspend       从调度循环中挂起该设备
+    
+       resume        将该设备从挂起状态恢复
+    
+       write_flash   写入flash。 必须先通过unseal 命令来解锁flash。
+         [address]   写入的起始地址
+         [number of bytes] 需要写入的字节数
+         [data[0]...data[n]] 具体的字节数据，使用空格隔开
+    
+       stop          停止设备
+    
+       status        打印状态信息
+    
+
+## dshot
+
+源码位置: [drivers/dshot](https://github.com/PX4/Firmware/tree/master/src/drivers/dshot)
+
+### 描述
+
+这是DShot输出的驱动。 它跟fmu的驱动很相似，可以简单地替换掉，来实现使用DShot与调速器通讯而不是PWM。
+
+它支持：
+
+- DShot150, DShot300, DShot600, DShot1200
+- 通过独立的串口遥控，并且发布esc_status消息
+- 通过命令行接口发送 DShot 命令
+
+### 示例
+
+设置电机1永久反向：
+
+    dshot reverse -m 1
+    dshot save -m 1
+    
+
+保存之后，设置的反向之后的转向将被认为是正常时候的转向， 所以如果需要再次反转方向只需要再次重复相同的命令。
+
+### 用法 {#dshot_usage}
+
+    dshot <命令> [参数...]
+     命令列表:
+       start         启动任务 (不带任何模式集, 使用mode_*类的命令)，所有的 mode_*类的命令都会启动这个模块，如果这个模块还没有启动的话
+    
+       mode_gpio
+    
+       mode_pwm      选择所有可能的PWM引脚
+    
+       mode_pwm8
+    
+       mode_pwm6
+    
+       mode_pwm5
+    
+       mode_pwm5cap1
+    
+       mode_pwm4
+    
+       mode_pwm4cap1
+    
+       mode_pwm4cap2
+    
+       mode_pwm3
+    
+       mode_pwm3cap1
+    
+       mode_pwm2
+    
+       mode_pwm2cap2
+    
+       mode_pwm1
+    
+       telemetry     在某个串口上使能遥控功能
+         <device>    UART 设备节点
+    
+       reverse       反转马达方向
+         [-m <val>]  马达的编号 (从1开始，默认全部)
+    
+       normal        转到默认的方向
+         [-m <val>]  马达的编号 (从1开始，默认全部)
+    
+       save          保存当前的设置
+         [-m <val>]  马达的编号 (从1开始，默认全部)
+    
+       3d_on         使能3D模式
+         [-m <val>]  马达的编号 (从1开始，默认全部)
+    
+       3d_off        关闭3D模式
+         [-m <val>]  马达的编号 (从1开始，默认全部)
+    
+       beep1         发送蜂鸣模式 1
+         [-m <val>]  马达的编号 (从1开始，默认全部)
+    
+       beep2         发送蜂鸣模式 2
+         [-m <val>]  马达的编号 (从1开始，默认全部)
+    
+       beep3         发送蜂鸣模式 3
+         [-m <val>]  马达的编号 (从1开始，默认全部)
+    
+       beep4         发送蜂鸣模式 4
+         [-m <val>]  马达的编号 (从1开始，默认全部)
+    
+       beep5         发送蜂鸣模式 5
+         [-m <val>]  马达的编号 (从1开始，默认全部)
+    
+       esc_info      请求马达的信息
+         -m <val>    马达的编号 (从1开始)
+    
+       stop
+    
+       status        打印状态信息
+    
+
 ## fmu
-源代码: [drivers/px4fmu](https://github.com/PX4/Firmware/tree/master/src/drivers/px4fmu)
 
+源码位置: [drivers/px4fmu](https://github.com/PX4/Firmware/tree/master/src/drivers/px4fmu)
 
-### 说明
-该模块负责驱动输出以及读取输入引脚。对于没有单独IO芯片的飞控板（例如Pixracer），它使用主通道。在具有IO芯片（例如Pixhawk）的飞控板上，它使用辅助通道，px4io驱动程序使用主通道。
+### 描述
 
-它通过监听actuator_controls主题，实现混控以及PWM输出。此外，它还进行RC输入解析并自动选择解析方法。支持的方法有：
+该模块负责驱动输出引脚或者读取输入引脚。 对于没有独立 IO 芯片的飞控板（例如 Pixracer), 它使用主通道。 On boards with an IO chip (eg. Pixhawk), it uses the AUX channels, and the px4io driver is used for main ones.
+
+It listens on the actuator_controls topics, does the mixing and writes the PWM outputs.
+
+The module is configured via mode_* commands. This defines which of the first N pins the driver should occupy. By using mode_pwm4 for example, pins 5 and 6 can be used by the camera trigger driver or by a PWM rangefinder driver. Alternatively, the fmu can be started in one of the capture modes, and then drivers can register a capture callback with ioctl calls.
+
+### 实现
+
+By default the module runs on a work queue with a callback on the uORB actuator_controls topic.
+
+### 示例
+
+It is typically started with:
+
+    fmu mode_pwm
+    
+
+To drive all available pins.
+
+Capture input (rising and falling edges) and print on the console: start the fmu in one of the capture modes:
+
+    fmu mode_pwm3cap1
+    
+
+This will enable capturing on the 4th pin. Then do:
+
+    fmu test
+    
+
+Use the `pwm` command for further configurations (PWM rate, levels, ...), and the `mixer` command to load mixer files.
+
+### Usage {#fmu_usage}
+
+    fmu <command> [arguments...]
+     Commands:
+       start         Start the task (without any mode set, use any of the mode_*
+                     cmds)
+    
+     All of the mode_* commands will start the fmu if not running already
+    
+       mode_gpio
+    
+       mode_pwm      Select all available pins as PWM
+    
+       mode_pwm8
+    
+       mode_pwm6
+    
+       mode_pwm5
+    
+       mode_pwm5cap1
+    
+       mode_pwm4
+    
+       mode_pwm4cap1
+    
+       mode_pwm4cap2
+    
+       mode_pwm3
+    
+       mode_pwm3cap1
+    
+       mode_pwm2
+    
+       mode_pwm2cap2
+    
+       mode_pwm1
+    
+       sensor_reset  Do a sensor reset (SPI bus)
+         [<ms>]      Delay time in ms between reset and re-enabling
+    
+       peripheral_reset Reset board peripherals
+         [<ms>]      Delay time in ms between reset and re-enabling
+    
+       i2c           Configure I2C clock rate
+         <bus_id> <rate> Specify the bus id (>=0) and rate in Hz
+    
+       test          Test inputs and outputs
+    
+       fake          Arm and send an actuator controls command
+         <roll> <pitch> <yaw> <thrust> Control values in range [-100, 100]
+    
+       stop
+    
+       status        print status info
+    
+
+## gps
+
+Source: [drivers/gps](https://github.com/PX4/Firmware/tree/master/src/drivers/gps)
+
+### Description
+
+GPS driver module that handles the communication with the device and publishes the position via uORB. It supports multiple protocols (device vendors) and by default automatically selects the correct one.
+
+The module supports a secondary GPS device, specified via `-e` parameter. The position will be published on the second uORB topic instance, but it's currently not used by the rest of the system (however the data will be logged, so that it can be used for comparisons).
+
+### Implementation
+
+There is a thread for each device polling for data. The GPS protocol classes are implemented with callbacks so that they can be used in other projects as well (eg. QGroundControl uses them too).
+
+### Examples
+
+For testing it can be useful to fake a GPS signal (it will signal the system that it has a valid position):
+
+    gps stop
+    gps start -f
+    
+
+Starting 2 GPS devices (the main GPS on /dev/ttyS3 and the secondary on /dev/ttyS4):
+
+    gps start -d /dev/ttyS3 -e /dev/ttyS4
+    
+
+Initiate warm restart of GPS device
+
+    gps reset warm
+    
+
+### Usage {#gps_usage}
+
+    gps <command> [arguments...]
+     Commands:
+       start
+         [-d <val>]  GPS device
+                     values: <file:dev>, default: /dev/ttyS3
+         [-b <val>]  Baudrate (can also be p:<param_name>)
+                     default: 0
+         [-e <val>]  Optional secondary GPS device
+                     values: <file:dev>
+         [-g <val>]  Baudrate (secondary GPS, can also be p:<param_name>)
+                     default: 0
+         [-f]        Fake a GPS signal (useful for testing)
+         [-s]        Enable publication of satellite info
+         [-i <val>]  GPS interface
+                     values: spi|uart, default: uart
+         [-p <val>]  GPS Protocol (default=auto select)
+                     values: ubx|mtk|ash|eml
+    
+       stop
+    
+       status        print status info
+    
+       reset         Reset GPS device
+         cold|warm|hot Specify reset type
+    
+
+## pga460
+
+Source: [drivers/distance_sensor/pga460](https://github.com/PX4/Firmware/tree/master/src/drivers/distance_sensor/pga460)
+
+### 描述
+
+Ultrasonic range finder driver that handles the communication with the device and publishes the distance via uORB.
+
+### Implementation
+
+This driver is implented as a NuttX task. This Implementation was chosen due to the need for polling on a message via UART, which is not supported in the work_queue. This driver continuously takes range measurements while it is running. A simple algorithm to detect false readings is implemented at the driver levelin an attemptto improve the quality of data that is being published. The driver will not publish data at all if it deems the sensor data to be invalid or unstable.
+
+### Usage {#pga460_usage}
+
+    pga460 <command> [arguments...]
+     Commands:
+       start <device_path>
+         [device_path] The pga460 sensor device path, (e.g: /dev/ttyS6
+    
+       status
+    
+       stop
+    
+       help
+    
+
+## pwm_out_sim
+
+Source: [drivers/pwm_out_sim](https://github.com/PX4/Firmware/tree/master/src/drivers/pwm_out_sim)
+
+### Description
+
+Driver for simulated PWM outputs.
+
+Its only function is to take `actuator_control` uORB messages, mix them with any loaded mixer and output the result to the `actuator_output` uORB topic.
+
+It is used in SITL and HITL.
+
+### Usage {#pwm_out_sim_usage}
+
+    pwm_out_sim <command> [arguments...]
+     Commands:
+       start         Start the module
+         [-m <val>]  Mode
+                     values: hil|sim, default: sim
+    
+       stop
+    
+       status        print status info
+    
+
+## rc_input
+
+Source: [drivers/rc_input](https://github.com/PX4/Firmware/tree/master/src/drivers/rc_input)
+
+### Description
+
+This module does the RC input parsing and auto-selecting the method. Supported methods are:
+
 - PPM
 - SBUS
 - DSM
 - SUMD
 - ST24
+- TBS Crossfire (CRSF)
 
-该模块通过mode_ *命令配置。 这定义了驱动程序应该占用的前N个引脚。例如，通过使用mode_pwm4，引脚5和6可以用于相机触发驱动或PWM测距仪驱动。
+### Implementation
+
+By default the module runs on the work queue, to reduce RAM usage. It can also be run in its own thread, specified via start flag -t, to reduce latency. When running on the work queue, it schedules at a fixed frequency.
+
+### Usage {#rc_input_usage}
+
+    rc_input <command> [arguments...]
+     Commands:
+       start         Start the task (without any mode set, use any of the mode_*
+                     cmds)
+         [-t]        Run as separate task instead of the work queue
+         [-d <val>]  RC device
+                     values: <file:dev>, default: /dev/ttyS3
+    
+       bind          Send a DSM bind command (module must be running)
+    
+       stop
+    
+       status        print status info
+    
+
+## roboclaw
+
+Source: [drivers/roboclaw](https://github.com/PX4/Firmware/tree/master/src/drivers/roboclaw)
+
+### Description
+
+This driver communicates over UART with the [Roboclaw motor driver](http://downloads.ionmc.com/docs/roboclaw_user_manual.pdf). It performs two tasks:
+
+- Control the motors based on the `actuator_controls_0` UOrb topic.
+- Read the wheel encoders and publish the raw data in the `wheel_encoders` UOrb topic
+
+In order to use this driver, the Roboclaw should be put into Packet Serial mode (see the linked documentation), and your flight controller's UART port should be connected to the Roboclaw as shown in the documentation. For Pixhawk 4, use the `UART & I2C B` port, which corresponds to `/dev/ttyS3`.
+
+### Implementation
+
+The main loop of this module (Located in `RoboClaw.cpp::task_main()`) performs 2 tasks:
+
+1. Write `actuator_controls_0` messages to the Roboclaw as they become available
+2. Read encoder data from the Roboclaw at a constant, fixed rate.
+
+Because of the latency of UART, this driver does not write every single `actuator_controls_0` message to the Roboclaw immediately. Instead, it is rate limited based on the parameter `RBCLW_WRITE_PER`.
+
+On startup, this driver will attempt to read the status of the Roboclaw to verify that it is connected. If this fails, the driver terminates immediately.
+
+### Examples
+
+The command to start this driver is:
+
+$ roboclaw start <device> <baud>
+
+`<device>` is the name of the UART port. On the Pixhawk 4, this is `/dev/ttyS3`. `<baud>` is te baud rate.
+
+All available commands are:
+
+- `$ roboclaw start <device> <baud>`
+- `$ roboclaw status`
+- `$ roboclaw stop`
+
+### Usage {#roboclaw_usage}
+
+    roboclaw <command> [arguments...]
+     Commands:
+    
+
+## safety_button
+
+Source: [drivers/safety_button](https://github.com/PX4/Firmware/tree/master/src/drivers/safety_button)
+
+### Description
+
+This module is responsible for the safety button.
+
+### 用法 {#safety_button_usage}
+
+    safety_button <command> [arguments...]
+     命令列表:
+       start         启动该驱动模块
+    
+
+## tap_esc
+
+源码位置: [drivers/tap_esc](https://github.com/PX4/Firmware/tree/master/src/drivers/tap_esc)
+
+### 描述
+
+该模块通过串口来控制TAP_ESC模块。 它负责监听话题actuator_controls，执行混控并输出给调速器设备。
 
 ### 实现
-默认情况下，模块在工作队列上运行，以减少RAM的使用。 它也可以在独占线程中运行，通过标志-t启用，以减少延迟。
 
-当在工作队列上运行时，它以固定的频率被调用，pwm速率限制actuator_controls主题的更新速率。在独占线程中运行的情况下，模块会轮询actuator_controls主题。此外，pwm速率定义了较低级别的IO定时器速率。
+目前该模块运行在一个独立的线程中，意思就是它不是在一个工作队列中的模块。
 
 ### 示例
-通常以以下方式启动：
-```
-fmu mode_pwm
-```
-驱动所有可用引脚。
 
-捕获输入（上升沿和下降沿）并在控制台上打印：以其中一种捕获模式启动fmu：
-```
-fmu mode_pwm3cap1
-```
-这将能够在第4个引脚上捕获。 然后：
-```
-fmu test
-```
+这个模块一般使用这个命令来启动: tap_esc start -d /dev/ttyS2 -n <1-8>
 
-使用`pwm`命令进一步配置（PWM速率，电平，...），使用`mixer`命令加载混控器文件。
+### 用法 {#tap_esc_usage}
 
-### 用法
-```
-fmu <命令> [参数...]
- 命令:
-   start         启动任务（没有任何模式设置，使用任意mode_ *均可）
-     [-t]        运行在独占线程而不是工作队列上
+    tap_esc <命令> [参数...]
+     命令列表:
+       start         启动该任务
+         [-d <val>]  与调速器通讯的串口设备节点
+                     值: <设备地址>
+         [-n <val>]  调速器数量
+                     默认: 4
+    
 
- 如果fmu不在运行状态，那么所有的mode_*命令都会启动它
+## vmount
 
-   mode_gpio
+源码位置: [modules/vmount](https://github.com/PX4/Firmware/tree/master/src/modules/vmount)
 
-   mode_rcin     只做RC输入，不做PWM输出
+### 描述
 
-   mode_pwm      选择所有可用引脚作为PWM输出
+Mount (Gimbal) control driver. It maps several different input methods (eg. RC or MAVLink) to a configured output (eg. AUX channels or MAVLink).
 
-   mode_pwm1
+Documentation how to use it is on the [gimbal_control](https://dev.px4.io/en/advanced/gimbal_control.html) page.
 
-   mode_pwm4
+### 实现
 
-   mode_pwm2
+Each method is implemented in its own class, and there is a common base class for inputs and outputs. They are connected via an API, defined by the `ControlData` data structure. This makes sure that each input method can be used with each output method and new inputs/outputs can be added with minimal effort.
 
-   mode_pwm3
+### 示例
 
-   mode_pwm3cap1
+Test the output by setting a fixed yaw angle (and the other axes to 0):
 
-   mode_pwm2cap2
+    vmount stop
+    vmount test yaw 30
+    
 
-   mode_serial
+### 用法 {#vmount_usage}
 
-   mode_gpio_serial
-
-   mode_pwm_serial
-
-   mode_pwm_gpio
-
-   bind          发送DSM绑定命令（模块必须正在运行）
-
-   sensor_reset  执行传感器重置(SPI bus)
-     [<ms>]      在重置和重启之间的延迟时间，单位：ms
-
-   peripheral_reset 重置所有外设
-     [<ms>]      在重置和重启之间的延迟时间，单位：ms
-
-   i2c           配置I2C时钟速率
-     <bus_id> <rate> 指定总线id(>=0)和速率，单位：Hz
-
-   test          测试输入输出
-
-   fake          解锁并发送作动器控制指令
-     <roll> <pitch> <yaw> <thrust> 控制量，取值范围：[-100, 100]
-
-   stop
-
-   status        打印状态信息
-```
+    vmount <command> [arguments...]
+     Commands:
+       start
+    
+       test          Test the output: set a fixed angle for one axis (vmount must
+                     not be running)
+         roll|pitch|yaw <angle> Specify an axis and an angle in degrees
+    
+       stop
+    
+       status        print status info

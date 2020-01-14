@@ -8,7 +8,7 @@ This topic explains how to create and run your first onboard application. It cov
 ## Prerequisites
 
 You will require the following:
-* [PX4 SITL Simulator](../simulation/README.md) *or* a [PX4-compatible flight controller](https://docs.px4.io/en/flight_controller/#documented-boards).
+* [PX4 SITL Simulator](../simulation/README.md) *or* a [PX4-compatible flight controller](https://docs.px4.io/master/en/flight_controller/#documented-boards).
 * [PX4 Development Toolchain](../setup/dev_env.md) for the desired target.
 * [Download the PX4 Source Code](../setup/building_px4.md#get_px4_code) from Github
 
@@ -127,14 +127,17 @@ In this section we create a *minimal application* that just prints out `Hello Sk
    	SRCS
    		px4_simple_app.c
    	DEPENDS
-   		platforms__common
    	)
    ```
    The `px4_add_module()` method builds a static library from a module description. 
    The `MAIN` block lists the name of the module - this registers the command with NuttX so that it can be called from the PX4 shell or SITL console.
    
-   > **Tip** The `px4_add_module()` format is documented in [Firmware/cmake/common/px4_base.cmake](https://github.com/PX4/Firmware/blob/master/cmake/common/px4_base.cmake).
+   > **Tip** The `px4_add_module()` format is documented in [Firmware/cmake/px4_add_module.cmake](https://github.com/PX4/Firmware/blob/{{ book.px4_version }}/cmake/px4_add_module.cmake).
    
+   > **Note**
+   > If you specify `DYNAMIC` as an option to `px4_add_module`, a *shared library* is created instead of a static library on POSIX platforms (these can be loaded without having to recompile PX4, and shared to others as binaries rather than source code).
+   > Your app will not become a builtin command, but ends up in a separate file called `examples__px4_simple_app.px4mod`.
+   > You can then run your command by loading the file at runtime using the `dyn` command: `dyn ./examples__px4_simple_app.px4mod`
 
 ## Build the Application/Firmware
 
@@ -277,9 +280,9 @@ px4_pollfd_struct_t fds[] = {
 };
 
 while (true) {
-uORB/* wait for sensor update of 1 file descriptor for 1000 ms (1 second) */
-uORBint poll_ret = px4_poll(fds, 1, 1000);
-..
+	/* wait for sensor update of 1 file descriptor for 1000 ms (1 second) */
+	int poll_ret = px4_poll(fds, 1, 1000);
+	..
 	if (fds[0].revents & POLLIN) {
 		/* obtained data for the first file descriptor */
 		struct sensor_combined_s raw;

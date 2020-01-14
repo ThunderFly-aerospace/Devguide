@@ -1,4 +1,5 @@
 # Modules Reference: Controller
+
 ## fw_att_control
 Source: [modules/fw_att_control](https://github.com/PX4/Firmware/tree/master/src/modules/fw_att_control)
 
@@ -11,6 +12,8 @@ fw_att_control is the fixed wing attitude controller.
 ```
 fw_att_control <command> [arguments...]
  Commands:
+   start
+     [vtol]      VTOL mode
 
    stop
 
@@ -29,6 +32,7 @@ fw_pos_control_l1 is the fixed wing position controller.
 fw_pos_control_l1 <command> [arguments...]
  Commands:
    start
+     [vtol]      VTOL mode
 
    stop
 
@@ -39,11 +43,10 @@ Source: [modules/mc_att_control](https://github.com/PX4/Firmware/tree/master/src
 
 
 ### Description
-This implements the multicopter attitude and rate controller. It takes attitude
-setpoints (`vehicle_attitude_setpoint`) or rate setpoints (in acro mode
-via `manual_control_setpoint` topic) as inputs and outputs actuator control messages.
+This implements the multicopter attitude controller. It takes attitude
+setpoints (`vehicle_attitude_setpoint`) as inputs and outputs a rate setpoint.
 
-The controller has two loops: a P loop for angular error and a PID loop for angular rate error.
+The controller has a P loop for angular error
 
 Publication documenting the implemented Quaternion Attitude Control:
 Nonlinear Quadrocopter Attitude Control (2013)
@@ -52,15 +55,13 @@ Institute for Dynamic Systems and Control (IDSC), ETH Zurich
 
 https://www.research-collection.ethz.ch/bitstream/handle/20.500.11850/154099/eth-7387-01.pdf
 
-### Implementation
-To reduce control latency, the module directly polls on the gyro topic published by the IMU driver.
-
 
 ### Usage {#mc_att_control_usage}
 ```
 mc_att_control <command> [arguments...]
  Commands:
    start
+     [vtol]      VTOL mode
 
    stop
 
@@ -83,6 +84,29 @@ logging.
 mc_pos_control <command> [arguments...]
  Commands:
    start
+     [vtol]      VTOL mode
+
+   stop
+
+   status        print status info
+```
+## mc_rate_control
+Source: [modules/mc_rate_control](https://github.com/PX4/Firmware/tree/master/src/modules/mc_rate_control)
+
+
+### Description
+This implements the multicopter rate controller. It takes rate setpoints (in acro mode
+via `manual_control_setpoint` topic) as inputs and outputs actuator control messages.
+
+The controller has a PID loop for angular rate error.
+
+
+### Usage {#mc_rate_control_usage}
+```
+mc_rate_control <command> [arguments...]
+ Commands:
+   start
+     [vtol]      VTOL mode
 
    stop
 
@@ -114,6 +138,57 @@ navigator <command> [arguments...]
    fencefile     load a geofence file from SD card, stored at etc/geofence.txt
 
    fake_traffic  publishes 3 fake transponder_report_s uORB messages
+
+   stop
+
+   status        print status info
+```
+## rover_pos_control
+Source: [modules/rover_pos_control](https://github.com/PX4/Firmware/tree/master/src/modules/rover_pos_control)
+
+
+### Description
+Controls the position of a ground rover using an L1 controller.
+
+Publishes `actuator_controls_0` messages at a constant 250Hz.
+
+### Implementation
+Currently, this implementation supports only a few modes:
+
+ * Full manual: Throttle and yaw controls are passed directly through to the actuators
+ * Auto mission: The rover runs missions
+ * Loiter: The rover will navigate to within the loiter radius, then stop the motors
+
+### Examples
+CLI usage example:
+```
+rover_pos_control start
+rover_pos_control status
+rover_pos_control stop
+```
+
+
+### Usage {#rover_pos_control_usage}
+```
+rover_pos_control <command> [arguments...]
+ Commands:
+   start
+
+   stop
+
+   status        print status info
+```
+## vtol_att_control
+Source: [modules/vtol_att_control](https://github.com/PX4/Firmware/tree/master/src/modules/vtol_att_control)
+
+
+### Description
+fw_att_control is the fixed wing attitude controller.
+
+### Usage {#vtol_att_control_usage}
+```
+vtol_att_control <command> [arguments...]
+ Commands:
 
    stop
 

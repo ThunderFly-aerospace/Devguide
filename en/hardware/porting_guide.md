@@ -15,11 +15,11 @@ Board startup and configuration files are located under [/boards](https://github
 For example, for FMUv5:
 * (All) Board-specific files: [/boards/px4/fmu-v5](https://github.com/PX4/Firmware/tree/master/boards/px4/fmu-v5). 
 * Build configuration: [/boards/px4/fmu-v5/default.cmake](https://github.com/PX4/Firmware/blob/master/boards/px4/fmu-v5/default.cmake).
-* Board-specific initialisation file: [/boards/px4/fmu-v5/init/rc.board](https://github.com/PX4/Firmware/blob/master/boards/px4/fmu-v5/init/rc.board)
+* Board-specific initialisation file: [/boards/px4/fmu-v5/init/rc.board_defaults](https://github.com/PX4/Firmware/blob/master/boards/px4/fmu-v5/init/rc.board_defaults)
   - A board-specific initialisation file is automatically included in startup scripts if found under the boards directory at **init/rc.board**.
   - The file is used to start sensors (and other things) that only exist on a particular board. 
     It may also be used to set a board's default parameters, UART mappings, and any other special cases.
-  - For FMUv5 you can see all the Pixhawk 4 sensors being started, and it also sets a larger LOGGER_BUF, and in AUTOCNF section (fresh setups) it sets the [SYS_FMU_TASK](../advanced/parameter_reference.md#SYS_FMU_TASK) parameter.
+  - For FMUv5 you can see all the Pixhawk 4 sensors being started, and it also sets a larger LOGGER_BUF. 
 
 In addition there are several groups of configuration files for each board located throughout the code base:
 * The boot file system (startup script) is located in: [ROMFS/px4fmu\_common](https://github.com/PX4/Firmware/tree/master/ROMFS/px4fmu_common)
@@ -38,12 +38,12 @@ For all NuttX based flight controllers (e.g. the Pixhawk series) the OS is loade
 
 The configuration files for all boards, including linker scripts and other required settings, are located under [/boards](https://github.com/PX4/Firmware/tree/master/boards/) in a vendor- and board-specific directory (i.e. **boards/_VENDOR_/_MODEL_/**)).
 
-The following example uses FMUv5 as it is a recent [reference configuration](../debug/reference-design.md) for NuttX based flight controllers:
+The following example uses FMUv5 as it is a recent [reference configuration](../hardware/reference_design.md) for NuttX based flight controllers:
 * Running `make px4_fmu-v5_default` from the **Firmware** directory will build the FMUv5 config
 * The base FMUv5 configuration files are located in: [/boards/px4/fmu-v5](https://github.com/PX4/Firmware/tree/master/boards/px4/fmu-v5).
 * Board specific header: [/boards/px4/fmu-v5/nuttx-config/include/board.h](https://github.com/PX4/Firmware/blob/master/boards/px4/fmu-v5/nuttx-config/include/board.h). 
 * NuttX OS config (created with Nuttx menuconfig): [/boards/px4/fmu-v5/nuttx-config/nsh/defconfig](https://github.com/PX4/Firmware/blob/master/boards/px4/fmu-v5/nuttx-config/nsh/defconfig).
-* Build configuration: [PX4/Firmware/boards/px4/fmu-v5/default.cmake](https://github.com/PX4/Firmware/blob/master/boards/px4/fmu-v5/default.cmake).
+* Build configuration: [boards/px4/fmu-v5/default.cmake](https://github.com/PX4/Firmware/blob/master/boards/px4/fmu-v5/default.cmake).
 
 The function of each of these files, and perhaps more, will need to be duplicated for a new flight controller board.
 
@@ -80,7 +80,7 @@ To run `qconfig` you may need to install additional Qt dependencies.
 Linux boards do not include the OS and kernel configuration. 
 These are already provided by the Linux image available for the board (which needs to support the inertial sensors out of the box).
 
-* [cmake/configs/posix\_rpi\_cross.cmake](https://github.com/PX4/Firmware/blob/master/cmake/configs/posix_rpi_cross.cmake) - RPI cross-compilation.
+* [boards/px4/raspberrypi/cross.cmake](https://github.com/PX4/Firmware/blob/master/boards/px4/raspberrypi/cross.cmake) - RPI cross-compilation. 
 
 ## Middleware Components and Configuration
 
@@ -90,22 +90,22 @@ This section describes the various middleware components, and the configuration 
 
 * The start script is located in [posix-configs/](https://github.com/PX4/Firmware/tree/master/posix-configs).
 * The OS configuration is part of the default Linux image (TODO: Provide location of LINUX IMAGE and flash instructions).
-* The PX4 middleware configuration is located in [src/drivers/boards](https://github.com/PX4/Firmware/tree/master/src/drivers/boards). TODO: ADD BUS CONFIG
+* The PX4 middleware configuration is located in [src/boards](https://github.com/PX4/Firmware/tree/master/boards). TODO: ADD BUS CONFIG 
 * Drivers: [DriverFramework](https://github.com/px4/DriverFramework).
 * Reference config: Running `make eagle_default` builds the Snapdragon Flight reference config.
 
 
 ## RC UART Wiring Recommendations
 
-It is generally recommended to connect RC via separate RX and TX pins to the microcontroller. 
+It is generally recommended to connect RC via separate RX and TX pins to the microcontroller.
 If however RX and TX are connected together, the UART has to be put into singlewire mode to prevent any contention. 
-This is done via board config and manifest files. 
-One example is [px4fmu-v5](https://github.com/PX4/Firmware/blob/master/src/drivers/boards/px4fmu-v5/manifest.c).
+This is done via board config and manifest files.
+One example is [px4fmu-v5](https://github.com/PX4/Firmware/blob/master/boards/px4/fmu-v5/src/manifest.c). 
 
 
 ## Officially Supported Hardware
 
-The PX4 project supports and maintains the [FMU standard reference hardware](../debug/reference-design.md) and any boards that are compatible with the standard.
+The PX4 project supports and maintains the [FMU standard reference hardware](../hardware/reference_design.md) and any boards that are compatible with the standard.
 This includes the [Pixhawk-series](https://docs.px4.io/en/flight_controller/pixhawk_series.html) (see the user guide for a [full list of officially supported hardware](https://docs.px4.io/en/flight_controller/)).
 
 Every officially supported board benefits from:
@@ -121,7 +121,7 @@ With full compatibility you benefit from the ongoing day-to-day development of P
 > **Tip** Manufacturers should carefully consider the cost of maintenance before deviating from the specification
   (the cost to the manufacturer is proportional to the level of divergence).
 
-We welcome any individual or company to submit their port for inclusion in our supported hardware, provided they are willing to follow our [Code of Conduct](../contribute/README.md#code-of-conduct) and work with the Dev Team to provide a safe and fulfilling PX4 experience to their customers.
+We welcome any individual or company to submit their port for inclusion in our supported hardware, provided they are willing to follow our [Code of Conduct](https://github.com/PX4/Firmware/blob/master/CODE_OF_CONDUCT.md) and work with the Dev Team to provide a safe and fulfilling PX4 experience to their customers.
 
 It's also important to note that the PX4 dev team has a responsibility to release safe software, and as such we require any board manufacturer to commit any resources necessary to keep their port up-to-date, and in a working state.
 

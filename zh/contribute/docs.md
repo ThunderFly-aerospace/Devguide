@@ -1,158 +1,158 @@
-# Contributing to Documentation
+# 投稿指南
 
-Contributions to the Dronecode guides, including the PX4 developer and user guides are very welcome!
-This article explains how you can make changes, add content, and create translations.
+非常欢迎大家给Dronecode项目的相关指南积极投稿。 投稿内容包括PX4和QGroundControl 开发者和用户指南，以及MAVLink指南。 本篇章用来向投稿者们解释如何对项目指南进行更改、添加内容和创建翻译。
 
-> **Note** You will need a (free) [Github](http://github.com) account to contribute to the guide.
+> **Note**你需要申请一个(免费的) [Github](http://github.com)帐户来向项目指南投稿。
 
-## Quick Changes
+## 快速更改
 
-Fixing typos or editing an *existing page* is easy:
-1. Click the **Edit** toolbar icon at the top of the relevant page in the guide.
+如需修改错误或编辑一个*现有页面*，请按如下步骤操作：
 
-   ![Gitbook: Edit Page button](../../assets/gitbook/gitbook_toolbar_icon_edit.png)
-   
-   This will open the page for editing (in Github).
-1. Make the desired change.
-1. At the bottom of the page you'll be prompted to create a separate branch and then 
-   guided to submit a *pull request*.
-   
-The documentation team reviews submitted pull requests and will either merge
-it or work with you to update it.
+1. 点击指南相关页面顶部的工具栏图标**Edit**。
+    
+    ![Gitbook: 编辑页面按钮](../../assets/gitbook/gitbook_toolbar_icon_edit.png)
+    
+    打开编辑页面(Github)。
 
-## Adding New Content - Big Changes
+2. 进行修改。
 
-### What Goes Where?
+3. 页面底部会提示投稿者创建一个单独的分支，然后 引导其提交一个*拉取请求*。
 
-The *Developer Guide* is for documentation that is relevant to *software developers*.
-This includes users who need to: 
-* Add or modify platform features - modules, flight modes, etc.
-* Add support/integrate with new hardware - flight controllers, peripherals, airframes, etc.
-* Communicate with the platform from an external source - e.g. a companion computer.
-* Understand the architecture
+The documentation team reviews submitted pull requests and will either merge it or work with you to update it.
+
+## 添加新内容 - 大更改
+
+If you want to add new pages or images that can't easily be done through the Github interface. In this case you make changes in the same way as you would for code changes: use the *git* toolchain to get the code, modify it as needed, test that it renders properly using the Gitbook client, create a branch for your changes and create a pull request (PR) to pull it back into the documentation. The following instructions explain how.
+
+### 内容分类
+
+The *Developer Guide* is for documentation that is relevant to *software developers*. This includes users who need to:
+
+* 添加或修改软件平台功能，如模块、飞行模式等。
+* 添加新硬件支持/集成，如飞行控制器、外围、机型等。
+* 从外部源与平台通信，例如一个配套的计算机。
+* 了解软件架构
 
 The *User Guide*, by contrast, is *primarily* for users who want to:
-* Fly a vehicle using PX4
-* Build, modify, or configure a vehicle using PX4 on a supported/existing airframe.
 
-> **Tip** For example, detailed information about how to build/configure an existing airframe are in the User Guide, 
-> while instructions for defining a *new* airframe are in the Developer Guide.
+* 使用 PX4 控制飞行器
+* 使用 PX4，基于已支持/现存的机型，构建、修改或配置类似载具。
 
+> **Tip** 例如，关于如何构建/配置现有机架类型的详细信息在用户指南中，而 定义*新*机架类型的说明在开发者指南中。
 
-### Gitbook Documentation Toolchain
+### Gitbook 文档工具
 
-The guide uses the [Gitbook](https://www.gitbook.com/about) toolchain. 
-Change requests can be either done on the Gitbook website using the [Gitbook editor](https://gitbookio.gitbooks.io/documentation/content/editor/index.html)
-or locally (more flexible, but less user-friendly). 
+The guide uses the [Legacy Gitbook Toolchain](https://legacy.gitbook.com/) toolchain.
 
-Everything you need to install and build Gitbook locally is explained in the 
-[toolchain documentation](https://toolchain.gitbook.com/). In overview:
+Change requests can be either done on the Gitbook website using the [Gitbook editor](https://gitbookio.gitbooks.io/documentation/content/editor/index.html) or locally (more flexible, but less user-friendly).
 
-* Pages are written in separate files using markdown \(almost the same syntax used by Github wiki\). 
-* The _structure_ of the book is defined in a file named **SUMMARY.md**.
-* This is a [multilingual](https://toolchain.gitbook.com/languages.html) book, 
-  so there is a **LANGS.md** file in the root directory defining what languages are supported. 
-  Pages for each language are stored in the folder named for the associated language code \(e.g. "zh" for Chinese, "en" for English\). 
-* A file named **book.json** defines any dependencies of the build.
-* A web hook is used to track whenever files are merged into the master branch on this repository, causing the book to rebuild.
+In order to contribute many changes to the documentation, it is recommended that you follow these steps to add the changes locally and then create a pull request:
 
+* 如果您还没有注册Github，请先[注册](https://github.com/join) Github 账户
+* 点击[这里](https://github.com/PX4/px4_user_guide)查看PX4用户指南，点击[这里](https://github.com/PX4/Devguide)查看PX4开发者指南。 点击[这里](https://help.github.com/articles/fork-a-repo/#fork-an-example-repository)，查看如何分支git repository。
+* 将分支克隆到本地计算机  
+        sh
+        cd ~/wherever/
+        git clone https://github.com/<your git name>/px4_user_guide.git
 
+* 通过 NPM 安装 gitbook。 在终端提示下，只需运行以下命令即可安装 GitBook：
+    
+    ```sh
+    npm install gitbook-cli -g
+    ```
+    
+    > **Note** 本地安装和构建Gitbook 的所需一切也会在[工具链文档](https://github.com/GitbookIO/gitbook/blob/master/docs/setup.md)中说明。
 
-## Style guide
+* 进入您的本地版本库并添加原始的上游版本：
+    
+    ```sh
+    cd ~/wherever/px4_user_guide
+    git remote add upstream https://github.com/PX4/px4_user_guide.git
+    ```
 
-1. Files/file names
+* 现在您可以检出一个新分支，并向其中添加您的更改。 要构建您的卷册，请运行：
+    
+    ```sh
+    gitbook build
+    ```
+    
+    > **Note** 如果遇到报错: `/usr/bin/env: node：No such file or directory`, 请运行 `ln -s /usr/bin/nodejs /usr/bin/node`
 
-   * Put new files in an appropriate sub-folder
-   * Use descriptive names. In particular, image filename should describe what they contain.
-   * User lower case and separate words using underscores "\_"
+* 要预览并服务您的卷册，请运行：
+    
+    ```sh
+    gitbook serve
+    ```
+    
+    > **Note** 运行 `gitbook install` 可安装缺失的插件。
 
-2. Images
+* 现在您可以在 http://localhost:4000/ 上浏览您的本地卷册
 
-   * Use the smallest size and lowest resolution that makes the image still useful.
-   * New images should be created in a sub-folder of **/assets/** by default 
-     (so they can be shared between translations).
+* 在终端提示中使用`CTRL+c`退出。
 
-3. Content:
+* 除了端口4000，您也可以在另一个端口上作业：
+    
+    ```sh
+    gitbook serve --port 4003
+    ```
 
-   * Use "style" \(bold, emphasis, etc\) consistently. **Bold** for button presses and menu definitions. 
-     _Emphasis_ for tool names. Otherwise use as little as possible.
-   * Headings and page titles should use "First Letter Capitalisation"
-   * The page title should be a first level heading \(\#\). All other headings should be h2 \(\#\#\) or lower.
-   * Don't add any style to headings.
-   * Don't translate the *first part* of a note, tip or warning declaration (e.g. `> **Note**`) 
-     as this precise text is required to render the note properly.
+* 您也可以以 html 、pdf、epub 或 mobi 格式输出： 
+        sh
+        gitbook help
 
-## Translations {#translation}
+* 预览过您的更改后，只要您感觉满意，您便可以添加并提交这些更改：
+    
+    ```sh
+    git add <file name>
+    git commit -m "<your commit message>"
+    ```
+    
+    需进一步了解提交信息, 请参阅 [Contributing](../contribute/README.md) 部分。
 
-We have recently started adding translated versions of all the PX4/Dronecode guides! 
-If you would like to help, contact us on [our support channels](../README.md#support). 
+* 现在, 您可以将本地提交推送到分支版本库
+    
+    ```sh
+    git push origin <your feature branch name>
+    ```
 
-Gitbook supports translation [as described here](https://toolchain.gitbook.com/languages.html):
-* Each language is independent and keeps all its documents in its own directory \(named using it's international code - "en" for English, "es" for Spanish, etc.\) 
-* The **LANGS.md** file in the root directory lists the language folders that Gitbook must build.
+* 您可以通过浏览器访问分支版本库来验证推送是否成功： ```https://github.com/<your git name>/px4_user_guide.git```  
+    您应该会看到一条告知消息：一个新分支已被推送到您的分支版本库。
+* 现在是时候创建一个拉取请求 (PR) 了。 在 "新分支消息" 的右侧 (请参阅前面的一个步骤), 您应该看到一个绿色按钮, 上面写着 "Compare & Create Pull Request"。 然后, 它应该列出你的更改，你必须添加一个有意义的标题 (在提交 PR 的情况下, 它通常是提交消息) 和消息 (<span style="color:orange">解释你做了这些更改的原因 </span>， 检查 [其他拉取请求 ](https://github.com/PX4/px4_user_guide/pulls) 进行比较)。
+* 搞定！ PX4 指南项目的负责人现在将看到您的投稿, 并决定是否要整合稿件内容。 每过一段时间，他们会检查你的更改，以确保没有疑义。
 
-In order to keep all language-versions of the guide up to date and synchronised, we have the following policy/guidelines:
+In overview:
 
-* This is an **English-first** book.
+* 用多个单独文件编写的页面，使用 markdown \(与Github wiki中的语法几乎一致\)。 
+* 卷册的*架构*定义，详见**SummMMARY.md**文件。
+* 这是一本[多语种](https://github.com/GitbookIO/gitbook/blob/master/docs/languages.md)的卷册。 所以在根目录中有一个**LANGS.md**文件来定义支持哪些语言。 每种语言的页面都存储在用相关语言代码命名的文件夹\(例如，中文的“zh”、 英文的“en”\)。 
+* 一个名为**book.json**的文件定义了此构建的所有依赖关系。
+* 网络钩子会被用来跟踪是否有文件合并到此版本库上的主分支，如果有，卷册将重新构建。
 
-  * Any _technical_ changes should be made in the English tree _first_ \(including both updates and new pages\). After the English change has been accepted in the main repo then submit the translation. This approach ensures that changes will propagate through to all the other translations!
-  * Improvements to translations that don't change "technical information" won't need to be made in the English tree.
+## 文档规范指南
 
-* The structure and documents should be the same for all languages \(i.e. based on the English version\).
-* All languages share the same images by default \(do not duplicate the _/image_ folder, unless you're changing/translating the image\).
-* Translation changes are submitted to the repo in the same way as any other changes \(fork the repo, make a branch for your changes, and create PRs of the branches to submit them into this repo\).
-* Translation teams can organise themselves however they like as long as PRs are submitted using the above approach.
+1. 文件/文件名
 
+* 将新文件放入相应的子文件夹
+* 使用描述性名称。 特别是图像类型文件，文件名应简要描述其中的内容。
+* 命名中使用小写，并用下划线"\_"分割单词
 
-### Starting a new language translation
+2. 图片
 
-The process straightforward:
+* 使用能保证图像使用价值的最小尺寸和最小分辨率。
+* 默认情况下，新图像应在 **/assets/** 的子文件夹中创建 (这样翻译之间可共享图像资源)。
 
-1. Fork the documentation repo.
-1. Create and checkout a new branch for your language.
-   ```
-   checkout -b add_translation_language_yourlanguagename
-   ```
-1. Copy the whole English folder \(/en\) and rename it to the appropriate language code \(e.g. "es" for Spanish\).
+3. 内容:
 
-   > **Note** This ensures that you keep the same structure and documents as the original version.
+* 始终如一地使用 "样式" (如bold, emphasis等) 按钮和菜单定义，请使用样式**Bold**。 工具名称，请使用样式*Emphasis*。 其他情况，尽量少用样式。
+* 标题和页面标题应该遵从"第一字母大写"
+* 页面标题应该是一级标题 。 所有其他标题应该是二级或更低级别的标题。
+* 不要在标题中添加任何样式。
+* 不要翻译注释、提示或警告声明的*第一部分* （例如`**Note**` ），因为这部分是用来向读者表达注解内容级别的。
 
-1. Update **\LANGS.md** with your language.
-1. Translate the content in your language tree.
+## 翻译 {#translation}
 
-   > **Tip** Minimally complete the home page and the **SUMMARY.md** before submitting any PR request. Ideally do more!
+We'd love your help to translate *QGroundControl* and our guides for PX4, *QGroundControl* and MAVLink. For more information see: [Translation](../contribute/translation.md).
 
-1. Commit the changes and push them back to your own fork repo.
-   ```
-   git add *
-   git commit -m "Created a your_new_language translation"
-   git push origin add_translation_language_yourlanguagename
-   ```
+## 许可证
 
-1. On the Github interface, create a PR to submit your branch back to the master repo \(a banner appears on Github that you can click when you visit the repo\).
-
-### Updating translations
-
-Translations can be updated like any other change to documentation: fork the repo, create a branch for your changes in your fork, then submit them back to the main repo as PRs.
-
-### Tracking changes
-
-We hope that translation owners will track changes in the English version and propagate them through to their translations.
-
-Git/Github have excellent mechanisms for tracking changes. We recommend that when you add [document front matter](https://toolchain.gitbook.com/pages.html#front-matter) to your translation with the commit information for the page you translated. This allows anyone to go back later and find out whether the text has changed since it was last translated. For example:
-
-```md
----
-translated_page: https://github.com/PX4/Devguide/blob/master/en/setup/config_initial.md
-translated_sha: 95b39d747851dd01c1fe5d36b24e59ec865e323e
-translated: false
----
-```
-
-> **Note** The *translated_sha* is the full SHA of the commit that you translated. Find this by opening the source page on github, press the **History** button. Find the commit of the document you are translating from (ideally the most recent) and press the "Copy the full SHA" icon associated with that commit.
-
-
-## Licence
-
-All PX4/Dronecode documentation is free to use and modify under terms of the permissive 
-[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) licence.
+All PX4/Dronecode documentation is free to use and modify under terms of the permissive [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) licence.

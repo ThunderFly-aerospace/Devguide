@@ -1,4 +1,88 @@
 # Modules Reference: System
+
+## battery_status
+Source: [modules/battery_status](https://github.com/PX4/Firmware/tree/master/src/modules/battery_status)
+
+
+### Description
+
+The provided functionality includes:
+- Read the output from the ADC driver (via ioctl interface) and publish `battery_status`.
+
+
+### Implementation
+It runs in its own thread and polls on the currently selected gyro topic.
+
+
+### Usage {#battery_status_usage}
+```
+battery_status <command> [arguments...]
+ Commands:
+   start
+
+   stop
+
+   status        print status info
+```
+## camera_feedback
+Source: [modules/camera_feedback](https://github.com/PX4/Firmware/tree/master/src/modules/camera_feedback)
+
+
+### Description
+
+
+
+### Usage {#camera_feedback_usage}
+```
+camera_feedback <command> [arguments...]
+ Commands:
+   start
+
+   stop
+
+   status        print status info
+```
+## commander
+Source: [modules/commander](https://github.com/PX4/Firmware/tree/master/src/modules/commander)
+
+
+### Description
+The commander module contains the state machine for mode switching and failsafe behavior.
+
+### Usage {#commander_usage}
+```
+commander <command> [arguments...]
+ Commands:
+   start
+     [-h]        Enable HIL mode
+
+   calibrate     Run sensor calibration
+     mag|accel|gyro|level|esc|airspeed Calibration type
+
+   check         Run preflight checks
+
+   arm
+     [-f]        Force arming (do not run preflight checks)
+
+   disarm
+
+   takeoff
+
+   land
+
+   transition    VTOL transition
+
+   mode          Change flight mode
+     manual|acro|offboard|stabilized|rattitude|altctl|posctl|auto:mission|auto:l
+                 oiter|auto:rtl|auto:takeoff|auto:land|auto:precland Flight mode
+
+   lockdown
+     [off]       Turn lockdown off
+
+   stop
+
+   status        print status info
+```
 ## dataman
 Source: [modules/dataman](https://github.com/PX4/Firmware/tree/master/src/modules/dataman)
 
@@ -45,6 +129,28 @@ dataman <command> [arguments...]
 
    status        print status info
 ```
+## dmesg
+Source: [systemcmds/dmesg](https://github.com/PX4/Firmware/tree/master/src/systemcmds/dmesg)
+
+
+### Description
+
+Command-line tool to show bootup console messages.
+Note that output from NuttX's work queues and syslog are not captured.
+
+### Examples
+
+Keep printing all messages in the background:
+```
+dmesg -f &
+```
+
+### Usage {#dmesg_usage}
+```
+dmesg <command> [arguments...]
+ Commands:
+     [-f]        Follow: wait for new messages
+```
 ## heater
 Source: [drivers/heater](https://github.com/PX4/Firmware/tree/master/src/drivers/heater)
 
@@ -58,32 +164,7 @@ This task can be started at boot from the startup scripts by setting SENS_EN_THE
 ```
 heater <command> [arguments...]
  Commands:
-   controller_period Reports the heater driver cycle period value, (us), and
-                 sets it if supplied an argument.
-
-   duty_cycle    Reports the heater duty cycle (%).
-
-   feed_forward  Sets the feedforward value if supplied an argument and reports
-                 the current value.
-
-   integrator    Sets the integrator gain value if supplied an argument and
-                 reports the current value.
-
-   proportional  Sets the proportional gain value if supplied an argument and
-                 reports the current value.
-
-   sensor_id     Reports the current IMU the heater is temperature controlling.
-
-   setpoint      Reports the current IMU temperature.
-
-   start         Starts the IMU heater driver as a background task
-
-   status        Reports the current IMU temperature, temperature setpoint, and
-                 heater on/off status.
-
-   stop          Stops the IMU heater driver.
-
-   temp          Reports the current IMU temperature.
+   start
 
    stop
 
@@ -121,7 +202,7 @@ The module runs periodically on the HP work queue.
 land_detector <command> [arguments...]
  Commands:
    start         Start the background task
-     fixedwing|multicopter|vtol|ugv Select vehicle type
+     fixedwing|multicopter|vtol|rover Select vehicle type
 
    stop
 
@@ -195,6 +276,7 @@ logger <command> [arguments...]
    start
      [-m <val>]  Backend mode
                  values: file|mavlink|all, default: all
+     [-x]        Enable/disable logging via Aux1 RC channel
      [-e]        Enable logging right after start until disarm (otherwise only
                  when armed)
      [-f]        Log until shutdown (implies -e)
@@ -203,8 +285,6 @@ logger <command> [arguments...]
                  default: 280
      [-b <val>]  Log buffer size in KiB
                  default: 12
-     [-q <val>]  uORB queue size for mavlink mode
-                 default: 14
      [-p <val>]  Poll on a topic instead of running with fixed rate (Log rate
                  and topic intervals are ignored if this is set)
                  values: <topic_name>
@@ -212,6 +292,49 @@ logger <command> [arguments...]
    on            start logging now, override arming (logger must be running)
 
    off           stop logging now, override arming (logger must be running)
+
+   stop
+
+   status        print status info
+```
+## pwm_input
+Source: [drivers/pwm_input](https://github.com/PX4/Firmware/tree/master/src/drivers/pwm_input)
+
+
+### Description
+Measures the PWM input on AUX5 (or MAIN5) via a timer capture ISR and publishes via the uORB 'pwm_input` message.
+
+
+### Usage {#pwm_input_usage}
+```
+pwm_input <command> [arguments...]
+ Commands:
+   start
+
+   test          prints PWM capture info.
+
+   stop
+
+   status        print status info
+```
+## rc_update
+Source: [modules/rc_update](https://github.com/PX4/Firmware/tree/master/src/modules/rc_update)
+
+
+### Description
+The rc_update module handles RC channel mapping: read the raw input channels (`input_rc`),
+then apply the calibration, map the RC channels to the configured channels & mode switches,
+low-pass filter, and then publish as `rc_channels` and `manual_control_setpoint`.
+
+### Implementation
+To reduce control latency, the module is scheduled on input_rc publications.
+
+
+### Usage {#rc_update_usage}
+```
+rc_update <command> [arguments...]
+ Commands:
+   start
 
    stop
 
@@ -291,10 +414,6 @@ The provided functionality includes:
   If there are multiple of the same type, do voting and failover handling.
   Then apply the board rotation and temperature calibration (if enabled). And finally publish the data; one of the
   topics is `sensor_combined`, used by many parts of the system.
-- Do RC channel mapping: read the raw input channels (`input_rc`), then apply the calibration, map the RC channels
-  to the configured channels & mode switches, low-pass filter, and then publish as `rc_channels` and
-  `manual_control_setpoint`.
-- Read the output from the ADC driver (via ioctl interface) and publish `battery_status`.
 - Make sure the sensor drivers get the updated calibration parameters (scale & offset) when the parameters change or
   on startup. The sensor drivers use the ioctl interface for parameter updates. For this to work properly, the
   sensor drivers must already be running when `sensors` is started.
@@ -340,14 +459,12 @@ tune_control play -t 2
 ```
 tune_control <command> [arguments...]
  Commands:
-   play          Play system tune, tone, or melody
+   play          Play system tune or single note.
      [-t <val>]  Play predefined system tune
                  default: 1
-     [-f <val>]  Frequency of tone in Hz (0-22kHz)
-                 default: 0
-     [-d <val>]  Duration of tone in us
-                 default: 1
-     [-s <val>]  Strength of tone (0-100)
+     [-f <val>]  Frequency of note in Hz (0-22kHz)
+     [-d <val>]  Duration of note in us
+     [-s <val>]  Volume level (loudness) of the note (0-100)
                  default: 40
      [-m <val>]  Melody in string form
                  values: <string> - e.g. "MFT200e8a8a"
@@ -355,4 +472,23 @@ tune_control <command> [arguments...]
    libtest       Test library
 
    stop          Stop playback (use for repeated tunes)
+```
+## work_queue
+Source: [systemcmds/work_queue](https://github.com/PX4/Firmware/tree/master/src/systemcmds/work_queue)
+
+
+### Description
+
+Command-line tool to show work queue status.
+
+
+### Usage {#work_queue_usage}
+```
+work_queue <command> [arguments...]
+ Commands:
+   start
+
+   stop
+
+   status        print status info
 ```
