@@ -19,7 +19,7 @@ Utility to flash the bootloader from a file
 
 Source: [systemcmds/config](https://github.com/PX4/Firmware/tree/master/src/systemcmds/config)
 
-Configure a sensor driver (sampling & publication rate, range, etc.)
+Configure a sensor driver (sampling & publication rate, etc.)
 
 ### Usage {#config_usage}
 
@@ -38,9 +38,6 @@ Configure a sensor driver (sampling & publication rate, range, etc.)
     
        rate          Set sensor publication rate
          <file:dev> <rate> Sensor device file and publication rate in Hz
-    
-       range         Set sensor measurement range
-         <file:dev> <rate> Sensor device file and range
     
        check         Perform sensor self-test (and print info)
          <file:dev>  Sensor device file
@@ -621,21 +618,3 @@ Tool to print various version information
        hwtypecmp     Compare hardware type (returns 0 on match)
          <hwtype> [<hwtype2>] Hardware type to compare against (eg. V2). An OR
                      comparison is used if multiple are specified
-    
-
-## voxlpm
-
-Source: [drivers/power_monitor/voxlpm](https://github.com/PX4/Firmware/tree/master/src/drivers/power_monitor/voxlpm)
-
-### Usage {#voxlpm_usage}
-
-    voxlpm [arguments...]
-       start         start monitoring
-    
-       info          display info
-    
-       -X            PX4_I2C_BUS_EXPANSION
-    
-       -T            PX4_I2C_BUS_EXPANSION1
-    
-       -R            PX4_I2C_BUS_EXPANSION2 (default)

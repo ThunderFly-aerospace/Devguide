@@ -32,11 +32,6 @@ Px4 支持 *软件在环（SITL）* 仿真，其中飞行堆栈在计算机上�
 
 **支持机型: </0 >Iris （多转子模型和 x 配置中 px4 quadrotor 的配置）。</p> 
 
-[XPlane](../simulation/hitl.md)（仅硬件在环）| 一个全面而强大的固定翼飞行仿真器，提供非常逼真的飞行模型。  
-
-
-**支持机型： **四旋翼
-
 [Simulation-In-Hardware](../simulation/simulation-in-hardware.md) (SIH) | An alternative to HITL that offers a hard real-time simulation directly on the hardware autopilot.  
 
 
@@ -114,7 +109,7 @@ make px4_sitl jmavsim
 
 The simulation can be further configured via environment variables:
 
-- `PX4_ESTIMATOR`：此变量配置要使用的估算器。 可能的选项有：`ekf2` （默认）、`lpe`、`inav`。 在运行模拟之前，可以通过 `export PX4_ESTIMATOR=lpe` 进行设置。
+- `PX4_ESTIMATOR`：此变量配置要使用的估算器。 Possible options are: `ekf2` (default), `lpe` (deprecated). 在运行模拟之前，可以通过 `export PX4_ESTIMATOR=lpe` 进行设置。
 
 The syntax described here is simplified, and there are many other options that you can configure via *make* - for example, to set that you wish to connect to an IDE or debugger. For more information see: [Building the Code > PX4 Make Build Targets](../setup/building_px4.md#make_targets).
 
@@ -189,7 +184,7 @@ For setup information see the *QGroundControl User Guide*:
 
 ## 相机模拟
 
-PX4 supports capture of both still images and video from within the [Gazebo](../simulation/gazebo.md) simulated environment. This can be enabled/set up as described in [Gazebo > Video Streaming](../simulation/gazebo.md#video-streaming).
+PX4 supports capture of both still images and video from within the [Gazebo](../simulation/gazebo.md) simulated environment. This can be enabled/set up as described in [Gazebo > Video Streaming](../simulation/gazebo.md#video).
 
 The simulated camera is a gazebo plugin that implements the [MAVLink Camera Protocol](https://mavlink.io/en/protocol/camera.html)<!-- **Firmware/Tools/sitl_gazebo/src/gazebo_geotagged_images_plugin.cpp -->. PX4 connects/integrates with this camera in 
 

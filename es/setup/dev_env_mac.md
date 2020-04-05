@@ -4,7 +4,7 @@ MacOS es una plataforma de desarrollo compatible para PX4. Las siguientes instru
 
 * Hardware basado en NuttX (Pixhawk, etcetera.)
 * Simulación en jMAVSim
-* Simulación en Gazebo 8
+* Gazebo Simulation
 
 > **Nota** Para compilar para otros objetivos véase: [Instalación de la Toolchain > Objetivos compatibles](../setup/dev_env.md#supported-targets).
 
@@ -13,7 +13,7 @@ MacOS es una plataforma de desarrollo compatible para PX4. Las siguientes instru
 Increase the maximum allowed number of open files on macOS using the *Terminal* command:
 
 ```sh
-ulimit -S -n 300
+ulimit -S -n 2048
 ```
 
 > **Note** At time of writing (December 2018) the master branch uses more than the default maximum allowed open files on macOS (256 in all running processes). As a *short term solution*, increasing the number of allowed open files to 300 should fix most problems.
@@ -29,26 +29,42 @@ After installing Homebrew, run these commands in your shell to install the commo
 ```sh
 brew tap PX4/px4
 brew install px4-dev
-# Optional, but recommended additional simulation tools:
-brew install px4-sim
 ```
 
-If the installation outputs an error message about missing requirements follow the instructions. Your system will be missing Java and Quartz:
+Make sure you have Python 3 installed.
 
 ```sh
-brew cask install xquartz java
+brew install python3
+
+# install required packages using pip3
+pip3 install --user pyserial empy toml numpy pandas jinja2 pyyaml pyros-genmsg packaging
 ```
 
-Install pip if you don't already have it and use it to install the required packages:
+## Gazebo Simulation
+
+To install SITL simulation with Gazebo:
 
 ```sh
-sudo easy_install pip
-sudo -H pip install pyserial empy toml numpy pandas jinja2 pyyaml
+brew cask install xquartz
+brew install px4-sim-gazebo
+```
+
+## jMAVSim Simulation
+
+To install SITL simulation with jMAVSim:
+
+```sh
+brew tap AdoptOpenJDK/openjdk
+brew cask install adoptopenjdk8
+```
+
+```sh
+brew install px4-sim-jmavsim
 ```
 
 ## Additional Tools
 
-After setting up the build/simulation toolchain, see [Additional Tools](../setup/generic_dev_tools.md) for information about other useful tools.
+See [Additional Tools](../setup/generic_dev_tools.md) for information about other useful development tools that are not part of the build toolchain (for example IDEs and GCSs).
 
 ## Next Steps
 

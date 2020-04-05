@@ -3,7 +3,7 @@
 MacOS is a supported development platform for PX4. The following instructions set up an environment for building:
 * NuttX-based hardware (Pixhawk, etc.)
 * jMAVSim Smulation
-* Gazebo 8 Simulation
+* Gazebo Simulation
 
 > **Tip** To build other targets see: [Toolchain Installation > Supported Targets](../setup/dev_env.md#supported-targets).
 
@@ -31,30 +31,42 @@ After installing Homebrew, run these commands in your shell to install the commo
 ```sh
 brew tap PX4/px4
 brew install px4-dev
-# Optional, but recommended additional simulation tools:
-brew install px4-sim
 ```
 
-If the installation outputs an error message about missing requirements follow the instructions. Your system will be missing Java and Quartz:
+Make sure you have Python 3 installed.
 
 ```sh
-brew cask install xquartz java
+brew install python3
+
+# install required packages using pip3
+pip3 install --user pyserial empy toml numpy pandas jinja2 pyyaml pyros-genmsg packaging
 ```
 
-Install pip if you don't already have it and use it to install the required packages:
+## Gazebo Simulation
+
+To install SITL simulation with Gazebo:
 
 ```sh
-# get pip
-curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-python get-pip.py
+brew cask install xquartz
+brew install px4-sim-gazebo
+```
 
-# install required packages
-sudo -H pip install pyserial empy toml numpy pandas jinja2 pyyaml
+## jMAVSim Simulation
+
+To install SITL simulation with jMAVSim:
+
+```sh
+brew tap AdoptOpenJDK/openjdk
+brew cask install adoptopenjdk8
+```
+
+```sh
+brew install px4-sim-jmavsim
 ```
 
 ## Additional Tools
 
-After setting up the build/simulation toolchain, see [Additional Tools](../setup/generic_dev_tools.md) for information about other useful tools.
+See [Additional Tools](../setup/generic_dev_tools.md) for information about other useful development tools that are not part of the build toolchain (for example IDEs and GCSs).
 
 ## Next Steps
 

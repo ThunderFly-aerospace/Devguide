@@ -7,72 +7,22 @@ PX4 can be built on the console or in an IDE, for both simulated and hardware ta
 <span></span>
 > **Tip** For solutions to common build problems see [Troubleshooting](#troubleshooting) below.
 
-## Downloading PX4 Source Code {#get_px4_code}
+## Download the PX4 Source Code {#get_px4_code}
 
 The PX4 source code is stored on Github in the [PX4/Firmware](https://github.com/PX4/Firmware) repository.
-We recommend that you [fork](https://help.github.com/articles/fork-a-repo/) this repository (creating a copy associated with your own Github account), and then [clone](https://help.github.com/articles/cloning-a-repository/) the source to your local computer.
+To get the *very latest* version onto your computer, enter the following command into a terminal:
 
-> **Tip** Forking the repository allows you to better manage your custom code.
-  Later on you will be able to use *git* to share changes with the main project.
+```sh
+git clone https://github.com/PX4/Firmware.git --recursive
+```
 
-The steps to fork and clone the project source code are:
-
-1. [Sign up](https://github.com/) to Github.
-1. Go to the [Firmware](https://github.com/PX4/Firmware) repository and click the **Fork** button near the upper right corner.
-   This will create and open the forked repository.
-
-   ![Github Fork button](../../assets/toolchain/github_fork.png)
-1. Copy the repository URL for your *Firmware* repository fork.
-   The easiest way to do this is to click the **Clone or download** button and then copy the URL:
-
-   ![Github Clone or download button](../../assets/toolchain/github_clone_or_download.png)
-1. Install *git* (if you haven't already done so as part of setting up the development environment):
-   * On macOS use the terminal command: `brew install git`
-   * On Ubuntu use the terminal command: `sudo apt install git`
-   * For other platforms see the [git documentation](https://git-scm.com/downloads).
-1. Open a command prompt/terminal on your computer
-   * On OS X, hit ⌘-space and search for 'terminal'.
-   * On Ubuntu, click the launch bar and search for 'terminal'.
-   * On Windows, find the PX4 folder in the start menu and click on 'PX4 Console'.
-1. Clone the repository fork using the copied URL. This will look something like:
-   ```
-   git clone https://github.com/<youraccountname>/Firmware.git
-   ```
-   
-   > **Tip** If you're just experimenting (and don't want to make any sort of permanent changes) you can simply clone the main Firmware repository as shown:
-   >  ```sh
-   >  git clone https://github.com/PX4/Firmware.git
-   >  ```
-   
-   Windows users [refer to the Github help](https://help.github.com/desktop/guides/getting-started-with-github-desktop/installing-github-desktop/). 
-   You can use a *git* command line client as above or instead perform the same actions with the *Github for Windows* app.
-
-This will copy *most* of the *very latest* version of PX4 source code onto your computer 
-(the rest of the code is automatically fetched from other [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) when you build PX4).
-
-<span id="specific_version_source"></span>
-
-### Get a Specific Release
-
-To get the source code for a *specific older release*:
-1. Clone the Firmware repo and navigate into Firmware directory:
-   ```sh
-   git clone https://github.com/PX4/Firmware.git
-   cd Firmware
-   ```
-1. List all releases (tags)
-   ```sh
-   git tag -l
-   ```
-1. Checkout code for particular tag (e.g. for tag 1.7.4beta)
-   ```sh
-   git checkout v1.7.4beta
-   ```
+> **Note** This is all you need to do just to build the latest code. 
+  [GIT Examples > Contributing code to PX4](../contribute/git_examples.md#contributing_code) provides a lot more information about using git to contribute to PX4. 
 
 
 ## First Build (Using the jMAVSim Simulator) {#jmavsim_build}
 
-For the first build we'll build for a simulated target using a console environment.
+First we'll build a simulated target using a console environment.
 This allows us to validate the system setup before moving on to real hardware and an IDE.
 
 Navigate into the **Firmware** directory and start [jMAVSim](../simulation/jmavsim.md) using the following command:
@@ -139,7 +89,7 @@ The following list shows the build commands for common boards:
 * [Pixfalcon](https://docs.px4.io/en/flight_controller/pixfalcon.html): `make px4_fmu-v2_default`
 * [Dropix](https://docs.px4.io/en/flight_controller/dropix.html): `make px4_fmu-v2_default`
 * [MindPX](https://docs.px4.io/en/flight_controller/mindpx.html)/[MindRacer](https://docs.px4.io/en/flight_controller/mindracer.html): `make airmind_mindpx-v2_default`
-* [mRo X-2.1](https://docs.px4.io/en/flight_controller/mro_x2.1.html): `make auav_x21_default` 
+* [mRo X-2.1](https://docs.px4.io/en/flight_controller/mro_x2.1.html): `make mro_x21_default` 
 * [Crazyflie 2.0](https://docs.px4.io/en/flight_controller/crazyflie2.html): `make bitcraze_crazyflie_default`
 * [Intel® Aero Ready to Fly Drone](https://docs.px4.io/en/flight_controller/intel_aero.html): `make intel_aerofc-v1_default`
 * [Pixhawk 1](https://docs.px4.io/en/flight_controller/pixhawk.html): `make px4_fmu-v2_default`
@@ -419,7 +369,7 @@ This section shows how *make* options are constructed and how to find the availa
 
 The full syntax to call *make* with a particular configuration and initialization file is:
 ```sh
-make [VENDOR_][MODEL][_VARIANT] [VIEWER_MODEL_DEBUGGER]
+make [VENDOR_][MODEL][_VARIANT] [VIEWER_MODEL_DEBUGGER_WORLD]
 ```
 
 **VENDOR_MODEL_VARIANT**: (also known as `CONFIGURATION_TARGET`)
@@ -434,15 +384,18 @@ make [VENDOR_][MODEL][_VARIANT] [VIEWER_MODEL_DEBUGGER]
   make list_config_targets
   ```
 
-**VIEWER_MODEL_DEBUGGER:**
+**VIEWER_MODEL_DEBUGGER_WORLD:**
   
 - **VIEWER:** This is the simulator ("viewer") to launch and connect: `gazebo`, `jmavsim` <!-- , ?airsim -->
 - **MODEL:** The *vehicle* model to use (e.g. `iris` (*default*), `rover`, `tailsitter`, etc), which will be loaded by the simulator.
   The environment variable `PX4_SIM_MODEL` will be set to the selected model, which is then used in the [startup script](..\simulation\README.md#scripts) to select appropriate parameters. 
 - **DEBUGGER:** Debugger to use: `none` (*default*), `ide`, `gdb`, `lldb`, `ddd`, `valgrind`, `callgrind`. 
   For more information see [Simulation Debugging](../debug/simulation_debugging.md).
+- **WORLD:** (Gazebo only). Set a the world ([PX4/sitl_gazebo/worlds](https://github.com/PX4/sitl_gazebo/tree/master/worlds)) that is loaded.
+  Default is [empty.world](https://github.com/PX4/sitl_gazebo/blob/master/worlds/empty.world).
+  For more information see [Gazebo > Loading a Specific World](../simulation/gazebo.md#set_world).
 
-> **Tip** You can get a list of *all* available `VIEWER_MODEL_DEBUGGER` options using the command below:
+> **Tip** You can get a list of *all* available `VIEWER_MODEL_DEBUGGER_WORLD` options using the command below:
   ```sh
   make px4_sitl list_vmd_make_targets
   ```
@@ -471,7 +424,7 @@ When it is used, the toolchain downloads the latest successful master build of a
 > **Tip** This can help analyse changes that (may) cause `px4_fmu-v2_default` to hit the 1MB flash limit.
 
 *Bloaty* must be in your path and found at *cmake* configure time.
-The PX4 [docker files](https://github.com/PX4/containers/blob/master/docker/Dockerfile_nuttx) install *bloaty* as shown:
+The PX4 [docker files](https://github.com/PX4/containers/blob/master/docker/Dockerfile_nuttx-bionic) install *bloaty* as shown:
 ```
 git clone --recursive https://github.com/google/bloaty.git /tmp/bloaty \
 	&& cd /tmp/bloaty && cmake -GNinja . && ninja bloaty && cp bloaty /usr/local/bin/ \

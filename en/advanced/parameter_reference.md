@@ -237,16 +237,8 @@ Set to 2 to use heading from motion capture</p> <strong>Values:</strong><ul>
  </thead>
 <tbody>
 <tr>
- <td style="vertical-align: top;"><strong id="BAT1_ADC_CHANNEL">BAT1_ADC_CHANNEL</strong> (INT32)</td>
- <td style="vertical-align: top;"><p>Battery 1 ADC Channel</p><p><strong>Comment:</strong> This parameter specifies the ADC channel used to monitor voltage of main power battery. A value of -1 means to use the board default.</p>   <p><b>Reboot required:</b> True</p>
-</td>
- <td style="vertical-align: top;"></td>
- <td style="vertical-align: top;">-1</td>
- <td style="vertical-align: top;"></td>
-</tr>
-<tr>
  <td style="vertical-align: top;"><strong id="BAT1_A_PER_V">BAT1_A_PER_V</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Battery 1 current per volt (A/V)</p><p><strong>Comment:</strong> The voltage seen by the 3.3V ADC multiplied by this factor will determine the battery current. A value of -1 means to use the board default.</p>   <p><b>Reboot required:</b> True</p>
+ <td style="vertical-align: top;"><p>Battery 1 current per volt (A/V)</p><p><strong>Comment:</strong> The voltage seen by the ADC multiplied by this factor will determine the battery current. A value of -1 means to use the board default.</p>   <p><b>Reboot required:</b> True</p>
 </td>
  <td style="vertical-align: top;"></td>
  <td style="vertical-align: top;">-1.0</td>
@@ -259,6 +251,14 @@ Set to 2 to use heading from motion capture</p> <strong>Values:</strong><ul>
  <td style="vertical-align: top;">-1.0 > 100000 (50)</td>
  <td style="vertical-align: top;">-1.0</td>
  <td style="vertical-align: top;">mAh</td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="BAT1_I_CHANNEL">BAT1_I_CHANNEL</strong> (INT32)</td>
+ <td style="vertical-align: top;"><p>Battery 1 Current ADC Channel</p><p><strong>Comment:</strong> This parameter specifies the ADC channel used to monitor current of main power battery. A value of -1 means to use the board default.</p>   <p><b>Reboot required:</b> True</p>
+</td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">-1</td>
+ <td style="vertical-align: top;"></td>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="BAT1_N_CELLS">BAT1_N_CELLS</strong> (INT32)</td>
@@ -321,6 +321,14 @@ Set to 2 to use heading from motion capture</p> <strong>Values:</strong><ul>
  <td style="vertical-align: top;">mAh</td>
 </tr>
 <tr>
+ <td style="vertical-align: top;"><strong id="BAT1_V_CHANNEL">BAT1_V_CHANNEL</strong> (INT32)</td>
+ <td style="vertical-align: top;"><p>Battery 1 Voltage ADC Channel</p><p><strong>Comment:</strong> This parameter specifies the ADC channel used to monitor voltage of main power battery. A value of -1 means to use the board default.</p>   <p><b>Reboot required:</b> True</p>
+</td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">-1</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
  <td style="vertical-align: top;"><strong id="BAT1_V_CHARGED">BAT1_V_CHARGED</strong> (FLOAT)</td>
  <td style="vertical-align: top;"><p>Full cell voltage (5C load)</p><p><strong>Comment:</strong> Defines the voltage where a single cell of battery 1 is considered full under a mild load. This will never be the nominal voltage of 4.2V</p>   <p><b>Reboot required:</b> True</p>
 </td>
@@ -330,7 +338,7 @@ Set to 2 to use heading from motion capture</p> <strong>Values:</strong><ul>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="BAT1_V_DIV">BAT1_V_DIV</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Battery 1 voltage divider (V divider)</p><p><strong>Comment:</strong> This is the divider from battery 1 voltage to 3.3V ADC voltage. If using e.g. Mauch power modules the value from the datasheet can be applied straight here. A value of -1 means to use the board default.</p>   <p><b>Reboot required:</b> True</p>
+ <td style="vertical-align: top;"><p>Battery 1 voltage divider (V divider)</p><p><strong>Comment:</strong> This is the divider from battery 1 voltage to ADC voltage. If using e.g. Mauch power modules the value from the datasheet can be applied straight here. A value of -1 means to use the board default.</p>   <p><b>Reboot required:</b> True</p>
 </td>
  <td style="vertical-align: top;"></td>
  <td style="vertical-align: top;">-1.0</td>
@@ -353,16 +361,8 @@ Set to 2 to use heading from motion capture</p> <strong>Values:</strong><ul>
  <td style="vertical-align: top;">V</td>
 </tr>
 <tr>
- <td style="vertical-align: top;"><strong id="BAT2_ADC_CHANNEL">BAT2_ADC_CHANNEL</strong> (INT32)</td>
- <td style="vertical-align: top;"><p>Battery 2 ADC Channel</p><p><strong>Comment:</strong> This parameter specifies the ADC channel used to monitor voltage of main power battery. A value of -1 means to use the board default.</p>   <p><b>Reboot required:</b> True</p>
-</td>
- <td style="vertical-align: top;"></td>
- <td style="vertical-align: top;">-1</td>
- <td style="vertical-align: top;"></td>
-</tr>
-<tr>
  <td style="vertical-align: top;"><strong id="BAT2_A_PER_V">BAT2_A_PER_V</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Battery 2 current per volt (A/V)</p><p><strong>Comment:</strong> The voltage seen by the 3.3V ADC multiplied by this factor will determine the battery current. A value of -1 means to use the board default.</p>   <p><b>Reboot required:</b> True</p>
+ <td style="vertical-align: top;"><p>Battery 2 current per volt (A/V)</p><p><strong>Comment:</strong> The voltage seen by the ADC multiplied by this factor will determine the battery current. A value of -1 means to use the board default.</p>   <p><b>Reboot required:</b> True</p>
 </td>
  <td style="vertical-align: top;"></td>
  <td style="vertical-align: top;">-1.0</td>
@@ -375,6 +375,14 @@ Set to 2 to use heading from motion capture</p> <strong>Values:</strong><ul>
  <td style="vertical-align: top;">-1.0 > 100000 (50)</td>
  <td style="vertical-align: top;">-1.0</td>
  <td style="vertical-align: top;">mAh</td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="BAT2_I_CHANNEL">BAT2_I_CHANNEL</strong> (INT32)</td>
+ <td style="vertical-align: top;"><p>Battery 2 Current ADC Channel</p><p><strong>Comment:</strong> This parameter specifies the ADC channel used to monitor current of main power battery. A value of -1 means to use the board default.</p>   <p><b>Reboot required:</b> True</p>
+</td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">-1</td>
+ <td style="vertical-align: top;"></td>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="BAT2_N_CELLS">BAT2_N_CELLS</strong> (INT32)</td>
@@ -437,6 +445,14 @@ Set to 2 to use heading from motion capture</p> <strong>Values:</strong><ul>
  <td style="vertical-align: top;">mAh</td>
 </tr>
 <tr>
+ <td style="vertical-align: top;"><strong id="BAT2_V_CHANNEL">BAT2_V_CHANNEL</strong> (INT32)</td>
+ <td style="vertical-align: top;"><p>Battery 2 Voltage ADC Channel</p><p><strong>Comment:</strong> This parameter specifies the ADC channel used to monitor voltage of main power battery. A value of -1 means to use the board default.</p>   <p><b>Reboot required:</b> True</p>
+</td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">-1</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
  <td style="vertical-align: top;"><strong id="BAT2_V_CHARGED">BAT2_V_CHARGED</strong> (FLOAT)</td>
  <td style="vertical-align: top;"><p>Full cell voltage (5C load)</p><p><strong>Comment:</strong> Defines the voltage where a single cell of battery 1 is considered full under a mild load. This will never be the nominal voltage of 4.2V</p>   <p><b>Reboot required:</b> True</p>
 </td>
@@ -446,7 +462,7 @@ Set to 2 to use heading from motion capture</p> <strong>Values:</strong><ul>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="BAT2_V_DIV">BAT2_V_DIV</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Battery 2 voltage divider (V divider)</p><p><strong>Comment:</strong> This is the divider from battery 2 voltage to 3.3V ADC voltage. If using e.g. Mauch power modules the value from the datasheet can be applied straight here. A value of -1 means to use the board default.</p>   <p><b>Reboot required:</b> True</p>
+ <td style="vertical-align: top;"><p>Battery 2 voltage divider (V divider)</p><p><strong>Comment:</strong> This is the divider from battery 2 voltage to ADC voltage. If using e.g. Mauch power modules the value from the datasheet can be applied straight here. A value of -1 means to use the board default.</p>   <p><b>Reboot required:</b> True</p>
 </td>
  <td style="vertical-align: top;"></td>
  <td style="vertical-align: top;">-1.0</td>
@@ -489,20 +505,6 @@ Set to 2 to use heading from motion capture</p> <strong>Values:</strong><ul>
  <td style="vertical-align: top;">-1.0 > 100000 (50)</td>
  <td style="vertical-align: top;">-1.0</td>
  <td style="vertical-align: top;">mAh</td>
-</tr>
-<tr>
- <td style="vertical-align: top;"><strong id="BAT_CNT_V_CURR">BAT_CNT_V_CURR</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Scaling from ADC counts to volt on the ADC input (battery current)</p><p><strong>Comment:</strong> This is not the battery current, but the intermediate ADC voltage. A value of -1 signifies that the board defaults are used, which is highly recommended.</p>   </td>
- <td style="vertical-align: top;"></td>
- <td style="vertical-align: top;">-1.0</td>
- <td style="vertical-align: top;"></td>
-</tr>
-<tr>
- <td style="vertical-align: top;"><strong id="BAT_CNT_V_VOLT">BAT_CNT_V_VOLT</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Scaling from ADC counts to volt on the ADC input (battery voltage)</p><p><strong>Comment:</strong> This is not the battery voltage, but the intermediate ADC voltage. A value of -1 signifies that the board defaults are used, which is highly recommended.</p>   </td>
- <td style="vertical-align: top;"></td>
- <td style="vertical-align: top;">-1.0</td>
- <td style="vertical-align: top;"></td>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="BAT_CRIT_THR">BAT_CRIT_THR</strong> (FLOAT)</td>
@@ -702,14 +704,16 @@ Set to 2 to use heading from motion capture</p> <strong>Values:</strong><ul>
 <tbody>
 <tr>
  <td style="vertical-align: top;"><strong id="TRIG_ACT_TIME">TRIG_ACT_TIME</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Camera trigger activation time</p><p><strong>Comment:</strong> This parameter sets the time the trigger needs to pulled high or low.</p>   </td>
+ <td style="vertical-align: top;"><p>Camera trigger activation time</p><p><strong>Comment:</strong> This parameter sets the time the trigger needs to pulled high or low.</p>   <p><b>Reboot required:</b> true</p>
+</td>
  <td style="vertical-align: top;">0.1 > 3000 </td>
  <td style="vertical-align: top;">40.0</td>
  <td style="vertical-align: top;">ms</td>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="TRIG_DISTANCE">TRIG_DISTANCE</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Camera trigger distance</p><p><strong>Comment:</strong> Sets the distance at which to trigger the camera.</p>   </td>
+ <td style="vertical-align: top;"><p>Camera trigger distance</p><p><strong>Comment:</strong> Sets the distance at which to trigger the camera.</p>   <p><b>Reboot required:</b> true</p>
+</td>
  <td style="vertical-align: top;">0 > ? (1)</td>
  <td style="vertical-align: top;">25.0</td>
  <td style="vertical-align: top;">m</td>
@@ -733,9 +737,18 @@ Set to 2 to use heading from motion capture</p> <strong>Values:</strong><ul>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="TRIG_INTERVAL">TRIG_INTERVAL</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Camera trigger interval</p><p><strong>Comment:</strong> This parameter sets the time between two consecutive trigger events</p>   </td>
+ <td style="vertical-align: top;"><p>Camera trigger interval</p><p><strong>Comment:</strong> This parameter sets the time between two consecutive trigger events</p>   <p><b>Reboot required:</b> true</p>
+</td>
  <td style="vertical-align: top;">4.0 > 10000.0 </td>
  <td style="vertical-align: top;">40.0</td>
+ <td style="vertical-align: top;">ms</td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="TRIG_MIN_INTERVA">TRIG_MIN_INTERVA</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Minimum camera trigger interval</p><p><strong>Comment:</strong> This parameter sets the minimum time between two consecutive trigger events the specific camera setup is supporting.</p>   <p><b>Reboot required:</b> true</p>
+</td>
+ <td style="vertical-align: top;">1.0 > 10000.0 </td>
+ <td style="vertical-align: top;">1.0</td>
  <td style="vertical-align: top;">ms</td>
 </tr>
 <tr>
@@ -772,7 +785,8 @@ Set to 2 to use heading from motion capture</p> <strong>Values:</strong><ul>
 
 <li><strong>1:</strong> Active high</li> 
 </ul>
-  </td>
+  <p><b>Reboot required:</b> true</p>
+</td>
  <td style="vertical-align: top;">0 > 1 </td>
  <td style="vertical-align: top;">0</td>
  <td style="vertical-align: top;"></td>
@@ -805,7 +819,7 @@ Set to 2 to use heading from motion capture</p> <strong>Values:</strong><ul>
 <tbody>
 <tr>
  <td style="vertical-align: top;"><strong id="CBRK_AIRSPD_CHK">CBRK_AIRSPD_CHK</strong> (INT32)</td>
- <td style="vertical-align: top;"><p>Circuit breaker for airspeed sensor</p><p><strong>Comment:</strong> Setting this parameter to 162128 will disable the check for an airspeed sensor. WARNING: ENABLING THIS CIRCUIT BREAKER IS AT OWN RISK</p>   <p><b>Reboot required:</b> true</p>
+ <td style="vertical-align: top;"><p>Circuit breaker for airspeed sensor</p><p><strong>Comment:</strong> Setting this parameter to 162128 will disable the check for an airspeed sensor. The sensor driver will not be started and it cannot be calibrated. WARNING: ENABLING THIS CIRCUIT BREAKER IS AT OWN RISK</p>   <p><b>Reboot required:</b> true</p>
 </td>
  <td style="vertical-align: top;">0 > 162128 </td>
  <td style="vertical-align: top;">0</td>
@@ -872,6 +886,14 @@ Set to 2 to use heading from motion capture</p> <strong>Values:</strong><ul>
  <td style="vertical-align: top;"><p>Circuit breaker for position error check</p><p><strong>Comment:</strong> Setting this parameter to 201607 will disable the position and velocity accuracy checks in the commander. WARNING: ENABLING THIS CIRCUIT BREAKER IS AT OWN RISK</p>   <p><b>Reboot required:</b> true</p>
 </td>
  <td style="vertical-align: top;">0 > 201607 </td>
+ <td style="vertical-align: top;">0</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="CBRK_VTOLARMING">CBRK_VTOLARMING</strong> (INT32)</td>
+ <td style="vertical-align: top;"><p>Circuit breaker for arming in fixed-wing mode check</p><p><strong>Comment:</strong> Setting this parameter to 159753 will enable arming in fixed-wing mode for VTOLs. WARNING: ENABLING THIS CIRCUIT BREAKER IS AT OWN RISK</p>   <p><b>Reboot required:</b> true</p>
+</td>
+ <td style="vertical-align: top;">0 > 159753 </td>
  <td style="vertical-align: top;">0</td>
  <td style="vertical-align: top;"></td>
 </tr>
@@ -1022,7 +1044,7 @@ Set -1 to disable the check</p>   </td>
 <tr>
  <td style="vertical-align: top;"><strong id="COM_DL_LOSS_T">COM_DL_LOSS_T</strong> (INT32)</td>
  <td style="vertical-align: top;"><p>Datalink loss time threshold</p><p><strong>Comment:</strong> After this amount of seconds without datalink the data link lost mode triggers</p>   </td>
- <td style="vertical-align: top;">5 > 300 (0.5)</td>
+ <td style="vertical-align: top;">5 > 300 (1)</td>
  <td style="vertical-align: top;">10</td>
  <td style="vertical-align: top;">s</td>
 </tr>
@@ -1343,13 +1365,6 @@ Set -1 to disable the check</p>   </td>
  <td style="vertical-align: top;"></td>
 </tr>
 <tr>
- <td style="vertical-align: top;"><strong id="COM_OA_BOOT_T">COM_OA_BOOT_T</strong> (INT32)</td>
- <td style="vertical-align: top;"><p>Set avoidance system bootup timeout</p><p><strong>Comment:</strong> The avoidance system running on the companion computer is expected to boot within this time and start providing trajectory points. If no avoidance system is detected a MAVLink warning message is sent.</p>   </td>
- <td style="vertical-align: top;">0 > 200 </td>
- <td style="vertical-align: top;">100</td>
- <td style="vertical-align: top;">s</td>
-</tr>
-<tr>
  <td style="vertical-align: top;"><strong id="COM_OBL_ACT">COM_OBL_ACT</strong> (INT32)</td>
  <td style="vertical-align: top;"><p>Set offboard loss failsafe mode</p><p><strong>Comment:</strong> The offboard loss failsafe will only be entered after a timeout, set by COM_OF_LOSS_T in seconds.</p> <strong>Values:</strong><ul>
 <li><strong>-1:</strong> Disabled</li> 
@@ -1399,8 +1414,8 @@ Set -1 to disable the check</p>   </td>
  <td style="vertical-align: top;"><strong id="COM_OF_LOSS_T">COM_OF_LOSS_T</strong> (FLOAT)</td>
  <td style="vertical-align: top;"><p>Time-out to wait when offboard connection is lost before triggering offboard lost action.
 See COM_OBL_ACT and COM_OBL_RC_ACT to configure action</p>   </td>
- <td style="vertical-align: top;">0 > 60 (1)</td>
- <td style="vertical-align: top;">0.0</td>
+ <td style="vertical-align: top;">0 > 60 (0.01)</td>
+ <td style="vertical-align: top;">0.5</td>
  <td style="vertical-align: top;">s</td>
 </tr>
 <tr>
@@ -1497,8 +1512,8 @@ See COM_OBL_ACT and COM_OBL_RC_ACT to configure action</p>   </td>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="COM_RC_OVERRIDE">COM_RC_OVERRIDE</strong> (INT32)</td>
- <td style="vertical-align: top;"><p>Enable RC stick override of auto or offboard modes</p><p><strong>Comment:</strong> Moving the RC sticks gives control back to the pilot in manual position mode immediately when: 0: an auto mode is active (except a critical battery reaction) 1: offboard mode is active Only has an effect on multicopters and VTOLS in multicopter mode.</p>  <strong>Bitmask:</strong><ul>  <li><strong>0:</strong>  Enable override of auto modes</li> 
-  <li><strong>1:</strong>  Enable override of offboard mode</li> 
+ <td style="vertical-align: top;"><p>Enable RC stick override of auto and/or offboard modes</p><p><strong>Comment:</strong> When RC stick override is enabled, moving the RC sticks immediately gives control back to the pilot (switches to manual position mode): bit 0: Enable for auto modes (except for in critical battery reaction), bit 1: Enable for offboard mode. Only has an effect on multicopters, and VTOLS in multicopter mode.</p>  <strong>Bitmask:</strong><ul>  <li><strong>0:</strong>  Enable override in auto modes</li> 
+  <li><strong>1:</strong>  Enable override in offboard mode</li> 
 </ul>
  </td>
  <td style="vertical-align: top;">0 > 3 </td>
@@ -1621,55 +1636,6 @@ See COM_OBL_ACT and COM_OBL_RC_ACT to configure action</p>   </td>
  <td style="vertical-align: top;">-1800000000 > 1800000000 </td>
  <td style="vertical-align: top;">1518423250</td>
  <td style="vertical-align: top;">deg * 1e7</td>
-</tr>
-<tr>
- <td style="vertical-align: top;"><strong id="NAV_DLL_AH_T">NAV_DLL_AH_T</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Airfield home wait time</p><p><strong>Comment:</strong> The amount of time in seconds the system should wait at the airfield home waypoint</p>   </td>
- <td style="vertical-align: top;">0.0 > 3600.0 (1)</td>
- <td style="vertical-align: top;">120.0</td>
- <td style="vertical-align: top;">s</td>
-</tr>
-<tr>
- <td style="vertical-align: top;"><strong id="NAV_DLL_CHSK">NAV_DLL_CHSK</strong> (INT32)</td>
- <td style="vertical-align: top;"><p>Skip comms hold wp</p><p><strong>Comment:</strong> If set to 1 the system will skip the comms hold wp on data link loss and will directly fly to airfield home</p>   </td>
- <td style="vertical-align: top;"></td>
- <td style="vertical-align: top;">Disabled (0)</td>
- <td style="vertical-align: top;"></td>
-</tr>
-<tr>
- <td style="vertical-align: top;"><strong id="NAV_DLL_CH_ALT">NAV_DLL_CH_ALT</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Comms hold alt</p><p><strong>Comment:</strong> Altitude of comms hold waypoint</p>   </td>
- <td style="vertical-align: top;">-50 > 30000 (0.5)</td>
- <td style="vertical-align: top;">600.0</td>
- <td style="vertical-align: top;">m</td>
-</tr>
-<tr>
- <td style="vertical-align: top;"><strong id="NAV_DLL_CH_LAT">NAV_DLL_CH_LAT</strong> (INT32)</td>
- <td style="vertical-align: top;"><p>Comms hold Lat</p><p><strong>Comment:</strong> Latitude of comms hold waypoint</p>   </td>
- <td style="vertical-align: top;">-900000000 > 900000000 </td>
- <td style="vertical-align: top;">-266072120</td>
- <td style="vertical-align: top;">deg * 1e7</td>
-</tr>
-<tr>
- <td style="vertical-align: top;"><strong id="NAV_DLL_CH_LON">NAV_DLL_CH_LON</strong> (INT32)</td>
- <td style="vertical-align: top;"><p>Comms hold Lon</p><p><strong>Comment:</strong> Longitude of comms hold waypoint</p>   </td>
- <td style="vertical-align: top;">-1800000000 > 1800000000 </td>
- <td style="vertical-align: top;">1518453890</td>
- <td style="vertical-align: top;">deg * 1e7</td>
-</tr>
-<tr>
- <td style="vertical-align: top;"><strong id="NAV_DLL_CH_T">NAV_DLL_CH_T</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Comms hold wait time</p><p><strong>Comment:</strong> The amount of time in seconds the system should wait at the comms hold waypoint</p>   </td>
- <td style="vertical-align: top;">0.0 > 3600.0 (1)</td>
- <td style="vertical-align: top;">120.0</td>
- <td style="vertical-align: top;">s</td>
-</tr>
-<tr>
- <td style="vertical-align: top;"><strong id="NAV_DLL_N">NAV_DLL_N</strong> (INT32)</td>
- <td style="vertical-align: top;"><p>Number of allowed Datalink timeouts</p><p><strong>Comment:</strong> After more than this number of data link timeouts the aircraft returns home directly</p>   </td>
- <td style="vertical-align: top;">0 > 1000 </td>
- <td style="vertical-align: top;">2</td>
- <td style="vertical-align: top;"></td>
 </tr>
 </tbody></table>
 
@@ -1928,21 +1894,21 @@ Sets the number of standard deviations used by the innovation consistency test</
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="EKF2_EV_POS_X">EKF2_EV_POS_X</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>X position of VI sensor focal point in body frame</p>   </td>
+ <td style="vertical-align: top;"><p>X position of VI sensor focal point in body frame (forward axis with origin relative to vehicle centre of gravity)</p>   </td>
  <td style="vertical-align: top;"></td>
  <td style="vertical-align: top;">0.0</td>
  <td style="vertical-align: top;">m</td>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="EKF2_EV_POS_Y">EKF2_EV_POS_Y</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Y position of VI sensor focal point in body frame</p>   </td>
+ <td style="vertical-align: top;"><p>Y position of VI sensor focal point in body frame (right axis with origin relative to vehicle centre of gravity)</p>   </td>
  <td style="vertical-align: top;"></td>
  <td style="vertical-align: top;">0.0</td>
  <td style="vertical-align: top;">m</td>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="EKF2_EV_POS_Z">EKF2_EV_POS_Z</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Z position of VI sensor focal point in body frame</p>   </td>
+ <td style="vertical-align: top;"><p>Z position of VI sensor focal point in body frame (down axis with origin relative to vehicle centre of gravity)</p>   </td>
  <td style="vertical-align: top;"></td>
  <td style="vertical-align: top;">0.0</td>
  <td style="vertical-align: top;">m</td>
@@ -2014,21 +1980,21 @@ Sets the number of standard deviations used by the innovation consistency test</
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="EKF2_GPS_POS_X">EKF2_GPS_POS_X</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>X position of GPS antenna in body frame</p>   </td>
+ <td style="vertical-align: top;"><p>X position of GPS antenna in body frame (forward axis with origin relative to vehicle centre of gravity)</p>   </td>
  <td style="vertical-align: top;"></td>
  <td style="vertical-align: top;">0.0</td>
  <td style="vertical-align: top;">m</td>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="EKF2_GPS_POS_Y">EKF2_GPS_POS_Y</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Y position of GPS antenna in body frame</p>   </td>
+ <td style="vertical-align: top;"><p>Y position of GPS antenna in body frame (right axis with origin relative to vehicle centre of gravity)</p>   </td>
  <td style="vertical-align: top;"></td>
  <td style="vertical-align: top;">0.0</td>
  <td style="vertical-align: top;">m</td>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="EKF2_GPS_POS_Z">EKF2_GPS_POS_Z</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Z position of GPS antenna in body frame</p>   </td>
+ <td style="vertical-align: top;"><p>Z position of GPS antenna in body frame (down axis with origin relative to vehicle centre of gravity)</p>   </td>
  <td style="vertical-align: top;"></td>
  <td style="vertical-align: top;">0.0</td>
  <td style="vertical-align: top;">m</td>
@@ -2066,6 +2032,14 @@ Sets the number of standard deviations used by the innovation consistency test</
  <td style="vertical-align: top;"><p>Measurement noise for gps horizontal velocity</p>   </td>
  <td style="vertical-align: top;">0.01 > 5.0 </td>
  <td style="vertical-align: top;">0.5</td>
+ <td style="vertical-align: top;">m/s</td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="EKF2_GSF_TAS">EKF2_GSF_TAS</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Default value of true airspeed used in EKF-GSF AHRS calculation.
+If no airspeed measurements are avalable, the EKF-GSF AHRS calculation will assume this value of true airspeed when compensating for centripetal acceleration during turns. Set to zero to disable centripetal acceleration compensation during fixed wing flight modes</p>   </td>
+ <td style="vertical-align: top;">0.0 > 100.0 </td>
+ <td style="vertical-align: top;">15.0</td>
  <td style="vertical-align: top;">m/s</td>
 </tr>
 <tr>
@@ -2114,22 +2088,32 @@ Sets the number of standard deviations used by the innovation consistency test</
  <td style="vertical-align: top;"></td>
 </tr>
 <tr>
+ <td style="vertical-align: top;"><strong id="EKF2_IMU_ID">EKF2_IMU_ID</strong> (INT32)</td>
+ <td style="vertical-align: top;"><p>Device id of IMU</p><p><strong>Comment:</strong> Set to 0 to use system selected (sensor_combined) IMU, otherwise set to the device id of the desired IMU (vehicle_imu).</p> <strong>Values:</strong><ul>
+<li><strong>0:</strong> System Primary</li> 
+</ul>
+  </td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">0</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
  <td style="vertical-align: top;"><strong id="EKF2_IMU_POS_X">EKF2_IMU_POS_X</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>X position of IMU in body frame</p>   </td>
+ <td style="vertical-align: top;"><p>X position of IMU in body frame (forward axis with origin relative to vehicle centre of gravity)</p>   </td>
  <td style="vertical-align: top;"></td>
  <td style="vertical-align: top;">0.0</td>
  <td style="vertical-align: top;">m</td>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="EKF2_IMU_POS_Y">EKF2_IMU_POS_Y</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Y position of IMU in body frame</p>   </td>
+ <td style="vertical-align: top;"><p>Y position of IMU in body frame (right axis with origin relative to vehicle centre of gravity)</p>   </td>
  <td style="vertical-align: top;"></td>
  <td style="vertical-align: top;">0.0</td>
  <td style="vertical-align: top;">m</td>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="EKF2_IMU_POS_Z">EKF2_IMU_POS_Z</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Z position of IMU in body frame</p>   </td>
+ <td style="vertical-align: top;"><p>Z position of IMU in body frame (down axis with origin relative to vehicle centre of gravity)</p>   </td>
  <td style="vertical-align: top;"></td>
  <td style="vertical-align: top;">0.0</td>
  <td style="vertical-align: top;">m</td>
@@ -2246,7 +2230,7 @@ This parameter is used when the magnetometer fusion method is set automatically 
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="EKF2_MAG_TYPE">EKF2_MAG_TYPE</strong> (INT32)</td>
- <td style="vertical-align: top;"><p>Type of magnetometer fusion</p><p><strong>Comment:</strong> Integer controlling the type of magnetometer fusion used - magnetic heading or 3-component vector. The fuson of magnetomer data as a three component vector enables vehicle body fixed hard iron errors to be learned, but requires a stable earth field. If set to 'Automatic' magnetic heading fusion is used when on-ground and 3-axis magnetic field fusion in-flight with fallback to magnetic heading fusion if there is insufficient motion to make yaw or magnetic field states observable. If set to 'Magnetic heading' magnetic heading fusion is used at all times If set to '3-axis' 3-axis field fusion is used at all times. If set to 'VTOL custom' the behaviour is the same as 'Automatic', but if fusing airspeed, magnetometer fusion is only allowed to modify the magnetic field states. This can be used by VTOL platforms with large magnetic field disturbances to prevent incorrect bias states being learned during forward flight operation which can adversely affect estimation accuracy after transition to hovering flight. If set to 'MC custom' the behaviour is the same as 'Automatic, but if there are no earth frame position or velocity observations being used, the magnetometer will not be used. This enables vehicles to operate with no GPS in environments where the magnetic field cannot be used to provide a heading reference. Prior to flight, the yaw angle is assumed to be constant if movement tests controlled by the EKF2_MOVE_TEST parameter indicate that the vehicle is static. This allows the vehicle to be placed on the ground to learn the yaw gyro bias prior to flight. If set to 'None' the magnetometer will not be used under any circumstance. Other sources of yaw may be used if selected via the EKF2_AID_MASK parameter.</p> <strong>Values:</strong><ul>
+ <td style="vertical-align: top;"><p>Type of magnetometer fusion</p><p><strong>Comment:</strong> Integer controlling the type of magnetometer fusion used - magnetic heading or 3-component vector. The fuson of magnetomer data as a three component vector enables vehicle body fixed hard iron errors to be learned, but requires a stable earth field. If set to 'Automatic' magnetic heading fusion is used when on-ground and 3-axis magnetic field fusion in-flight with fallback to magnetic heading fusion if there is insufficient motion to make yaw or magnetic field states observable. If set to 'Magnetic heading' magnetic heading fusion is used at all times If set to '3-axis' 3-axis field fusion is used at all times. If set to 'VTOL custom' the behaviour is the same as 'Automatic', but if fusing airspeed, magnetometer fusion is only allowed to modify the magnetic field states. This can be used by VTOL platforms with large magnetic field disturbances to prevent incorrect bias states being learned during forward flight operation which can adversely affect estimation accuracy after transition to hovering flight. If set to 'MC custom' the behaviour is the same as 'Automatic, but if there are no earth frame position or velocity observations being used, the magnetometer will not be used. This enables vehicles to operate with no GPS in environments where the magnetic field cannot be used to provide a heading reference. Prior to flight, the yaw angle is assumed to be constant if movement tests controlled by the EKF2_MOVE_TEST parameter indicate that the vehicle is static. This allows the vehicle to be placed on the ground to learn the yaw gyro bias prior to flight. If set to 'None' the magnetometer will not be used under any circumstance. If no external source of yaw is available, it is possible to use post-takeoff horizontal movement combined with GPS velocity measurements to align the yaw angle with the timer required (depending on the amount of movement and GPS data quality). Other external sources of yaw may be used if selected via the EKF2_AID_MASK parameter.</p> <strong>Values:</strong><ul>
 <li><strong>0:</strong> Automatic</li> 
 
 <li><strong>1:</strong> Magnetic heading</li> 
@@ -2342,21 +2326,21 @@ Assumes measurement is timestamped at trailing edge of integration period</p>   
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="EKF2_OF_POS_X">EKF2_OF_POS_X</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>X position of optical flow focal point in body frame</p>   </td>
+ <td style="vertical-align: top;"><p>X position of optical flow focal point in body frame (forward axis with origin relative to vehicle centre of gravity)</p>   </td>
  <td style="vertical-align: top;"></td>
  <td style="vertical-align: top;">0.0</td>
  <td style="vertical-align: top;">m</td>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="EKF2_OF_POS_Y">EKF2_OF_POS_Y</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Y position of optical flow focal point in body frame</p>   </td>
+ <td style="vertical-align: top;"><p>Y position of optical flow focal point in body frame (right axis with origin relative to vehicle centre of gravity)</p>   </td>
  <td style="vertical-align: top;"></td>
  <td style="vertical-align: top;">0.0</td>
  <td style="vertical-align: top;">m</td>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="EKF2_OF_POS_Z">EKF2_OF_POS_Z</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Z position of optical flow focal point in body frame</p>   </td>
+ <td style="vertical-align: top;"><p>Z position of optical flow focal point in body frame (down axis with origin relative to vehicle centre of gravity)</p>   </td>
  <td style="vertical-align: top;"></td>
  <td style="vertical-align: top;">0.0</td>
  <td style="vertical-align: top;">m</td>
@@ -2533,21 +2517,21 @@ This is the ratio of static pressure error to dynamic pressure generated by a wi
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="EKF2_RNG_POS_X">EKF2_RNG_POS_X</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>X position of range finder origin in body frame</p>   </td>
+ <td style="vertical-align: top;"><p>X position of range finder origin in body frame (forward axis with origin relative to vehicle centre of gravity)</p>   </td>
  <td style="vertical-align: top;"></td>
  <td style="vertical-align: top;">0.0</td>
  <td style="vertical-align: top;">m</td>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="EKF2_RNG_POS_Y">EKF2_RNG_POS_Y</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Y position of range finder origin in body frame</p>   </td>
+ <td style="vertical-align: top;"><p>Y position of range finder origin in body frame (right axis with origin relative to vehicle centre of gravity)</p>   </td>
  <td style="vertical-align: top;"></td>
  <td style="vertical-align: top;">0.0</td>
  <td style="vertical-align: top;">m</td>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="EKF2_RNG_POS_Z">EKF2_RNG_POS_Z</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Z position of range finder origin in body frame</p>   </td>
+ <td style="vertical-align: top;"><p>Z position of range finder origin in body frame (down axis with origin relative to vehicle centre of gravity)</p>   </td>
  <td style="vertical-align: top;"></td>
  <td style="vertical-align: top;">0.0</td>
  <td style="vertical-align: top;">m</td>
@@ -2586,6 +2570,16 @@ This is the ratio of static pressure error to dynamic pressure generated by a wi
  <td style="vertical-align: top;">0.0 > ? </td>
  <td style="vertical-align: top;">0.5</td>
  <td style="vertical-align: top;">m/m</td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="EKF2_TERR_MASK">EKF2_TERR_MASK</strong> (INT32)</td>
+ <td style="vertical-align: top;"><p>Integer bitmask controlling fusion sources of the terrain estimator</p><p><strong>Comment:</strong> Set bits in the following positions to enable: 0 : Set to true to use range finder data if available 1 : Set to true to use optical flow data if available</p>  <strong>Bitmask:</strong><ul>  <li><strong>0:</strong> use range finder</li> 
+  <li><strong>1:</strong> use optical flow</li> 
+</ul>
+ </td>
+ <td style="vertical-align: top;">0 > 3 </td>
+ <td style="vertical-align: top;">3</td>
+ <td style="vertical-align: top;"></td>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="EKF2_TERR_NOISE">EKF2_TERR_NOISE</strong> (FLOAT)</td>
@@ -2668,6 +2662,13 @@ This is the ratio of static pressure error to dynamic pressure generated by a wi
   </td>
  <td style="vertical-align: top;"></td>
  <td style="vertical-align: top;">0</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="FW_ARSP_SCALE_EN">FW_ARSP_SCALE_EN</strong> (INT32)</td>
+ <td style="vertical-align: top;"><p>Enable airspeed scaling</p><p><strong>Comment:</strong> This enables a logic that automatically adjusts the output of the rate controller to take into account the real torque produced by an aerodynamic control surface given the current deviation from the trim airspeed (FW_AIRSPD_TRIM). Enable when using aerodynamic control surfaces (e.g.: plane) Disable when using rotor wings (e.g.: autogyro)</p>   </td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">Enabled (1)</td>
  <td style="vertical-align: top;"></td>
 </tr>
 <tr>
@@ -3269,13 +3270,6 @@ Set to 0 to disable heading hold</p>   </td>
  <td style="vertical-align: top;">m/s</td>
 </tr>
 <tr>
- <td style="vertical-align: top;"><strong id="FW_T_HGT_OMEGA">FW_T_HGT_OMEGA</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Complementary filter "omega" parameter for height</p><p><strong>Comment:</strong> This is the cross-over frequency (in radians/second) of the complementary filter used to fuse vertical acceleration and barometric height to obtain an estimate of height rate and height. Increasing this frequency weights the solution more towards use of the barometer, whilst reducing it weights the solution more towards use of the accelerometer data.</p>   </td>
- <td style="vertical-align: top;">1.0 > 10.0 (0.5)</td>
- <td style="vertical-align: top;">3.0</td>
- <td style="vertical-align: top;">rad/s</td>
-</tr>
-<tr>
  <td style="vertical-align: top;"><strong id="FW_T_HRATE_FF">FW_T_HRATE_FF</strong> (FLOAT)</td>
  <td style="vertical-align: top;"><p>Height rate feed forward</p>   </td>
  <td style="vertical-align: top;">0.0 > 1.0 (0.05)</td>
@@ -3684,6 +3678,37 @@ but also ignore less noise</p>   </td>
  <td style="vertical-align: top;">0 > 1 </td>
  <td style="vertical-align: top;">0</td>
  <td style="vertical-align: top;"></td>
+</tr>
+</tbody></table>
+
+## Hover Thrust Estimator
+
+<table style="width: 100%; table-layout:fixed; font-size:1.5rem; overflow: auto; display:block;">
+ <colgroup><col style="width: 23%"><col style="width: 46%"><col style="width: 11%"><col style="width: 11%"><col style="width: 9%"></colgroup>
+ <thead>
+   <tr><th>Name</th><th>Description</th><th>Min > Max (Incr.)</th><th>Default</th><th>Units</th></tr>
+ </thead>
+<tbody>
+<tr>
+ <td style="vertical-align: top;"><strong id="HTE_ACC_GATE">HTE_ACC_GATE</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Gate size for acceleration fusion</p><p><strong>Comment:</strong> Sets the number of standard deviations used by the innovation consistency test.</p>   </td>
+ <td style="vertical-align: top;">1.0 > 10.0 </td>
+ <td style="vertical-align: top;">3.0</td>
+ <td style="vertical-align: top;">SD</td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="HTE_HT_ERR_INIT">HTE_HT_ERR_INIT</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>1-sigma initial hover thrust uncertainty</p><p><strong>Comment:</strong> Sets the number of standard deviations used by the innovation consistency test.</p>   </td>
+ <td style="vertical-align: top;">0.0 > 1.0 </td>
+ <td style="vertical-align: top;">0.1</td>
+ <td style="vertical-align: top;">normalized_thrust</td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="HTE_HT_NOISE">HTE_HT_NOISE</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Hover thrust process noise</p><p><strong>Comment:</strong> Reduce to make the hover thrust estimate more stable, increase if the real hover thrust is expected to change quickly over time.</p>   </td>
+ <td style="vertical-align: top;">0.0001 > 1.0 </td>
+ <td style="vertical-align: top;">0.0005</td>
+ <td style="vertical-align: top;">normalized_thrust/s</td>
 </tr>
 </tbody></table>
 
@@ -4279,6 +4304,14 @@ Used to calculate increased terrain random walk nosie due to movement</p>   </td
  <td style="vertical-align: top;"></td>
 </tr>
 <tr>
+ <td style="vertical-align: top;"><strong id="MAV_0_RADIO_CTL">MAV_0_RADIO_CTL</strong> (INT32)</td>
+ <td style="vertical-align: top;"><p>Enable software throttling of mavlink on instance 0</p><p><strong>Comment:</strong> If enabled, MAVLink messages will be throttled according to `txbuf` field reported by radio_status. Requires a radio to send the mavlink message RADIO_STATUS.</p>   <p><b>Reboot required:</b> True</p>
+</td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">Enabled (1)</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
  <td style="vertical-align: top;"><strong id="MAV_0_RATE">MAV_0_RATE</strong> (INT32)</td>
  <td style="vertical-align: top;"><p>Maximum MAVLink sending rate for instance 0</p><p><strong>Comment:</strong> Configure the maximum sending rate for the MAVLink streams in Bytes/sec. If the configured streams exceed the maximum rate, the sending rate of each stream is automatically decreased. If this is set to 0 a value of half of the theoretical maximum bandwidth is used. This corresponds to baudrate/20 Bytes/s (baudrate/10 = maximum data rate on 8N1-configured links).</p>   <p><b>Reboot required:</b> True</p>
 </td>
@@ -4349,6 +4382,14 @@ Used to calculate increased terrain random walk nosie due to movement</p>   </td
  <td style="vertical-align: top;"></td>
 </tr>
 <tr>
+ <td style="vertical-align: top;"><strong id="MAV_1_RADIO_CTL">MAV_1_RADIO_CTL</strong> (INT32)</td>
+ <td style="vertical-align: top;"><p>Enable software throttling of mavlink on instance 1</p><p><strong>Comment:</strong> If enabled, MAVLink messages will be throttled according to `txbuf` field reported by radio_status. Requires a radio to send the mavlink message RADIO_STATUS.</p>   <p><b>Reboot required:</b> True</p>
+</td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">Enabled (1)</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
  <td style="vertical-align: top;"><strong id="MAV_1_RATE">MAV_1_RATE</strong> (INT32)</td>
  <td style="vertical-align: top;"><p>Maximum MAVLink sending rate for instance 1</p><p><strong>Comment:</strong> Configure the maximum sending rate for the MAVLink streams in Bytes/sec. If the configured streams exceed the maximum rate, the sending rate of each stream is automatically decreased. If this is set to 0 a value of half of the theoretical maximum bandwidth is used. This corresponds to baudrate/20 Bytes/s (baudrate/10 = maximum data rate on 8N1-configured links).</p>   <p><b>Reboot required:</b> True</p>
 </td>
@@ -4416,6 +4457,14 @@ Used to calculate increased terrain random walk nosie due to movement</p>   </td
 </td>
  <td style="vertical-align: top;"></td>
  <td style="vertical-align: top;">0</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="MAV_2_RADIO_CTL">MAV_2_RADIO_CTL</strong> (INT32)</td>
+ <td style="vertical-align: top;"><p>Enable software throttling of mavlink on instance 2</p><p><strong>Comment:</strong> If enabled, MAVLink messages will be throttled according to `txbuf` field reported by radio_status. Requires a radio to send the mavlink message RADIO_STATUS.</p>   <p><b>Reboot required:</b> True</p>
+</td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">Enabled (1)</td>
  <td style="vertical-align: top;"></td>
 </tr>
 <tr>
@@ -4491,8 +4540,15 @@ Used to calculate increased terrain random walk nosie due to movement</p>   </td
  <td style="vertical-align: top;"></td>
 </tr>
 <tr>
- <td style="vertical-align: top;"><strong id="MAV_RADIO_ID">MAV_RADIO_ID</strong> (INT32)</td>
- <td style="vertical-align: top;"><p>MAVLink Radio ID</p><p><strong>Comment:</strong> When non-zero the MAVLink app will attempt to configure the radio to this ID and re-set the parameter to 0. If the value is negative it will reset the complete radio config to factory defaults.</p>   </td>
+ <td style="vertical-align: top;"><strong id="MAV_RADIO_TOUT">MAV_RADIO_TOUT</strong> (INT32)</td>
+ <td style="vertical-align: top;"><p>Timeout in seconds for the RADIO_STATUS reports coming in</p><p><strong>Comment:</strong> If the connected radio stops reporting RADIO_STATUS for a certain time, a warning is triggered and, if MAV_X_RADIO_CTL is enabled, the software-flow control is reset.</p>   </td>
+ <td style="vertical-align: top;">1 > 250 </td>
+ <td style="vertical-align: top;">5</td>
+ <td style="vertical-align: top;">s</td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="MAV_SIK_RADIO_ID">MAV_SIK_RADIO_ID</strong> (INT32)</td>
+ <td style="vertical-align: top;"><p>MAVLink SiK Radio ID</p><p><strong>Comment:</strong> When non-zero the MAVLink app will attempt to configure the SiK radio to this ID and re-set the parameter to 0. If the value is negative it will reset the complete radio config to factory defaults. Only applies if this mavlink instance is going through a SiK radio</p>   </td>
  <td style="vertical-align: top;">-1 > 240 </td>
  <td style="vertical-align: top;">0</td>
  <td style="vertical-align: top;"></td>
@@ -4722,7 +4778,7 @@ Used to calculate increased terrain random walk nosie due to movement</p>   </td
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="NAV_DLL_ACT">NAV_DLL_ACT</strong> (INT32)</td>
- <td style="vertical-align: top;"><p>Set data link loss failsafe mode</p><p><strong>Comment:</strong> The data link loss failsafe will only be entered after a timeout, set by COM_DL_LOSS_T in seconds. Once the timeout occurs the selected action will be executed. Setting this parameter to 4 will enable CASA Outback Challenge rules, which are only recommended to participants of that competition.</p> <strong>Values:</strong><ul>
+ <td style="vertical-align: top;"><p>Set data link loss failsafe mode</p><p><strong>Comment:</strong> The data link loss failsafe will only be entered after a timeout, set by COM_DL_LOSS_T in seconds. Once the timeout occurs the selected action will be executed.</p> <strong>Values:</strong><ul>
 <li><strong>0:</strong> Disabled</li> 
 
 <li><strong>1:</strong> Hold mode</li> 
@@ -4730,8 +4786,6 @@ Used to calculate increased terrain random walk nosie due to movement</p>   </td
 <li><strong>2:</strong> Return mode</li> 
 
 <li><strong>3:</strong> Land mode</li> 
-
-<li><strong>4:</strong> Data Link Auto Recovery (CASA Outback Challenge rules)</li> 
 
 <li><strong>5:</strong> Terminate</li> 
 
@@ -4779,7 +4833,7 @@ Used to calculate increased terrain random walk nosie due to movement</p>   </td
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="NAV_RCL_ACT">NAV_RCL_ACT</strong> (INT32)</td>
- <td style="vertical-align: top;"><p>Set RC loss failsafe mode</p><p><strong>Comment:</strong> The RC loss failsafe will only be entered after a timeout, set by COM_RC_LOSS_T in seconds. If RC input checks have been disabled by setting the COM_RC_IN_MODE param it will not be triggered. Setting this parameter to 4 will enable CASA Outback Challenge rules, which are only recommended to participants of that competition.</p> <strong>Values:</strong><ul>
+ <td style="vertical-align: top;"><p>Set RC loss failsafe mode</p><p><strong>Comment:</strong> The RC loss failsafe will only be entered after a timeout, set by COM_RC_LOSS_T in seconds. If RC input checks have been disabled by setting the COM_RC_IN_MODE param it will not be triggered.</p> <strong>Values:</strong><ul>
 <li><strong>0:</strong> Disabled</li> 
 
 <li><strong>1:</strong> Hold mode</li> 
@@ -4787,8 +4841,6 @@ Used to calculate increased terrain random walk nosie due to movement</p>   </td
 <li><strong>2:</strong> Return mode</li> 
 
 <li><strong>3:</strong> Land mode</li> 
-
-<li><strong>4:</strong> RC Auto Recovery (CASA Outback Challenge rules)</li> 
 
 <li><strong>5:</strong> Terminate</li> 
 
@@ -4800,13 +4852,6 @@ Used to calculate increased terrain random walk nosie due to movement</p>   </td
  <td style="vertical-align: top;"></td>
 </tr>
 <tr>
- <td style="vertical-align: top;"><strong id="NAV_RCL_LT">NAV_RCL_LT</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>RC Loss Loiter Time (CASA Outback Challenge rules)</p><p><strong>Comment:</strong> The amount of time in seconds the system should loiter at current position before termination. Only applies if NAV_RCL_ACT is set to 2 (CASA Outback Challenge rules). Set to -1 to make the system skip loitering.</p>   </td>
- <td style="vertical-align: top;">-1.0 > ? (0.1)</td>
- <td style="vertical-align: top;">120.0</td>
- <td style="vertical-align: top;">s</td>
-</tr>
-<tr>
  <td style="vertical-align: top;"><strong id="NAV_TRAFF_AVOID">NAV_TRAFF_AVOID</strong> (INT32)</td>
  <td style="vertical-align: top;"><p>Set traffic avoidance mode</p><p><strong>Comment:</strong> Enabling this will allow the system to respond to transponder data from e.g. ADSB transponders</p> <strong>Values:</strong><ul>
 <li><strong>0:</strong> Disabled</li> 
@@ -4816,11 +4861,27 @@ Used to calculate increased terrain random walk nosie due to movement</p>   </td
 <li><strong>2:</strong> Return mode</li> 
 
 <li><strong>3:</strong> Land mode</li> 
+
+<li><strong>4:</strong> Position Hold mode</li> 
 </ul>
   </td>
  <td style="vertical-align: top;"></td>
  <td style="vertical-align: top;">1</td>
  <td style="vertical-align: top;"></td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="NAV_TRAFF_A_RADM">NAV_TRAFF_A_RADM</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Set NAV TRAFFIC AVOID RADIUS MANNED</p><p><strong>Comment:</strong> Defines the Radius where NAV TRAFFIC AVOID is Called For Manned Aviation</p>   </td>
+ <td style="vertical-align: top;">500 > ? </td>
+ <td style="vertical-align: top;">500</td>
+ <td style="vertical-align: top;">m</td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="NAV_TRAFF_A_RADU">NAV_TRAFF_A_RADU</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Set NAV TRAFFIC AVOID RADIUS</p><p><strong>Comment:</strong> Defines the Radius where NAV TRAFFIC AVOID is Called For Unmanned Aviation</p>   </td>
+ <td style="vertical-align: top;">10 > 500 </td>
+ <td style="vertical-align: top;">10</td>
+ <td style="vertical-align: top;">m</td>
 </tr>
 </tbody></table>
 
@@ -5105,6 +5166,13 @@ if required by the gimbal (only in AUX output mode)</p>   </td>
  <td style="vertical-align: top;">1/s</td>
 </tr>
 <tr>
+ <td style="vertical-align: top;"><strong id="MC_YAW_WEIGHT">MC_YAW_WEIGHT</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Yaw weight</p><p><strong>Comment:</strong> A fraction [0,1] deprioritizing yaw compared to roll and pitch in non-linear attitude control. Deprioritizing yaw is necessary because multicopters have much less control authority in yaw compared to the other axes and it makes sense because yaw is not critical for stable hovering or 3D navigation. For yaw control tuning use MC_YAW_P. This ratio has no inpact on the yaw gain.</p>   </td>
+ <td style="vertical-align: top;">0.0 > 1.0 (0.1)</td>
+ <td style="vertical-align: top;">0.4</td>
+ <td style="vertical-align: top;">1/s</td>
+</tr>
+<tr>
  <td style="vertical-align: top;"><strong id="MPC_YAWRAUTO_MAX">MPC_YAWRAUTO_MAX</strong> (FLOAT)</td>
  <td style="vertical-align: top;"><p>Max yaw rate in auto mode</p><p><strong>Comment:</strong> Limit the rate of change of the yaw setpoint in autonomous mode to avoid large control output and mixer saturation.</p>   </td>
  <td style="vertical-align: top;">0.0 > 360.0 (5)</td>
@@ -5165,7 +5233,7 @@ if required by the gimbal (only in AUX output mode)</p>   </td>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="MPC_ACC_HOR_MAX">MPC_ACC_HOR_MAX</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Maximum horizontal acceleration for auto mode and for manual mode</p><p><strong>Comment:</strong> Maximum deceleration for MPC_POS_MODE 1 and 2. Maximum acceleration and deceleration for MPC_POS_MODE 3.</p>   </td>
+ <td style="vertical-align: top;"><p>Maximum horizontal acceleration for auto mode and for manual mode</p><p><strong>Comment:</strong> Maximum deceleration for MPC_POS_MODE 1. Maximum acceleration and deceleration for MPC_POS_MODE 3.</p>   </td>
  <td style="vertical-align: top;">2.0 > 15.0 (1)</td>
  <td style="vertical-align: top;">5.0</td>
  <td style="vertical-align: top;">m/s/s</td>
@@ -5222,15 +5290,15 @@ if required by the gimbal (only in AUX output mode)</p>   </td>
 <tr>
  <td style="vertical-align: top;"><strong id="MPC_JERK_AUTO">MPC_JERK_AUTO</strong> (FLOAT)</td>
  <td style="vertical-align: top;"><p>Jerk limit in auto mode</p><p><strong>Comment:</strong> Limit the maximum jerk of the vehicle (how fast the acceleration can change). A lower value leads to smoother vehicle motions, but it also limits its agility.</p>   </td>
- <td style="vertical-align: top;">5.0 > 80.0 (1)</td>
- <td style="vertical-align: top;">8.0</td>
+ <td style="vertical-align: top;">1.0 > 80.0 (1)</td>
+ <td style="vertical-align: top;">4.0</td>
  <td style="vertical-align: top;">m/s/s/s</td>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="MPC_JERK_MAX">MPC_JERK_MAX</strong> (FLOAT)</td>
  <td style="vertical-align: top;"><p>Maximum jerk limit</p><p><strong>Comment:</strong> Limit the maximum jerk of the vehicle (how fast the acceleration can change). A lower value leads to smoother vehicle motions, but it also limits its agility (how fast it can change directions or break). Setting this to the maximum value essentially disables the limit. Note: This is only used when MPC_POS_MODE is set to a smoothing mode 1 or 3.</p>   </td>
  <td style="vertical-align: top;">0.5 > 500.0 (1)</td>
- <td style="vertical-align: top;">20.0</td>
+ <td style="vertical-align: top;">8.0</td>
  <td style="vertical-align: top;">m/s/s/s</td>
 </tr>
 <tr>
@@ -5300,14 +5368,12 @@ Setting this parameter to 0 disables the filter</p>   </td>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="MPC_POS_MODE">MPC_POS_MODE</strong> (INT32)</td>
- <td style="vertical-align: top;"><p>Manual-Position control sub-mode</p><p><strong>Comment:</strong> The supported sub-modes are: 0 Default position control where sticks map to position/velocity directly. Maximum speeds is MPC_VEL_MANUAL. 1 Smooth position control where setpoints are adjusted based on acceleration limits and jerk limits. 2 Sport mode that is the same Default position control but with velocity limits set to the maximum allowed speeds (MPC_XY_VEL_MAX) 3 Smooth position control with maximum acceleration and jerk limits (different algorithm than 1).</p> <strong>Values:</strong><ul>
-<li><strong>0:</strong> Default position control</li> 
+ <td style="vertical-align: top;"><p>Manual-Position control sub-mode</p><p><strong>Comment:</strong> The supported sub-modes are: 0 Simple position control where sticks map directly to velocity setpoints without smoothing. Useful for velocity control tuning. 1 Smooth position control with maximum acceleration and jerk limits based on slew-rates. 3 Smooth position control with maximum acceleration and jerk limits based on jerk optimized trajectory generator (different algorithm than 1).</p> <strong>Values:</strong><ul>
+<li><strong>0:</strong> Simple position control</li> 
 
 <li><strong>1:</strong> Smooth position control</li> 
 
-<li><strong>2:</strong> Sport position control</li> 
-
-<li><strong>3:</strong> Smooth position control (Velocity)</li> 
+<li><strong>3:</strong> Smooth position control (Jerk optimized)</li> 
 </ul>
   </td>
  <td style="vertical-align: top;"></td>
@@ -5357,14 +5423,14 @@ Setting this parameter to 0 disables the filter</p>   </td>
 <tr>
  <td style="vertical-align: top;"><strong id="MPC_TILTMAX_AIR">MPC_TILTMAX_AIR</strong> (FLOAT)</td>
  <td style="vertical-align: top;"><p>Maximum tilt angle in air</p><p><strong>Comment:</strong> Limits maximum tilt in AUTO and POSCTRL modes during flight.</p>   </td>
- <td style="vertical-align: top;">20.0 > 180.0 </td>
+ <td style="vertical-align: top;">20.0 > 89.0 </td>
  <td style="vertical-align: top;">45.0</td>
  <td style="vertical-align: top;">deg</td>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="MPC_TILTMAX_LND">MPC_TILTMAX_LND</strong> (FLOAT)</td>
  <td style="vertical-align: top;"><p>Maximum tilt during landing</p><p><strong>Comment:</strong> Limits maximum tilt angle on landing.</p>   </td>
- <td style="vertical-align: top;">10.0 > 90.0 </td>
+ <td style="vertical-align: top;">10.0 > 89.0 </td>
  <td style="vertical-align: top;">12.0</td>
  <td style="vertical-align: top;">deg</td>
 </tr>
@@ -5381,6 +5447,13 @@ Setting this parameter to 0 disables the filter</p>   </td>
  <td style="vertical-align: top;">1 > 5 </td>
  <td style="vertical-align: top;">1.5</td>
  <td style="vertical-align: top;">m/s</td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="MPC_USE_HTE">MPC_USE_HTE</strong> (INT32)</td>
+ <td style="vertical-align: top;"><p>Hover thrust source selector</p><p><strong>Comment:</strong> Set false to use the fixed parameter MPC_THR_HOVER Set true to use the value computed by the hover thrust estimator</p>   </td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">Enabled (1)</td>
+ <td style="vertical-align: top;"></td>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="MPC_VELD_LP">MPC_VELD_LP</strong> (FLOAT)</td>
@@ -5601,13 +5674,6 @@ default 1.5 turns per second</p>   </td>
  <td style="vertical-align: top;"></td>
 </tr>
 <tr>
- <td style="vertical-align: top;"><strong id="MC_DTERM_CUTOFF">MC_DTERM_CUTOFF</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Cutoff frequency for the low pass filter on the D-term in the rate controller</p><p><strong>Comment:</strong> The D-term uses the derivative of the rate and thus is the most susceptible to noise. Therefore, using a D-term filter allows to decrease the driver-level filtering, which leads to reduced control latency and permits to increase the P gains. A value of 0 disables the filter.</p>   </td>
- <td style="vertical-align: top;">0 > 1000 (10)</td>
- <td style="vertical-align: top;">0.</td>
- <td style="vertical-align: top;">Hz</td>
-</tr>
-<tr>
  <td style="vertical-align: top;"><strong id="MC_PITCHRATE_D">MC_PITCHRATE_D</strong> (FLOAT)</td>
  <td style="vertical-align: top;"><p>Pitch rate D gain</p><p><strong>Comment:</strong> Pitch rate differential gain. Small values help reduce fast oscillations. If value is too big oscillations will appear again.</p>   </td>
  <td style="vertical-align: top;">0.0 > ? (0.0005)</td>
@@ -5631,14 +5697,14 @@ default 1.5 turns per second</p>   </td>
 <tr>
  <td style="vertical-align: top;"><strong id="MC_PITCHRATE_K">MC_PITCHRATE_K</strong> (FLOAT)</td>
  <td style="vertical-align: top;"><p>Pitch rate controller gain</p><p><strong>Comment:</strong> Global gain of the controller. This gain scales the P, I and D terms of the controller: output = MC_PITCHRATE_K * (MC_PITCHRATE_P * error + MC_PITCHRATE_I * error_integral + MC_PITCHRATE_D * error_derivative) Set MC_PITCHRATE_P=1 to implement a PID in the ideal form. Set MC_PITCHRATE_K=1 to implement a PID in the parallel form.</p>   </td>
- <td style="vertical-align: top;">0.0 > 5.0 (0.0005)</td>
+ <td style="vertical-align: top;">0.01 > 5.0 (0.0005)</td>
  <td style="vertical-align: top;">1.0</td>
  <td style="vertical-align: top;"></td>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="MC_PITCHRATE_P">MC_PITCHRATE_P</strong> (FLOAT)</td>
  <td style="vertical-align: top;"><p>Pitch rate P gain</p><p><strong>Comment:</strong> Pitch rate proportional gain, i.e. control output for angular speed error 1 rad/s.</p>   </td>
- <td style="vertical-align: top;">0.0 > 0.6 (0.01)</td>
+ <td style="vertical-align: top;">0.01 > 0.6 (0.01)</td>
  <td style="vertical-align: top;">0.15</td>
  <td style="vertical-align: top;"></td>
 </tr>
@@ -5673,14 +5739,14 @@ default 1.5 turns per second</p>   </td>
 <tr>
  <td style="vertical-align: top;"><strong id="MC_ROLLRATE_K">MC_ROLLRATE_K</strong> (FLOAT)</td>
  <td style="vertical-align: top;"><p>Roll rate controller gain</p><p><strong>Comment:</strong> Global gain of the controller. This gain scales the P, I and D terms of the controller: output = MC_ROLLRATE_K * (MC_ROLLRATE_P * error + MC_ROLLRATE_I * error_integral + MC_ROLLRATE_D * error_derivative) Set MC_ROLLRATE_P=1 to implement a PID in the ideal form. Set MC_ROLLRATE_K=1 to implement a PID in the parallel form.</p>   </td>
- <td style="vertical-align: top;">0.0 > 5.0 (0.0005)</td>
+ <td style="vertical-align: top;">0.01 > 5.0 (0.0005)</td>
  <td style="vertical-align: top;">1.0</td>
  <td style="vertical-align: top;"></td>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="MC_ROLLRATE_P">MC_ROLLRATE_P</strong> (FLOAT)</td>
  <td style="vertical-align: top;"><p>Roll rate P gain</p><p><strong>Comment:</strong> Roll rate proportional gain, i.e. control output for angular speed error 1 rad/s.</p>   </td>
- <td style="vertical-align: top;">0.0 > 0.5 (0.01)</td>
+ <td style="vertical-align: top;">0.01 > 0.5 (0.01)</td>
  <td style="vertical-align: top;">0.15</td>
  <td style="vertical-align: top;"></td>
 </tr>
@@ -6588,58 +6654,6 @@ default 1.5 turns per second</p>   </td>
  <td style="vertical-align: top;">0.0 > 1.0 </td>
  <td style="vertical-align: top;">0.0</td>
  <td style="vertical-align: top;"></td>
-</tr>
-</tbody></table>
-
-## Payload drop
-
-<table style="width: 100%; table-layout:fixed; font-size:1.5rem; overflow: auto; display:block;">
- <colgroup><col style="width: 23%"><col style="width: 46%"><col style="width: 11%"><col style="width: 11%"><col style="width: 9%"></colgroup>
- <thead>
-   <tr><th>Name</th><th>Description</th><th>Min > Max (Incr.)</th><th>Default</th><th>Units</th></tr>
- </thead>
-<tbody>
-<tr>
- <td style="vertical-align: top;"><strong id="BD_GPROPERTIES">BD_GPROPERTIES</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Ground drag property</p><p><strong>Comment:</strong> This parameter encodes the ground drag coefficient and the corresponding decrease in wind speed from the plane altitude to ground altitude.</p>   </td>
- <td style="vertical-align: top;">0.001 > 0.1 </td>
- <td style="vertical-align: top;">0.03</td>
- <td style="vertical-align: top;"></td>
-</tr>
-<tr>
- <td style="vertical-align: top;"><strong id="BD_OBJ_CD">BD_OBJ_CD</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Payload drag coefficient of the dropped object</p><p><strong>Comment:</strong> The drag coefficient (cd) is the typical drag constant for air. It is in general object specific, but the closest primitive shape to the actual object should give good results: http://en.wikipedia.org/wiki/Drag_coefficient</p>   </td>
- <td style="vertical-align: top;">0.08 > 1.5 </td>
- <td style="vertical-align: top;">0.1</td>
- <td style="vertical-align: top;"></td>
-</tr>
-<tr>
- <td style="vertical-align: top;"><strong id="BD_OBJ_MASS">BD_OBJ_MASS</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Payload mass</p><p><strong>Comment:</strong> A typical small toy ball: 0.025 kg OBC water bottle: 0.6 kg</p>   </td>
- <td style="vertical-align: top;">0.001 > 5.0 </td>
- <td style="vertical-align: top;">0.6</td>
- <td style="vertical-align: top;">kg</td>
-</tr>
-<tr>
- <td style="vertical-align: top;"><strong id="BD_OBJ_SURFACE">BD_OBJ_SURFACE</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Payload front surface area</p><p><strong>Comment:</strong> A typical small toy ball: (0.045 * 0.045) / 4.0 * pi = 0.001590 m^2 OBC water bottle: (0.063 * 0.063) / 4.0 * pi = 0.003117 m^2</p>   </td>
- <td style="vertical-align: top;">0.001 > 0.5 </td>
- <td style="vertical-align: top;">0.00311724531</td>
- <td style="vertical-align: top;">m^2</td>
-</tr>
-<tr>
- <td style="vertical-align: top;"><strong id="BD_PRECISION">BD_PRECISION</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Drop precision</p><p><strong>Comment:</strong> If the system is closer than this distance on passing over the drop position, it will release the payload. This is a safeguard to prevent a drop out of the required accuracy.</p>   </td>
- <td style="vertical-align: top;">1.0 > 80.0 </td>
- <td style="vertical-align: top;">30.0</td>
- <td style="vertical-align: top;">m</td>
-</tr>
-<tr>
- <td style="vertical-align: top;"><strong id="BD_TURNRADIUS">BD_TURNRADIUS</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Plane turn radius</p><p><strong>Comment:</strong> The planes known minimal turn radius - use a higher value to make the plane maneuver more distant from the actual drop position. This is to ensure the wings are level during the drop.</p>   </td>
- <td style="vertical-align: top;">30.0 > 500.0 </td>
- <td style="vertical-align: top;">120.0</td>
- <td style="vertical-align: top;">m</td>
 </tr>
 </tbody></table>
 
@@ -9831,13 +9845,6 @@ Particularly useful for testing different low-battery behaviour</p>   </td>
  <td style="vertical-align: top;"></td>
 </tr>
 <tr>
- <td style="vertical-align: top;"><strong id="CAL_BARO_PRIME">CAL_BARO_PRIME</strong> (INT32)</td>
- <td style="vertical-align: top;"><p>Primary baro ID</p>   </td>
- <td style="vertical-align: top;"></td>
- <td style="vertical-align: top;">0</td>
- <td style="vertical-align: top;"></td>
-</tr>
-<tr>
  <td style="vertical-align: top;"><strong id="CAL_GYRO0_EN">CAL_GYRO0_EN</strong> (INT32)</td>
  <td style="vertical-align: top;"><p>Gyro 0 enabled</p>   </td>
  <td style="vertical-align: top;"></td>
@@ -10027,6 +10034,17 @@ Particularly useful for testing different low-battery behaviour</p>   </td>
  <td style="vertical-align: top;"></td>
 </tr>
 <tr>
+ <td style="vertical-align: top;"><strong id="CAL_MAG0_XCOMP">CAL_MAG0_XCOMP</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Coefficient describing linear relationship between
+X component of magnetometer in body frame axis
+and either current or throttle depending on value of CAL_MAG_COMP_TYP
+Unit for throttle-based compensation is [G] and
+for current-based compensation [G/kA]</p>   </td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">0.0</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
  <td style="vertical-align: top;"><strong id="CAL_MAG0_XOFF">CAL_MAG0_XOFF</strong> (FLOAT)</td>
  <td style="vertical-align: top;"><p>Magnetometer X-axis offset</p>   </td>
  <td style="vertical-align: top;"></td>
@@ -10041,6 +10059,17 @@ Particularly useful for testing different low-battery behaviour</p>   </td>
  <td style="vertical-align: top;"></td>
 </tr>
 <tr>
+ <td style="vertical-align: top;"><strong id="CAL_MAG0_YCOMP">CAL_MAG0_YCOMP</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Coefficient describing linear relationship between
+Y component of magnetometer in body frame axis
+and either current or throttle depending on value of CAL_MAG_COMP_TYP
+Unit for throttle-based compensation is [G] and
+for current-based compensation [G/kA]</p>   </td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">0.0</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
  <td style="vertical-align: top;"><strong id="CAL_MAG0_YOFF">CAL_MAG0_YOFF</strong> (FLOAT)</td>
  <td style="vertical-align: top;"><p>Magnetometer Y-axis offset</p>   </td>
  <td style="vertical-align: top;"></td>
@@ -10052,6 +10081,17 @@ Particularly useful for testing different low-battery behaviour</p>   </td>
  <td style="vertical-align: top;"><p>Magnetometer Y-axis scaling factor</p>   </td>
  <td style="vertical-align: top;"></td>
  <td style="vertical-align: top;">1.0</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="CAL_MAG0_ZCOMP">CAL_MAG0_ZCOMP</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Coefficient describing linear relationship between
+Z component of magnetometer in body frame axis
+and either current or throttle depending on value of CAL_MAG_COMP_TYP
+Unit for throttle-based compensation is [G] and
+for current-based compensation [G/kA]</p>   </td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">0.0</td>
  <td style="vertical-align: top;"></td>
 </tr>
 <tr>
@@ -10146,6 +10186,17 @@ Particularly useful for testing different low-battery behaviour</p>   </td>
  <td style="vertical-align: top;"></td>
 </tr>
 <tr>
+ <td style="vertical-align: top;"><strong id="CAL_MAG1_XCOMP">CAL_MAG1_XCOMP</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Coefficient describing linear relationship between
+X component of magnetometer in body frame axis
+and either current or throttle depending on value of CAL_MAG_COMP_TYP
+Unit for throttle-based compensation is [G] and
+for current-based compensation [G/kA]</p>   </td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">0.0</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
  <td style="vertical-align: top;"><strong id="CAL_MAG1_XOFF">CAL_MAG1_XOFF</strong> (FLOAT)</td>
  <td style="vertical-align: top;"><p>Magnetometer X-axis offset</p>   </td>
  <td style="vertical-align: top;"></td>
@@ -10160,6 +10211,17 @@ Particularly useful for testing different low-battery behaviour</p>   </td>
  <td style="vertical-align: top;"></td>
 </tr>
 <tr>
+ <td style="vertical-align: top;"><strong id="CAL_MAG1_YCOMP">CAL_MAG1_YCOMP</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Coefficient describing linear relationship between
+Y component of magnetometer in body frame axis
+and either current or throttle depending on value of CAL_MAG_COMP_TYP
+Unit for throttle-based compensation is [G] and
+for current-based compensation [G/kA]</p>   </td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">0.0</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
  <td style="vertical-align: top;"><strong id="CAL_MAG1_YOFF">CAL_MAG1_YOFF</strong> (FLOAT)</td>
  <td style="vertical-align: top;"><p>Magnetometer Y-axis offset</p>   </td>
  <td style="vertical-align: top;"></td>
@@ -10171,6 +10233,17 @@ Particularly useful for testing different low-battery behaviour</p>   </td>
  <td style="vertical-align: top;"><p>Magnetometer Y-axis scaling factor</p>   </td>
  <td style="vertical-align: top;"></td>
  <td style="vertical-align: top;">1.0</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="CAL_MAG1_ZCOMP">CAL_MAG1_ZCOMP</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Coefficient describing linear relationship between
+Z component of magnetometer in body frame axis
+and either current or throttle depending on value of CAL_MAG_COMP_TYP
+Unit for throttle-based compensation is [G] and
+for current-based compensation [G/kA]</p>   </td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">0.0</td>
  <td style="vertical-align: top;"></td>
 </tr>
 <tr>
@@ -10265,6 +10338,17 @@ Particularly useful for testing different low-battery behaviour</p>   </td>
  <td style="vertical-align: top;"></td>
 </tr>
 <tr>
+ <td style="vertical-align: top;"><strong id="CAL_MAG2_XCOMP">CAL_MAG2_XCOMP</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Coefficient describing linear relationship between
+X component of magnetometer in body frame axis
+and either current or throttle depending on value of CAL_MAG_COMP_TYP
+Unit for throttle-based compensation is [G] and
+for current-based compensation [G/kA]</p>   </td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">0.0</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
  <td style="vertical-align: top;"><strong id="CAL_MAG2_XOFF">CAL_MAG2_XOFF</strong> (FLOAT)</td>
  <td style="vertical-align: top;"><p>Magnetometer X-axis offset</p>   </td>
  <td style="vertical-align: top;"></td>
@@ -10279,6 +10363,17 @@ Particularly useful for testing different low-battery behaviour</p>   </td>
  <td style="vertical-align: top;"></td>
 </tr>
 <tr>
+ <td style="vertical-align: top;"><strong id="CAL_MAG2_YCOMP">CAL_MAG2_YCOMP</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Coefficient describing linear relationship between
+Y component of magnetometer in body frame axis
+and either current or throttle depending on value of CAL_MAG_COMP_TYP
+Unit for throttle-based compensation is [G] and
+for current-based compensation [G/kA]</p>   </td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">0.0</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
  <td style="vertical-align: top;"><strong id="CAL_MAG2_YOFF">CAL_MAG2_YOFF</strong> (FLOAT)</td>
  <td style="vertical-align: top;"><p>Magnetometer Y-axis offset</p>   </td>
  <td style="vertical-align: top;"></td>
@@ -10290,6 +10385,17 @@ Particularly useful for testing different low-battery behaviour</p>   </td>
  <td style="vertical-align: top;"><p>Magnetometer Y-axis scaling factor</p>   </td>
  <td style="vertical-align: top;"></td>
  <td style="vertical-align: top;">1.0</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="CAL_MAG2_ZCOMP">CAL_MAG2_ZCOMP</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Coefficient describing linear relationship between
+Z component of magnetometer in body frame axis
+and either current or throttle depending on value of CAL_MAG_COMP_TYP
+Unit for throttle-based compensation is [G] and
+for current-based compensation [G/kA]</p>   </td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">0.0</td>
  <td style="vertical-align: top;"></td>
 </tr>
 <tr>
@@ -10384,6 +10490,17 @@ Particularly useful for testing different low-battery behaviour</p>   </td>
  <td style="vertical-align: top;"></td>
 </tr>
 <tr>
+ <td style="vertical-align: top;"><strong id="CAL_MAG3_XCOMP">CAL_MAG3_XCOMP</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Coefficient describing linear relationship between
+X component of magnetometer in body frame axis
+and either current or throttle depending on value of CAL_MAG_COMP_TYP
+Unit for throttle-based compensation is [G] and
+for current-based compensation [G/kA]</p>   </td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">0.0</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
  <td style="vertical-align: top;"><strong id="CAL_MAG3_XOFF">CAL_MAG3_XOFF</strong> (FLOAT)</td>
  <td style="vertical-align: top;"><p>Magnetometer X-axis offset</p>   </td>
  <td style="vertical-align: top;"></td>
@@ -10395,6 +10512,17 @@ Particularly useful for testing different low-battery behaviour</p>   </td>
  <td style="vertical-align: top;"><p>Magnetometer X-axis scaling factor</p>   </td>
  <td style="vertical-align: top;"></td>
  <td style="vertical-align: top;">1.0</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="CAL_MAG3_YCOMP">CAL_MAG3_YCOMP</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Coefficient describing linear relationship between
+Y component of magnetometer in body frame axis
+and either current or throttle depending on value of CAL_MAG_COMP_TYP
+Unit for throttle-based compensation is [G] and
+for current-based compensation [G/kA]</p>   </td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">0.0</td>
  <td style="vertical-align: top;"></td>
 </tr>
 <tr>
@@ -10412,6 +10540,17 @@ Particularly useful for testing different low-battery behaviour</p>   </td>
  <td style="vertical-align: top;"></td>
 </tr>
 <tr>
+ <td style="vertical-align: top;"><strong id="CAL_MAG3_ZCOMP">CAL_MAG3_ZCOMP</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Coefficient describing linear relationship between
+Z component of magnetometer in body frame axis
+and either current or throttle depending on value of CAL_MAG_COMP_TYP
+Unit for throttle-based compensation is [G] and
+for current-based compensation [G/kA]</p>   </td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">0.0</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
  <td style="vertical-align: top;"><strong id="CAL_MAG3_ZOFF">CAL_MAG3_ZOFF</strong> (FLOAT)</td>
  <td style="vertical-align: top;"><p>Magnetometer Z-axis offset</p>   </td>
  <td style="vertical-align: top;"></td>
@@ -10423,6 +10562,20 @@ Particularly useful for testing different low-battery behaviour</p>   </td>
  <td style="vertical-align: top;"><p>Magnetometer Z-axis scaling factor</p>   </td>
  <td style="vertical-align: top;"></td>
  <td style="vertical-align: top;">1.0</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="CAL_MAG_COMP_TYP">CAL_MAG_COMP_TYP</strong> (INT32)</td>
+ <td style="vertical-align: top;"><p>Type of magnetometer compensation</p> <strong>Values:</strong><ul>
+<li><strong>0:</strong> Disabled</li> 
+
+<li><strong>1:</strong> Throttle-based compensation</li> 
+
+<li><strong>2:</strong> Current-based compensation</li> 
+</ul>
+  </td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">0</td>
  <td style="vertical-align: top;"></td>
 </tr>
 <tr>
@@ -10481,6 +10634,14 @@ is less than 50% of this value</p>   </td>
  </thead>
 <tbody>
 <tr>
+ <td style="vertical-align: top;"><strong id="BAT_C_MULT">BAT_C_MULT</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Capacity/current multiplier for high-current capable SMBUS battery</p>   <p><b>Reboot required:</b> true</p>
+</td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">1.0</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
  <td style="vertical-align: top;"><strong id="CAL_AIR_CMODEL">CAL_AIR_CMODEL</strong> (INT32)</td>
  <td style="vertical-align: top;"><p>Airspeed sensor compensation model for the SDP3x</p><p><strong>Comment:</strong> Model with Pitot CAL_AIR_TUBED_MM: Not used, 1.5 mm tubes assumed. CAL_AIR_TUBELEN: Length of the tubes connecting the pitot to the sensor. Model without Pitot (1.5 mm tubes) CAL_AIR_TUBED_MM: Not used, 1.5 mm tubes assumed. CAL_AIR_TUBELEN: Length of the tubes connecting the pitot to the sensor. Tube Pressure Drop CAL_AIR_TUBED_MM: Diameter in mm of the pitot and tubes, must have the same diameter. CAL_AIR_TUBELEN: Length of the tubes connecting the pitot to the sensor and the static + dynamic port length of the pitot.</p> <strong>Values:</strong><ul>
 <li><strong>0:</strong> Model with Pitot</li> 
@@ -10524,7 +10685,15 @@ is less than 50% of this value</p>   </td>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="IMU_ACCEL_CUTOFF">IMU_ACCEL_CUTOFF</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Driver level cutoff frequency for accel</p><p><strong>Comment:</strong> The cutoff frequency for the 2nd order butterworth filter on the accel driver. This only affects the signal sent to the controllers, not the estimators. 0 disables the filter.</p>   <p><b>Reboot required:</b> true</p>
+ <td style="vertical-align: top;"><p>Low pass filter cutoff frequency for accel</p><p><strong>Comment:</strong> The cutoff frequency for the 2nd order butterworth filter on the primary accelerometer. This only affects the signal sent to the controllers, not the estimators. 0 disables the filter.</p>   <p><b>Reboot required:</b> true</p>
+</td>
+ <td style="vertical-align: top;">0 > 1000 </td>
+ <td style="vertical-align: top;">30.0</td>
+ <td style="vertical-align: top;">Hz</td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="IMU_DGYRO_CUTOFF">IMU_DGYRO_CUTOFF</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Cutoff frequency for angular acceleration (D-Term filter)</p><p><strong>Comment:</strong> The cutoff frequency for the 2nd order butterworth filter used on the time derivative of the measured angular velocity, also known as the D-term filter in the rate controller. The D-term uses the derivative of the rate and thus is the most susceptible to noise. Therefore, using a D-term filter allows to decrease the driver-level filtering, which leads to reduced control latency and permits to increase the P gains. A value of 0 disables the filter.</p>   <p><b>Reboot required:</b> true</p>
 </td>
  <td style="vertical-align: top;">0 > 1000 </td>
  <td style="vertical-align: top;">30.0</td>
@@ -10532,7 +10701,7 @@ is less than 50% of this value</p>   </td>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="IMU_GYRO_CUTOFF">IMU_GYRO_CUTOFF</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Driver level cutoff frequency for gyro</p><p><strong>Comment:</strong> The cutoff frequency for the 2nd order butterworth filter on the gyro driver. This only affects the signal sent to the controllers, not the estimators. 0 disables the filter.</p>   <p><b>Reboot required:</b> true</p>
+ <td style="vertical-align: top;"><p>Low pass filter cutoff frequency for gyro</p><p><strong>Comment:</strong> The cutoff frequency for the 2nd order butterworth filter on the primary gyro. This only affects the angular velocity sent to the controllers, not the estimators. Doesn't apply to the angular acceleration (D-Term filter), see IMU_DGYRO_CUTOFF. A value of 0 disables the filter.</p>   <p><b>Reboot required:</b> true</p>
 </td>
  <td style="vertical-align: top;">0 > 1000 </td>
  <td style="vertical-align: top;">30.0</td>
@@ -10540,7 +10709,7 @@ is less than 50% of this value</p>   </td>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="IMU_GYRO_NF_BW">IMU_GYRO_NF_BW</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Driver level notch bandwidth for gyro</p><p><strong>Comment:</strong> The frequency width of the stop band for the 2nd order notch filter on the gyro driver. See "IMU_GYRO_NF_FREQ" to activate the filter and to set the notch frequency.</p>   <p><b>Reboot required:</b> true</p>
+ <td style="vertical-align: top;"><p>Notch filter bandwidth for gyro</p><p><strong>Comment:</strong> The frequency width of the stop band for the 2nd order notch filter on the primary gyro. See "IMU_GYRO_NF_FREQ" to activate the filter and to set the notch frequency. Applies to both angular velocity and angular acceleration sent to the controllers.</p>   <p><b>Reboot required:</b> true</p>
 </td>
  <td style="vertical-align: top;">0 > 100 </td>
  <td style="vertical-align: top;">20.0</td>
@@ -10548,7 +10717,7 @@ is less than 50% of this value</p>   </td>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="IMU_GYRO_NF_FREQ">IMU_GYRO_NF_FREQ</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Driver level notch frequency for gyro</p><p><strong>Comment:</strong> The center frequency for the 2nd order notch filter on the gyro driver. This filter can be enabled to avoid feedback amplification of structural resonances at a specific frequency. This only affects the signal sent to the controllers, not the estimators. 0 disables the filter. See "IMU_GYRO_NF_BW" to set the bandwidth of the filter.</p>   <p><b>Reboot required:</b> true</p>
+ <td style="vertical-align: top;"><p>Notch filter frequency for gyro</p><p><strong>Comment:</strong> The center frequency for the 2nd order notch filter on the primary gyro. This filter can be enabled to avoid feedback amplification of structural resonances at a specific frequency. This only affects the signal sent to the controllers, not the estimators. Applies to both angular velocity and angular acceleration sent to the controllers. See "IMU_GYRO_NF_BW" to set the bandwidth of the filter. A value of 0 disables the filter.</p>   <p><b>Reboot required:</b> true</p>
 </td>
  <td style="vertical-align: top;">0 > 1000 </td>
  <td style="vertical-align: top;">0.0</td>
@@ -10556,7 +10725,7 @@ is less than 50% of this value</p>   </td>
 </tr>
 <tr>
  <td style="vertical-align: top;"><strong id="IMU_GYRO_RATEMAX">IMU_GYRO_RATEMAX</strong> (INT32)</td>
- <td style="vertical-align: top;"><p>Gyro control data maximum publication rate</p><p><strong>Comment:</strong> This is the maximum rate the gyro control data (sensor_gyro_control) will be allowed to publish at. Set to 0 to disable and publish at the native sensor sample rate.</p> <strong>Values:</strong><ul>
+ <td style="vertical-align: top;"><p>Gyro control data maximum publication rate</p><p><strong>Comment:</strong> This is the maximum rate the gyro control data (sensor_gyro) will be allowed to publish at. Set to 0 to disable and publish at the native sensor sample rate.</p> <strong>Values:</strong><ul>
 <li><strong>0:</strong> 0 (no limit)</li> 
 
 <li><strong>50:</strong> 50 Hz</li> 
@@ -10594,6 +10763,44 @@ is less than 50% of this value</p>   </td>
  <td style="vertical-align: top;"><p>INA226 Power Monitor Shunt</p>   </td>
  <td style="vertical-align: top;">0.000000001 > 0.1 (.000000001)</td>
  <td style="vertical-align: top;">0.0005</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="PCF8583_ADDR">PCF8583_ADDR</strong> (INT32)</td>
+ <td style="vertical-align: top;"><p>PCF8583 rotorfreq (i2c) i2c address</p> <strong>Values:</strong><ul>
+<li><strong>80:</strong> Address 0x50 (80)</li> 
+
+<li><strong>81:</strong> Address 0x51 (81)</li> 
+</ul>
+  <p><b>Reboot required:</b> true</p>
+</td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">80</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="PCF8583_MAGNET">PCF8583_MAGNET</strong> (INT32)</td>
+ <td style="vertical-align: top;"><p>PCF8583 rotorfreq (i2c) pulse count</p><p><strong>Comment:</strong> Nmumber of signals per rotation of actuator</p>   <p><b>Reboot required:</b> true</p>
+</td>
+ <td style="vertical-align: top;">1 > ? </td>
+ <td style="vertical-align: top;">2</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="PCF8583_POOL">PCF8583_POOL</strong> (INT32)</td>
+ <td style="vertical-align: top;"><p>PCF8583 rotorfreq (i2c) pool interval
+How often the sensor is readout</p>   <p><b>Reboot required:</b> true</p>
+</td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">1000000</td>
+ <td style="vertical-align: top;">us</td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="PCF8583_RESET">PCF8583_RESET</strong> (INT32)</td>
+ <td style="vertical-align: top;"><p>PCF8583 rotorfreq (i2c) pulse reset value</p><p><strong>Comment:</strong> Internal device counter is reset to 0 when overun this value, counter is able to store upto 6 digits reset of counter takes some time - measurement with reset has worse accurancy. 0 means reset counter after every measurement.</p>   <p><b>Reboot required:</b> true</p>
+</td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">500000</td>
  <td style="vertical-align: top;"></td>
 </tr>
 <tr>
@@ -10798,6 +11005,14 @@ is less than 50% of this value</p>   </td>
 </td>
  <td style="vertical-align: top;">0 > 1 </td>
  <td style="vertical-align: top;">0</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="SENS_EN_PAW3902">SENS_EN_PAW3902</strong> (INT32)</td>
+ <td style="vertical-align: top;"><p>PAW3902 Optical Flow</p>   <p><b>Reboot required:</b> true</p>
+</td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">Disabled (0)</td>
  <td style="vertical-align: top;"></td>
 </tr>
 <tr>
@@ -13918,6 +14133,98 @@ is less than 50% of this value</p>   </td>
 </tr>
 </tbody></table>
 
+## UUV Attitude Control
+
+<table style="width: 100%; table-layout:fixed; font-size:1.5rem; overflow: auto; display:block;">
+ <colgroup><col style="width: 23%"><col style="width: 46%"><col style="width: 11%"><col style="width: 11%"><col style="width: 9%"></colgroup>
+ <thead>
+   <tr><th>Name</th><th>Description</th><th>Min > Max (Incr.)</th><th>Default</th><th>Units</th></tr>
+ </thead>
+<tbody>
+<tr>
+ <td style="vertical-align: top;"><strong id="UUV_DIRCT_PITCH">UUV_DIRCT_PITCH</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Direct pitch input</p>   </td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">0.0</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="UUV_DIRCT_ROLL">UUV_DIRCT_ROLL</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Direct roll input</p>   </td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">0.0</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="UUV_DIRCT_THRUST">UUV_DIRCT_THRUST</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Direct thrust input</p>   </td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">0.0</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="UUV_DIRCT_YAW">UUV_DIRCT_YAW</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Direct yaw input</p>   </td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">0.0</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="UUV_INPUT_MODE">UUV_INPUT_MODE</strong> (INT32)</td>
+ <td style="vertical-align: top;"><p>Select Input Mode</p> <strong>Values:</strong><ul>
+<li><strong>0:</strong> use Attitude Setpoints</li> 
+
+<li><strong>1:</strong> Direct Feedthrough</li> 
+</ul>
+  </td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">0</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="UUV_PITCH_D">UUV_PITCH_D</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Pitch differential gain</p>   </td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">2.0</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="UUV_PITCH_P">UUV_PITCH_P</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Pitch proportional gain</p>   </td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">4.0</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="UUV_ROLL_D">UUV_ROLL_D</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Roll differential gain</p>   </td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">1.5</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="UUV_ROLL_P">UUV_ROLL_P</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Roll proportional gain</p>   </td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">4.0</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="UUV_YAW_D">UUV_YAW_D</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Yaw differential gain</p>   </td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">2.0</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="UUV_YAW_P">UUV_YAW_P</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Yawh proportional gain</p>   </td>
+ <td style="vertical-align: top;"></td>
+ <td style="vertical-align: top;">4.0</td>
+ <td style="vertical-align: top;"></td>
+</tr>
+</tbody></table>
+
 ## VTOL Attitude Control
 
 <table style="width: 100%; table-layout:fixed; font-size:1.5rem; overflow: auto; display:block;">
@@ -13941,9 +14248,23 @@ is less than 50% of this value</p>   </td>
  <td style="vertical-align: top;">m/s</td>
 </tr>
 <tr>
+ <td style="vertical-align: top;"><strong id="VT_B_DEC_FF">VT_B_DEC_FF</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Backtransition deceleration setpoint to pitch feedforward gain</p>   </td>
+ <td style="vertical-align: top;">0 > 0.2 (0.05)</td>
+ <td style="vertical-align: top;">0.12</td>
+ <td style="vertical-align: top;">rad*s*s/m</td>
+</tr>
+<tr>
+ <td style="vertical-align: top;"><strong id="VT_B_DEC_I">VT_B_DEC_I</strong> (FLOAT)</td>
+ <td style="vertical-align: top;"><p>Backtransition deceleration setpoint to pitch I gain</p>   </td>
+ <td style="vertical-align: top;">0 > 0.3 (0.05)</td>
+ <td style="vertical-align: top;">0.1</td>
+ <td style="vertical-align: top;">rad*s/m</td>
+</tr>
+<tr>
  <td style="vertical-align: top;"><strong id="VT_B_DEC_MSS">VT_B_DEC_MSS</strong> (FLOAT)</td>
- <td style="vertical-align: top;"><p>Approximate deceleration during back transition</p><p><strong>Comment:</strong> The approximate deceleration during a back transition in m/s/s Used to calculate back transition distance in mission mode. A lower value will make the VTOL transition further from the destination waypoint.</p>   </td>
- <td style="vertical-align: top;">0.00 > 20.00 (1)</td>
+ <td style="vertical-align: top;"><p>Approximate deceleration during back transition</p><p><strong>Comment:</strong> The approximate deceleration during a back transition in m/s/s Used to calculate back transition distance in mission mode. A lower value will make the VTOL transition further from the destination waypoint. For standard vtol and tiltrotors a controller is used to track this value during the transition.</p>   </td>
+ <td style="vertical-align: top;">0.5 > 10 (0.1)</td>
  <td style="vertical-align: top;">2.0</td>
  <td style="vertical-align: top;">m/s/s</td>
 </tr>

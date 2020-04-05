@@ -32,11 +32,6 @@ It is easy to set up and can be used to test that your vehicle can take off, fly
 
 **Supported Vehicles:** Iris (MultiRotor model and a configuration for PX4 QuadRotor in the X configuration).
 
-[XPlane](../simulation/hitl.md) (HITL only)| A comprehensive and powerful fixed-wing flight simulator that offers very realistic flight models.  
-
-
-**Supported Vehicles:** Plane
-
 [Simulation-In-Hardware](../simulation/simulation-in-hardware.md) (SIH) | An alternative to HITL that offers a hard real-time simulation directly on the hardware autopilot.  
 
 
@@ -114,7 +109,7 @@ make px4_sitl jmavsim
 
 The simulation can be further configured via environment variables:
 
-- `PX4_ESTIMATOR`: This variable configures which estimator to use. Possible options are: `ekf2` (default), `lpe`, `inav`. It can be set via `export PX4_ESTIMATOR=lpe` before running the simulation.
+- `PX4_ESTIMATOR`: This variable configures which estimator to use. Possible options are: `ekf2` (default), `lpe` (deprecated). It can be set via `export PX4_ESTIMATOR=lpe` before running the simulation.
 
 The syntax described here is simplified, and there are many other options that you can configure via *make* - for example, to set that you wish to connect to an IDE or debugger. For more information see: [Building the Code > PX4 Make Build Targets](../setup/building_px4.md#make_targets).
 
@@ -189,7 +184,7 @@ For setup information see the *QGroundControl User Guide*:
 
 ## Camera Simulation
 
-PX4 supports capture of both still images and video from within the [Gazebo](../simulation/gazebo.md) simulated environment. This can be enabled/set up as described in [Gazebo > Video Streaming](../simulation/gazebo.md#video-streaming).
+PX4 supports capture of both still images and video from within the [Gazebo](../simulation/gazebo.md) simulated environment. This can be enabled/set up as described in [Gazebo > Video Streaming](../simulation/gazebo.md#video).
 
 The simulated camera is a gazebo plugin that implements the [MAVLink Camera Protocol](https://mavlink.io/en/protocol/camera.html)<!-- **Firmware/Tools/sitl_gazebo/src/gazebo_geotagged_images_plugin.cpp -->. PX4 connects/integrates with this camera in 
 

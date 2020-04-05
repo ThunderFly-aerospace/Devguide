@@ -98,10 +98,10 @@ In addition, the C++ version has also better type-safety and less overhead in te
 
 The C++ API provides macros to declare parameters as *class attributes*. You add some "boilerplate" code to regularly listen for changes in the [uORB Topic](../middleware/uorb.md) associated with *any* parameter update. Framework code then (invisibly) handles tracking uORB messages that affect your parameter attributes and keeping them in sync. In the rest of the code you can just use the defined parameter attributes and they will always be up to date!
 
-First include **px4_module_params.h** in the class header for your module or driver (to get the `DEFINE_PARAMETERS` macro):
+First include **px4_platform_common/module_params.h** in the class header for your module or driver (to get the `DEFINE_PARAMETERS` macro):
 
 ```cpp
-#include <px4_module_params.h>
+#include <px4_platform_common/module_params.h>
 ```
 
 Derive your class from `ModuleParams`, and use `DEFINE_PARAMETERS` to specify a list of parameters and their associated parameter attributes. The names of the parameters must be the same as their parameter metadata definitions.
@@ -221,6 +221,8 @@ Parameter metadata can be stored anywhere in the source tree as either **.c** or
 
 The build system extracts the metadata (using `make parameters_metadata`) to build the [parameter reference](../advanced/parameter_reference.md) and the parameter information used by ground stations.
 
+> **Warning** After adding a *new* parameter file you should call `make clean` before building to generate the new parameters (parameter files are added as part of the *cmake* configure step, which happens for clean builds and if a cmake file is modified).
+
 ### c Parameter Metadata {#c_metadata}
 
 The legacy approach for defining parameter metadata is in a file with extension **.c** (at time of writing this is the approach most commonly used in the source tree).
@@ -302,3 +304,8 @@ The following YAML definitions provide the start and end indexes.
 - `instance_start` (default 0): First instance number. If 0, `${i}` expands to [0, N-1]`.
 
 For a full example see the MAVLink parameter definitions: [/src/modules/mavlink/module.yaml](https://github.com/PX4/Firmware/blob/master/src/modules/mavlink/module.yaml)
+
+## Further Information
+
+- [Finding/Updating Parameters](https://docs.px4.io/master/en/advanced_config/parameters.html) (PX4 User Guide)
+- [Parameter Reference](../advanced/parameter_reference.md)

@@ -98,10 +98,10 @@ param save /fs/microsd/vtol_param_backup
     
     C++ api 提供宏将参数声明为 *class 属性*。 您可以添加一些 "样板" 代码，以定期侦听与 *any* 参数更新相关的 [uORB topic](../middleware/uorb.md) 中的更改。 然后，框架代码（无形地）处理跟踪影响参数属性并保持它们同步的 uORB 消息。 在代码的其余部分中，您只需使用定义的参数属性，它们将始终是最新的!
     
-    首先在模块或驱动程序的类标题中包含 **px4_module_params.h**（以获取 `DEFINE_PARAMETERS` 宏）：
+    First include **px4_platform_common/module_params.h** in the class header for your module or driver (to get the `DEFINE_PARAMETERS` macro):
     
     ```cpp
-    #include <px4_module_params.h>
+    #include <px4_platform_common/module_params.h>
     ```
     
     从 `ModuleParams` 派生类，并使用 `DEFINE_PARAMETERS` 指定参数及其关联参数属性的列表。 参数的名称必须与其参数元数据定义相同。
@@ -221,6 +221,8 @@ param save /fs/microsd/vtol_param_backup
     
     构建系统提取 metadata（使用 `make parameters_metadata`）来构建 [parameter reference ](../advanced/parameter_reference.md) 和地面站使用的参数信息。
     
+    > **Warning** After adding a *new* parameter file you should call `make clean` before building to generate the new parameters (parameter files are added as part of the *cmake* configure step, which happens for clean builds and if a cmake file is modified).
+    
     ### c Parameter Metadata {#c_metadata}
     
     The legacy approach for defining parameter metadata is in a file with extension **.c** (at time of writing this is the approach most commonly used in the source tree).
@@ -301,3 +303,8 @@ param save /fs/microsd/vtol_param_backup
     - `instance_start` (default 0): First instance number. If 0, `${i}` expands to [0, N-1]`.
     
     For a full example see the MAVLink parameter definitions: [/src/modules/mavlink/module.yaml](https://github.com/PX4/Firmware/blob/master/src/modules/mavlink/module.yaml)
+    
+    ## Further Information
+    
+    - [Finding/Updating Parameters](https://docs.px4.io/master/en/advanced_config/parameters.html) (PX4 User Guide)
+    - [Parameter Reference](../advanced/parameter_reference.md)

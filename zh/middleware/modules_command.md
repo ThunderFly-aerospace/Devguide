@@ -18,31 +18,28 @@
 
 源码： [systemcmds/config](https://github.com/PX4/Firmware/tree/master/src/systemcmds/config)
 
-配置传感器的驱动（设定传感器采样 & 发布速率，量程等）
+Configure a sensor driver (sampling & publication rate, etc.)
 
 ### 用法 {#config_usage}
 
-    config &lt;command&gt; [arguments...]
+    config <command> [arguments...]
      Commands:
     
-    &lt;file:dev&gt; 参数通常是 /dev/{gyro,accel,mag}i 中的一个
-       block         堵塞传感器话题的发布
-         &lt;file:dev&gt;  传感器设备文件
+     The <file:dev> argument is typically one of /dev/{gyro,accel,mag}i
+       block         Block sensor topic publication
+         <file:dev>  Sensor device file
     
-       unblock       恢复传感器话题的发布
-         &lt;file:dev&gt;  传感器设备文件
+       unblock       Unblock sensor topic publication
+         <file:dev>  Sensor device file
     
-       sampling      设定传感器采样速率
-         &lt;file:dev&gt; &lt;rate&gt; 传感器设备文件，采样速率 Hz
+       sampling      Set sensor sampling rate
+         <file:dev> <rate> Sensor device file and sampling rate in Hz
     
-       rate          设定传感器数据发布速率
-         &lt;file:dev&gt; &lt;rate&gt; 传感器设备文件，发布速率 Hz
+       rate          Set sensor publication rate
+         <file:dev> <rate> Sensor device file and publication rate in Hz
     
-       range         设定传感器测量量程
-         &lt;file:dev&gt; &lt;rate&gt; 传感器设备文件和量程
-    
-       check         执行传感器自检（并打印自检信息）
-         &lt;file:dev&gt;  传感器设备文件
+       check         Perform sensor self-test (and print info)
+         <file:dev>  Sensor device file
     
 
 ## dumpfile
@@ -620,21 +617,3 @@ Tool to print various version information
        hwtypecmp     Compare hardware type (returns 0 on match)
          <hwtype> [<hwtype2>] Hardware type to compare against (eg. V2). An OR
                      comparison is used if multiple are specified
-    
-
-## voxlpm
-
-Source: [drivers/power_monitor/voxlpm](https://github.com/PX4/Firmware/tree/master/src/drivers/power_monitor/voxlpm)
-
-### Usage {#voxlpm_usage}
-
-    voxlpm [arguments...]
-       start         start monitoring
-    
-       info          display info
-    
-       -X            PX4_I2C_BUS_EXPANSION
-    
-       -T            PX4_I2C_BUS_EXPANSION1
-    
-       -R            PX4_I2C_BUS_EXPANSION2 (default)

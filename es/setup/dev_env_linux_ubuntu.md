@@ -1,13 +1,13 @@
 # Entorno de desarrollo en Ubuntu LTS / Debian Linux
 
-[Ubuntu Linux LTS](https://wiki.ubuntu.com/LTS) 16.04 is the standard/preferred Linux development OS. It allows you to build for the [most PX4 targets](../setup/dev_env.md#supported-targets) (NuttX based hardware, *Qualcomm Snapdragon Flight* hardware, Linux-based hardware, Simulation).
+The supported/tested Linux OS versions for PX4 development are [Ubuntu Linux LTS](https://wiki.ubuntu.com/LTS) 18.04 (Bionic Beaver) and 20.04 (Focal Fossa). These allow you to build for the [most PX4 targets](../setup/dev_env.md#supported-targets) (NuttX based hardware, *Qualcomm Snapdragon Flight* hardware, Linux-based hardware, Simulation).
 
 Bash scripts are provided to help make it easy to install development environment for different target platforms:
 
 * **[ubuntu.sh](https://github.com/PX4/Firmware/blob/{{ book.px4_version }}/Tools/setup/ubuntu.sh)**: Installs [Gazebo 9](../simulation/gazebo.md) and [jMAVSim](../simulation/jmavsim.md) simulators and/or [NuttX/Pixhawk](../setup/building_px4.md#nuttx) tools. Does not include dependencies for [FastRTPS](#fast_rtps).
-* **[ubuntu_sim_ros_melodic.sh](https://raw.githubusercontent.com/PX4/Devguide/{{ book.px4_version }}/build_scripts/ubuntu_sim_ros_melodic.sh)**: Installs [ROS "Melodic"](#rosgazebo) and PX4 on Ubuntu 18.04 LTS.
+* **[ubuntu_sim_ros_melodic.sh](https://raw.githubusercontent.com/PX4/Devguide/{{ book.px4_version }}/build_scripts/ubuntu_sim_ros_melodic.sh)**: Installs [ROS "Melodic"](#rosgazebo) and PX4 on Ubuntu 18.04 LTS (and later).
 
-> **Tip** The scripts have been tested on clean Ubuntu 16.04 and 18.04 LTS installations. They *may* not work as expected if installed on top of an existing system or a different Ubuntu release.
+> **Tip** The scripts have been tested on *clean* Ubuntu 18.04 LTS and Ubuntu 20.04 LTS installations. They *may* not work as expected if installed "on top" of an existing system, or on a different Ubuntu release.
 
 The instructions below explain how to download and use the scripts.
 
@@ -17,21 +17,23 @@ Use the [ubuntu.sh](https://github.com/PX4/Firmware/blob/{{ book.px4_version }}/
 
 To install the toolchain:
 
-1. Download [ubuntu.sh](https://github.com/PX4/Firmware/blob/{{ book.px4_version }}/Tools/setup/ubuntu.sh) and [requirements.txt](https://github.com/PX4/Firmware/blob/{{ book.px4_version }}/Tools/setup/requirements.txt) from the PX4 source repository (**/Tools/setup/**):   
-    `wget https://raw.githubusercontent.com/PX4/Firmware/{{ book.px4_version }}/Tools/setup/ubuntu.sh`   
-    `wget https://raw.githubusercontent.com/PX4/Firmware/{{ book.px4_version }}/Tools/setup/requirements.txt`
+1. [Download PX4 Source Code](../setup/building_px4.md): 
+        bash
+        git clone https://github.com/PX4/Firmware.git --recursive
+
 2. Run the **ubuntu.sh** with no arguments (in a bash shell) to install everything: 
         bash
-        source ubuntu.sh
+        bash ./Tools/setup/ubuntu.sh
     
+      
     * Acknowledge any prompts as the script progress.
     * You can use the `--no-nuttx` and `--no-sim-tools` to omit the nuttx and/or simulation tools.
 3. Restart the computer on completion.
 
-> **Note** You can alternatively [Download PX4 Source Code](../setup/building_px4.md) and run the scripts in place: 
-> 
->     git clone https://github.com/PX4/Firmware.git
->       source Firmware/Tools/setup/ubuntu.sh
+> **Note** You can alternatively download [ubuntu.sh](https://github.com/PX4/Firmware/blob/{{ book.px4_version }}/Tools/setup/ubuntu.sh) and [requirements.txt](https://github.com/PX4/Firmware/blob/{{ book.px4_version }}/Tools/setup/requirements.txt) from the PX4 source repository (**/Tools/setup/**) and run ubuntu.sh in place:   
+> `wget https://raw.githubusercontent.com/PX4/Firmware/{{ book.px4_version }}/Tools/setup/ubuntu.sh`   
+> `wget https://raw.githubusercontent.com/PX4/Firmware/{{ book.px4_version }}/Tools/setup/requirements.txt`   
+> `bash ubuntu.sh`
 
 Notes:
 
@@ -59,6 +61,8 @@ sudo add-apt-repository --remove ppa:team-gcc-arm-embedded/ppa
 
 ## Raspberry Pi {#raspberry-pi-hardware}
 
+<!-- NOTE: RaPi docker toolchain (for comparison) here: https://github.com/PX4/containers/blob/master/docker/Dockerfile_armhf -->
+
 To get the build toolchain for Raspberry Pi:
 
 1. Download [ubuntu.sh](https://github.com/PX4/Firmware/blob/{{ book.px4_version }}/Tools/setup/ubuntu.sh) and [requirements.txt](https://github.com/PX4/Firmware/blob/{{ book.px4_version }}/Tools/setup/requirements.txt) from the PX4 source repository (**/Tools/setup/**):   
@@ -66,70 +70,58 @@ To get the build toolchain for Raspberry Pi:
     `wget https://raw.githubusercontent.com/PX4/Firmware/{{ book.px4_version }}/Tools/setup/requirements.txt`
 2. Run **ubuntu.sh** in a terminal to get just the common dependencies: 
         bash
-        source ubuntu.sh --no-nuttx --no-sim-tools
+        bash ubuntu.sh --no-nuttx --no-sim-tools
 
 3. Then setup an ARMv7 cross-compiler (either GCC or clang) as described in the following sections.
 
 ### GCC
 
-The current recommended toolchain for raspbian can be cloned from `https://github.com/raspberrypi/tools.git` (at time of writing 4.9.3). The `PATH` environmental variable should include the path to the gcc cross-compiler collection of tools (e.g. gcc, g++, strip) prefixed with `arm-linux-gnueabihf-`.
+The official Raspberry Pi toolchains are not supported as PX4 has requires C++14 (which they do not support).
 
-```sh
-git clone https://github.com/raspberrypi/tools.git ${HOME}/rpi-tools
+Ubuntu provides a set of pre-compiled toolchains that you can use instead. Install these with the terminal command:
 
-# test compiler
-$HOME/rpi-tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf-gcc -v
+    sudo apt-get install -y gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf
+    
 
-# permanently update PATH variable by modifying ~/.profile
-echo 'export PATH=$PATH:$HOME/rpi-tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin' >> ~/.profile
+These package contains GCC/G++ 7.4.0 at time of writing. To test the toolchain, please execute:
 
-# update PATH variable only for this session
-export PATH=$PATH:$HOME/rpi-tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin
-```
+    arm-linux-gnueabihf-gcc -v
+    arm-linux-gnueabihf-g++ -v
+    
 
 ### Clang
 
-In order to use clang, you also need GCC.
+First [install GCC](#gcc) (needed to use clang).
 
-Download clang for your specific distribution from [LLVM Download page](http://releases.llvm.org/download.html) and unpack it. Assuming that you've unpacked clang to `CLANG_DIR`, and `clang` binary is available in `CLANG_DIR/bin`, and you have the GCC cross-compiler in `GCC_DIR`, you will need to setup the symlinks for clang in the `GCC_DIR` bin dir, and add `GCC_DIR/bin` to `PATH`.
+We recommend you to get clang from the Ubuntu software repository as follows:
+
+    sudo apt-get install clang
+    
 
 Example below for building PX4 firmware out of tree, using CMake.
 
 ```sh
-ln -s <CLANG_DIR>/bin/clang <GCC_DIR>/bin/clang
-ln -s <CLANG_DIR>/bin/clang++ <GCC_DIR>/bin/clang++
-export PATH=<GCC_DIR>/bin:$PATH
-
 cd <PATH-TO-PX4-SRC>
-mkdir build/posix_rpi_cross_clang
-cd build/posix_rpi_cross_clang
+mkdir build/px4_raspberrypi_default_clang
+cd build/px4_raspberrypi_default_clang
 cmake \
 -G"Unix Makefiles" \
--DCONFIG=posix_rpi_cross \
+-DCONFIG=px4_raspberrypi_default \
+-UCMAKE_C_COMPILER \
 -DCMAKE_C_COMPILER=clang \
+-UCMAKE_CXX_COMPILER \
 -DCMAKE_CXX_COMPILER=clang++ \
-..
+../..
+make
 ```
 
 ### Native Builds
 
 Additional developer information for using PX4 on Raspberry Pi (including building PX4 natively) can be found here: [Raspberry Pi 2/3 Navio2 Autopilot](https://docs.px4.io/en/flight_controller/raspberry_pi_navio2.html).
 
-## Parrot Bebop
-
-Developers working with the Parrot Bebop should first install the [Raspberry Pi Linux Toolchain](#raspberry-pi-hardware) as described above.
-
-Then install ADB:
-
-```sh
-sudo apt-get install android-tools-adb -y
-```
-
 ## ROS/Gazebo {#rosgazebo}
 
 This section explains how to install [ROS/Gazebo](../ros/README.md) ("Melodic") for use with PX4.
-
-> **Note** PX4 is tested with ROS Melodic on Ubuntu 18.04 LTS. ROS Melodic does not work on Ubuntu 16.04.
 
 To install the development toolchain:
 
@@ -137,7 +129,7 @@ To install the development toolchain:
     `wget https://raw.githubusercontent.com/PX4/Devguide/{{ book.px4_version }}/build_scripts/ubuntu_sim_ros_melodic.sh`
 2. Run the script: 
         bash
-        source ubuntu_sim_ros_melodic.sh You may need to acknowledge some prompts as the script progresses.
+        bash ubuntu_sim_ros_melodic.sh You may need to acknowledge some prompts as the script progresses.
 
 Note:
 

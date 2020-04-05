@@ -1,69 +1,53 @@
 # PX4 System Console
 
-The system console allows low-level access to the system, debug output and analysis of the system boot process. The most convenient way to connect it is by using a [Dronecode probe](https://kb.zubax.com/display/MAINKB/Dronecode+Probe+documentation), but a plain FTDI cable can be used as well.
+The PX4 *System Console* provides low-level access to the system, debug output and analysis of the system boot process.
 
-## System Console vs. Shells
-
-There is just one *System Console*, which runs on one specific UART (the debug port, as configured in NuttX), and is commonly attached via FTDI cable.
-- Used for *low-level debugging/development*: bootup, NuttX, startup scripts, board bringup, development on central parts of PX4 (e.g. uORB).
-- In particular, is the only place where all boot output (including information about applications auto-started on boot) is printed.
-
-Shells provide higher-level access to the system:
-- Used for basic module testing/running commands.
-- Only display the output of modules you start (and therefore cannot debug the boot process).
-- Cannot display the output of tasks running on the work queue.
-
-There can be several shells, either running on a dedicated UART, or via MAVLink.
-Since MAVLink provides more flexibility, the shell is nowadays only used [via MAVLink](#mavlink_shell).
+> **Tip** The console should be used for debugging if the system won't boot.
+  The [MAVLink Shell](../debug/mavlink_shell.md) may otherwise be more suitable, as it is much easier to set up and can be used for [many of the same tasks](../debug/consoles.md#console_vs_shell).
 
 
-## Snapdragon Flight: Wiring the Console
+## Wiring the Console
 
-The developer kit comes with a breakout board with three pins to access the console. Connect the bundled FTDI cable to the header and the breakout board to the expansion connector.
+The console is made available through a (board-specific) UART that can be connected to a computer USB port using a [3.3V FTDI](https://www.digikey.com/product-detail/en/TTL-232R-3V3/768-1015-ND/1836393) cable.
+This allows the console to be accessed using a terminal application.
 
-## Pixracer / Pixhawk v3: Wiring the Console
+Pixhawk controller manufacturers are expected to expose the console UART and SWD (JTAG) debug interfaces through a dedicated *debug port* that complies with the [Pixhawk Connector Standard](#pixhawk_debug_port).
+Unfortunately some boards predate this standard or a non-compliant.
 
-Connect the 6-pos JST SH 1:1 cable to the Dronecode probe or connect the individual pins of the cable to a FTDI cable like this:
+> **Tip** Developers targeting a number of different boards may wish to use a *debug adapter* to simplify connecting multiple boards.
+  For example, the [Dronecode probe](https://kb.zubax.com/display/MAINKB/Dronecode+Probe+documentation) comes with connectors for the [Pixhawk Debug Port](#pixhawk_debug_port) and several other boards.
 
-| Pixracer / Pixhawk v3  |         | FTDI    |        |
-| -- | -- | -- | -- |
-|1         | +5V (red)     |         | N/C    |
-|2         | UART7 Tx      | 5       | FTDI RX (yellow)  |
-|3         | UART7 Rx      | 4       | FTDI TX (orange)  |
-|4         | SWDIO      |         | N/C   |
-|5         | SWCLK      |         | N/C   |
-|6         | GND     | 1       | FTDI GND (black)   |
+The sections below outline/link to the wiring and system console information for many common boards.
 
-## Pixhawk v1: Wiring the Console
 
-The system console can be accessed through the Dronecode probe or an FTDI cable. Both options are explained in the section below.
+### Board-Specific Wiring
 
-### Connecting via Dronecode Probe
+The System Console UART pinouts/debug ports are typically documented in [autopilot overview pages](https://docs.px4.io/master/en/flight_controller/) (some are linked below):
+- [3DR Pixhawk v1 Flight Controller](https://docs.px4.io/master/en/flight_controller/pixhawk.html#console-port) (also applies to 
+[mRo Pixhawk](https://docs.px4.io/master/en/flight_controller/mro_pixhawk.html#debug-ports), [HobbyKing HKPilot32](https://docs.px4.io/master/en/flight_controller/HKPilot32.html#debug-port))
+- [Pixhawk 3](https://docs.px4.io/master/en/flight_controller/pixhawk3_pro.html#debug-port)
+- [Pixracer](https://docs.px4.io/master/en/flight_controller/pixracer.html#debug-port)
 
-Connect the 6-pos DF13 1:1 cable on the [Dronecode probe](https://kb.zubax.com/display/MAINKB/Dronecode+Probe+documentation) to the SERIAL4/5 port of Pixhawk.
+- [Snapdragon Flight](https://docs.px4.io/master/en/flight_controller/snapdragon_flight.html):
+  - [FTDI](https://docs.px4.io/master/en/flight_controller/snapdragon_flight_advanced.html#over-ftdi)
+  - [DSP Debug Monitor/Console](https://docs.px4.io/master/en/flight_controller/snapdragon_flight_advanced.html#dsp-debug-monitorconsole)
 
-![Dronecode probe](../../assets/console/dronecode_probe.jpg)
 
-### Connecting via FTDI 3.3V Cable
+### Pixhawk Debug Port {#pixhawk_debug_port}
 
-If no Dronecode probe is at hand an FTDI 3.3V (Digi-Key: [768-1015-ND](https://www.digikey.com/product-detail/en/TTL-232R-3V3/768-1015-ND/1836393)) will do as well.
+Flight controllers that adhere to the Pixhawk Connector standard use the [Pixhawk Standard Debug Port](
+https://pixhawk.org/pixhawk-connector-standard/#dronecode_debug).
 
-| Pixhawk 1/2  |         | FTDI    |        |
-| -- | -- | -- | -- |
-|1         | +5V (red)     |         | N/C    |
-|2         | S4 Tx      |         | N/C   |
-|3         | S4 Rx      |         | N/C   |
-|4         | S5 Tx      | 5       | FTDI RX (yellow)   |
-|5         | S5 Rx      | 4       | FTDI TX (orange)   |
-|6         | GND     | 1       | FTDI GND (black)   |
+The port/FTDI mapping is shown below.
 
-The connector pinout is shown in the figure below.
-
-![Console Connector](../../assets/console/console_connector.jpg)
-
-The complete wiring is shown below.
-
-![Console Debug](../../assets/console/console_debug.jpg)
+Pixhawk Debug Port | - | FTDI | -
+--- | --- | --- | ---
+1 (red) | TARGET PROCESSOR VOLTAGE | | N/C (used for SWD/JTAG debugging)
+2 (blk) | CONSOLE TX (OUT) | 5 | FTDI RX (yellow)
+3 (blk) | CONSOLE RX (IN) | 4 | FTDI TX (orange)
+4 (blk) | SWDIO | | N/C (used for SWD/JTAG debugging)
+5 (blk) | SWCLK | | N/C (used for SWD/JTAG debugging)
+6 (blk) | GND | 1 | FTDI GND (black)
 
 ## Opening the Console
 
@@ -95,54 +79,3 @@ Then select 'serial connection' and set the port parameters to:
 * 57600 baud
 * 8 data bits
 * 1 stop bit
-
-## Getting Started on the Console
-
-Type `ls` to view the local file system, type `free` to see the remaining free RAM. The console will also display the system boot log when power-cycling the board.
-
-```bash
-nsh> ls
-nsh> free
-```
-
-## MAVLink Shell{#mavlink_shell}
-
-For NuttX-based systems (Pixhawk, Pixracer, ...), the nsh console can also be
-accessed via MAVLink. This works via serial link (USB/Telemetry) or WiFi (UDP/TCP). Make sure
-that QGC is not running, then start the shell with e.g.
-`./Tools/mavlink_shell.py /dev/ttyACM0` (in the Firmware source, you may first have to install the dependencies with `sudo pip install pymavlink pyserial`).
-Use `./Tools/mavlink_shell.py -h` to get a description of all available arguments which also displays the IP address of wifi connection.
-For example `./Tools/mavlink_shell.py <IP address>` can be used to start nsh shell via wifi connection to the autopilot.
-.
-
-> **Tip** You can also use the nsh shell on [QGC directly](https://docs.qgroundcontrol.com/en/analyze_view/mavlink_console.html).
-
-# Snapdragon DSP Console
-
-When you are connected to your Snapdragon board via usb you have access to the px4 shell on the posix side of things.
-The interaction with the DSP side (QuRT) is enabled with the `qshell` posix app and its QuRT companion.
-
-With the Snapdragon connected via USB, open the mini-dm to see the output of the DSP:
-```
-${HEXAGON_SDK_ROOT}/tools/debug/mini-dm/Linux_Debug/mini-dm
-```
-
-Note: Alternatively, especially on Mac, you can also use [nano-dm](https://github.com/kevinmehall/nano-dm).
-
-Run the main app on the linaro side:
-```
-cd /home/linaro
-./px4 -s px4.config
-```
-
-You can now use all apps loaded on the DSP from the linaro shell with the following syntax:
-```
-pxh> qshell command [args ...]
-```
-
-For example, to see the available QuRT apps:
-```
-pxh> qshell list_tasks
-```
-
-The output of the executed command is displayed on the minidm.
