@@ -29,11 +29,11 @@ The easiest way to setup the environment is to use the **<a href="https://raw.gi
 
 1. 在 bash shell 命令行界面输入如下指令：
     
-        cd ~/src/Firmware
+        cd ~/src/PX4-Autopilot
         make px4_fmu-v4_default
         
     
-    成功完成编译后可以在 `Firmware/build/px4_fmu-v4_default/px4_fmu-v4_default.px4` 文件夹下找到编译好的固件。
+    On successful completion you'll find the firmware here: `PX4-Autopilot/build/px4_fmu-v4_default/px4_fmu-v4_default.px4`
     
     > **Note** The `make` commands to build firmware for other boards can be found in [Building the Code](../setup/building_px4.md#nuttx)
 
@@ -59,7 +59,7 @@ JMAVSim 运行流程：
     
     JMAVSim 的UI界面会显示在 XMing 程序中，如下所示：
     
-    ![jMAVSimOnWindows](../../assets/simulation/JMAVSim_on_Windows.PNG)
+    ![jMAVSimOnWindows](../../assets/simulation/jmavsim_on_windows.png)
 
 > **注意！** Gazebo 也可以以类似方式在 Ubuntu Bash for Windows 中运行，但运行速度太慢以至于没有实用价值。 如要尝试运行，请遵循 [ROS kinetic install guide](http://wiki.ros.org/kinetic/Installation/Ubuntu) 的指示然后在 Bash shell 界面中使用如下命令运行Gazebo： 
 > 
@@ -68,13 +68,15 @@ JMAVSim 运行流程：
 >       export GAZEBO_IP=127.0.0.1
 >       make px4_sitl gazebo
 
-### 开发环境安装脚本详情 {#build_script_details}
+<a id="build_script_details"></a>
+
+### Build Script Details
 
 The [windows_bash_nuttx.sh](https://raw.githubusercontent.com/PX4/Devguide/{{ book.px4_version }}/build_scripts/windows_bash_nuttx.sh) build script modifies the Ubuntu build instructions to remove Ubuntu-specific and UI-dependent components, including the *Qt Creator* IDE and the simulators.
 
 In addition, it uses a [64 bit arm-none-eabi compiler](https://github.com/SolinGuo/arm-none-eabi-bash-on-win10-.git) since BashOnWindows doesn't run 32 bit ELF programs (and the default compiler from `https://launchpad.net/gcc-arm-embedded` is 32 bit).
 
-手动将此编译器添加到您的环境中请执行以下操作:
+To add this compiler to your environment manually:
 
 1. 下载编译器: 
         sh

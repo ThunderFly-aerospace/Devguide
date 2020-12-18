@@ -1,10 +1,10 @@
-# 시스템 스타트업
+# 시스템 시작
 
-PX4 스타트업은 쉘 스크립트에 의해 제어됩니다. 쉘 스크립트는 NuttX는 [ROMFS/px4fmu_common/init.d](https://github.com/PX4/Firmware/tree/master/ROMFS/px4fmu_common/init.d) 폴더에 있습니다. 몇몇의 Posix 계열(Linux/MacOS)도 동일합니다. Posix만을 위한 스크립트는 [ROMFS/px4fmu_common/init.d-posix](https://github.com/PX4/Firmware/tree/master/ROMFS/px4fmu_common/init.d-posix)에 위치합니다.
+PX4 시작은 쉘 스크립트로 제어합니다. On NuttX they reside in the [ROMFS/px4fmu_common/init.d](https://github.com/PX4/PX4-Autopilot/tree/master/ROMFS/px4fmu_common/init.d) folder - some of these are also used on Posix (Linux/MacOS). The scripts that are only used on Posix are located in [ROMFS/px4fmu_common/init.d-posix](https://github.com/PX4/PX4-Autopilot/tree/master/ROMFS/px4fmu_common/init.d-posix).
 
-All files starting with a number and underscore (e.g. `10000_airplane`) are predefined airframe configurations. 설정값들은 빌드타임에 하나의 `airframes.xml`으로 보내지고 [QGroundControl](http://qgroundcontrol.com)을 통해 기체 선택 UI에 활용됩니다. 새로운 설정을 다루기 위해서는 [여기](../airframes/adding_a_new_frame.md)를 참고하세요.
+숫자와 밑줄 문자로 시작하는 모든 파일(예: `00000_airplane`)은 선정의 에어프레임 설정 파일입니다. 설정 값은 빌드 타임에 [QGroundControl](http://qgroundcontrol.com)에서 해석할 `airframes.xml` 파일로 내보내고 기체 선택 UI에 활용합니다. 새 설정 추가는 [여기](../airframes/adding_a_new_frame.md)에서 다룹니다.
 
-남아 있는 파일들을 일반적인 스타트업 로직을 위해 사용됩니다. 처음 실행되는 파일은 [init.d/rcS](https://github.com/PX4/Firmware/blob/master/ROMFS/px4fmu_common/init.d/rcS)로 ( 또는 Posix에서는 [init.d-posix/rcS](https://github.com/PX4/Firmware/blob/master/ROMFS/px4fmu_common/init.d-posix/rcS)), 다른 모든 스크립트들을 호출합니다.
+남아있는 파일은 공통 시작 로직의 일부입니다. The first executed file is the [init.d/rcS](https://github.com/PX4/PX4-Autopilot/blob/master/ROMFS/px4fmu_common/init.d/rcS) script (or [init.d-posix/rcS](https://github.com/PX4/PX4-Autopilot/blob/master/ROMFS/px4fmu_common/init.d-posix/rcS) on Posix), which calls all other scripts.
 
 다음의 섹션은 PX4가 실행되는 운영체제에 따라 구분되어 있습니다.
 
@@ -21,7 +21,7 @@ Posix에서는 시스템 쉘이 쉘 인터프리터로 사용됩니다 (예. /bi
 
 모듈은 PX4가 이미 실행중인 시스템이면 어느 터미널을 통해서든지 실행할 수 있습니다. 예:
 
-    cd <Firmware>/build/px4_sitl_default/bin
+    cd <PX4-Autopilot>/build/px4_sitl_default/bin
     ./px4-commander takeoff
     ./px4-listener sensor_accel
     
@@ -35,7 +35,7 @@ Posix에서는 시스템 쉘이 쉘 인터프리터로 사용됩니다 (예. /bi
 
 ## NuttX
 
-NuttX has an integrated shell interpreter ([NuttShell (NSH)](https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=139629410)), and thus scripts can be executed directly.
+NuttX 에는 통합 셸 해석 프로그램([NuttShell (NSH)](https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=139629410))이 있어 해당 스크립트를 바로 실행할 수 있습니다.
 
 ### 시스템 부팅 디버깅
 
@@ -74,10 +74,10 @@ NuttX has an integrated shell interpreter ([NuttShell (NSH)](https://cwiki.apach
 
 > **Caution** 알 수 없는 명령어를 호출하면 부팅이 실패합니다. 보통 시스템은 부팅 실패 이후에 mavlink 메시지를 스트림처리하지 않습니다. 이 경우에 시스템 콘솔에 출력된 에러 메시지를 확인하세요.
 
-아래의 예제들은 어떻게 커스텀 응용프로그램을 시작하는지 보여줍니다.
+아래의 예제들은 어떻게 커스텀 응용프로그램을 시작하는지 보여줍니다:
 
 - SD 카드 내의 `/etc/extras.txt`에 다음의 내용으로 파일을 만듭니다. ```custom_app start```
-- 명령어는 `set +e`과 `set -e` 명령어에 의해 선택적이 될 수 있습니다.
+- `set +e`과 `set -e` 명령어로 별도의 명령을 선택 요소로 만들 수 있습니다:
     
         set +e
         optional_app start      # Will not result in boot failure if optional_app is unknown or fails

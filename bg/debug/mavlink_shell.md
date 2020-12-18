@@ -8,7 +8,9 @@ The shell can be used for running commands and modules, and displaying their out
 
 ## Opening the Shell
 
-### QGroundControl MAVLink Console {#qgroundcontrol}
+<a id="qgroundcontrol"></a>
+
+### QGroundControl MAVLink Console
 
 The easiest way to access shell is to use the [QGroundControl MAVLink Console](https://docs.qgroundcontrol.com/en/analyze_view/mavlink_console.html) (see **Analyze View > Mavlink Console**).
 
@@ -20,7 +22,7 @@ You can also access the shell in a terminal using the **mavlink_shell.py** scrip
    ```sh
    sudo pip3 install pymavlink pyserial
    ```
-1. Open terminal (in Firmware directory) and start the shell:
+1. Open terminal (in PX4-Autopilot directory) and start the shell:
    ```sh
    # For serial port
    ./Tools/mavlink_shell.py /dev/ttyACM0

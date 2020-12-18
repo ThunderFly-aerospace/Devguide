@@ -2,21 +2,23 @@
 
 ## frsky_telemetry
 
-源码：[drivers/telemetry/frsky_telemetry](https://github.com/PX4/Firmware/tree/master/src/drivers/telemetry/frsky_telemetry)
+Source: [drivers/telemetry/frsky_telemetry](https://github.com/PX4/Firmware/tree/master/src/drivers/telemetry/frsky_telemetry)
 
 FrSky 数传支持， 会自动检测使用 D.PORT 还是 S.PORT 协议。
+<a id="frsky_telemetry_usage"></a>
 
-### 用法 {#frsky_telemetry_usage}
+### Usage
 
-    frsky_telemetry &lt;command&gt; [arguments...]
+    frsky_telemetry <command> [arguments...]
      Commands:
        start
-         [-d &lt;val&gt;]  选择串口设备
-                    取值 &lt;file:dev&gt;, 默认值： /dev/ttyS6
-         [-t &lt;val&gt;]  扫描超时时间 [s] (默认值： no timeout)
+         [-d <val>]  Select Serial Device
+                     values: <file:dev>, default: /dev/ttyS6
+         [-t <val>]  Scanning timeout [s] (default: no timeout)
                      default: 0
-         [-m &lt;val&gt;]  选择通信协议 (默认值：auto-detect)
-                     取值： sport|sport_single|dtype, 默认值： auto
+         [-m <val>]  Select protocol (default: auto-detect)
+                     values: sport|sport_single|sport_single_invert|dtype, default:
+                     auto
     
        stop
     
@@ -25,7 +27,7 @@ FrSky 数传支持， 会自动检测使用 D.PORT 还是 S.PORT 协议。
 
 ## mavlink
 
-源码： [modules/mavlink](https://github.com/PX4/Firmware/tree/master/src/modules/mavlink)
+Source: [modules/mavlink](https://github.com/PX4/Firmware/tree/master/src/modules/mavlink)
 
 ### 描述
 
@@ -54,7 +56,9 @@ FrSky 数传支持， 会自动检测使用 D.PORT 还是 S.PORT 协议。
     mavlink stream -u 14556 -s HIGHRES_IMU -r 50
     
 
-### 用法 {#mavlink_usage}
+<a id="mavlink_usage"></a>
+
+### Usage
 
     mavlink <command> [arguments...]
      Commands:
@@ -85,7 +89,8 @@ FrSky 数传支持， 会自动检测使用 D.PORT 还是 S.PORT 协议。
          [-f]        Enable message forwarding to other Mavlink instances
          [-w]        Wait to send, until first message received
          [-x]        Enable FTP
-         [-z]        Force flow control always on
+         [-z]        Force hardware flow control always on
+         [-Z]        Force hardware flow control always off
     
        stop-all      Stop all instances
     
@@ -104,9 +109,11 @@ FrSky 数传支持， 会自动检测使用 D.PORT 还是 S.PORT 协议。
 
 ## micrortps_client
 
-源码：[modules/micrortps_bridge/micrortps_client](https://github.com/PX4/Firmware/tree/master/src/modules/micrortps_bridge/micrortps_client)
+Source: [modules/micrortps_bridge/micrortps_client](https://github.com/PX4/Firmware/tree/master/src/modules/micrortps_bridge/micrortps_client)
 
-### 用法 {#micrortps_client_usage}
+<a id="micrortps_client_usage"></a>
+
+### Usage
 
     micrortps_client <command> [arguments...]
      Commands:
@@ -129,6 +136,9 @@ FrSky 数传支持， 会自动检测使用 D.PORT 还是 S.PORT 协议。
                      default: 2020
          [-i <val>]  Select IP address (remote)
                      values: <x.x.x.x>, default: 127.0.0.1
+         [-f]        Activate UART link SW flow control
+         [-h]        Activate UART link HW flow control
+         [-v]        Add more verbosity
     
        stop
     
@@ -137,34 +147,36 @@ FrSky 数传支持， 会自动检测使用 D.PORT 还是 S.PORT 协议。
 
 ## uorb
 
-源码：[modules/uORB](https://github.com/PX4/Firmware/tree/master/src/modules/uORB)
+Source: [modules/uORB](https://github.com/PX4/Firmware/tree/master/src/modules/uORB)
 
 ### 描述
 
-uORB 是各模块之间进行通讯的基于 发布-订阅 机制的内部消息传递系统。
+uORB is the internal pub-sub messaging system, used for communication between modules.
 
-uORB 模块通常作为第一个模块启动，并且绝大多数其它模块均依赖于它，
+It is typically started as one of the very first modules and most other modules depend on it.
 
 ### 实现
 
-不需要任何线程或工作队列， 该模块的启动只是确保初始化共享全局状态（shared global state）。 通信是通过共享内存（shared memory）完成的。 模块的实现是异步的，且无需进行锁定，例如， 发布者不需要等待订阅者，反之也成立。 这一特性是通过在发布者和订阅者之间建立单独的缓冲区来实现的。
+No thread or work queue is needed, the module start only makes sure to initialize the shared global state. Communication is done via shared memory. The implementation is asynchronous and lock-free, ie. a publisher does not wait for a subscriber and vice versa. This is achieved by having a separate buffer between a publisher and a subscriber.
 
-我们对代码以最大限度地减少内存占用和交换消息的延迟为目标进行了优化。
+The code is optimized to minimize the memory footprint and the latency to exchange messages.
 
-该接口基于文件描述符（file descriptor）实现：它在内部使用 `read`、`write` 和 `ioctl`。 唯一例外的是数据的发布，它使用了 `orb_advert_t` 句柄以使得其也可以从中断中使用（在 Nuttx 平台上）。
+The interface is based on file descriptors: internally it uses `read`, `write` and `ioctl`. Except for the publications, which use `orb_advert_t` handles, so that they can be used from interrupts as well (on NuttX).
 
-消息在 `/msg` 文件夹下定义。 在构建时它们会被转化为 C/C++ 代码。
+Messages are defined in the `/msg` directory. They are converted into C/C++ code at build-time.
 
-如果使用 ORB_USE_PUBLISHER_RULES 进行编译，那么可以使用一个包含了 uORB 发布规则的文件来配置允许哪些模块发布哪些主题。 这可以用于全系统范围的回放。
+If compiled with ORB_USE_PUBLISHER_RULES, a file with uORB publication rules can be used to configure which modules are allowed to publish which topics. This is used for system-wide replay.
 
 ### 示例
 
-监控主题发布速率。 除了 `top`命令，这也是进行常规系统检查的一个重要命令：
+Monitor topic publication rates. Besides `top`, this is an important command for general system inspection:
 
     uorb top
     
 
-### 用法 {#uorb_usage}
+<a id="uorb_usage"></a>
+
+### Usage
 
     uorb <command> [arguments...]
      Commands:
@@ -173,6 +185,7 @@ uORB 模块通常作为第一个模块启动，并且绝大多数其它模块均
        status        Print topic statistics
     
        top           Monitor topic publication rates
-         [-a]        print all instead of only currently publishing topics
+         [-a]        print all instead of only currently publishing topics with
+                     subscribers
          [-1]        run only once, then exit
          [<filter1> [<filter2>]] topic(s) to match (implies -a)

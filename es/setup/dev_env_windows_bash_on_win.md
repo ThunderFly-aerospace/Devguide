@@ -29,11 +29,11 @@ Para compilar el firmware (por ejemplo para px4_fmu-v4):
 
 1. Introduzca los siguientes comandos en el shell de bash:
     
-        cd ~/src/Firmware
+        cd ~/src/PX4-Autopilot
         make px4_fmu-v4_default
         
     
-    Una vez se haya completado encontrarás el firmware aquí: `Firmware/build/px4_fmu-v4_default/px4_fmu-v4_default.px4`
+    On successful completion you'll find the firmware here: `PX4-Autopilot/build/px4_fmu-v4_default/px4_fmu-v4_default.px4`
     
     > **Note** The `make` commands to build firmware for other boards can be found in [Building the Code](../setup/building_px4.md#nuttx)
 
@@ -59,7 +59,7 @@ Para ejecutar JMAVSim:
     
     La UI de JMAVSim se mostrará en XMing tal como se muestra a continuación:
     
-    ![jMAVSimOnWindows](../../assets/simulation/JMAVSim_on_Windows.PNG)
+    ![jMAVSimOnWindows](../../assets/simulation/jmavsim_on_windows.png)
 
 > **Advertencia** Gazebo puede ejecutarse de igual forma en Ubuntu Bash for Windows, pero demasiado lento como par ser útil. Para intentarlo, siguie la [Guia de instalación de ROS kinetic](http://wiki.ros.org/kinetic/Installation/Ubuntu) y ejecuta Gazebo en el shell de la siguiente forma: 
 > 
@@ -68,13 +68,15 @@ Para ejecutar JMAVSim:
 >       export GAZEBO_IP=127.0.0.1
 >       make px4_sitl gazebo
 
-### Detalles de script de compilación {#build_script_details}
+<a id="build_script_details"></a>
+
+### Build Script Details
 
 The [windows_bash_nuttx.sh](https://raw.githubusercontent.com/PX4/Devguide/{{ book.px4_version }}/build_scripts/windows_bash_nuttx.sh) build script modifies the Ubuntu build instructions to remove Ubuntu-specific and UI-dependent components, including the *Qt Creator* IDE and the simulators.
 
 In addition, it uses a [64 bit arm-none-eabi compiler](https://github.com/SolinGuo/arm-none-eabi-bash-on-win10-.git) since BashOnWindows doesn't run 32 bit ELF programs (and the default compiler from `https://launchpad.net/gcc-arm-embedded` is 32 bit).
 
-Para agregar este compilador a tu entorno manualmente:
+To add this compiler to your environment manually:
 
 1. Descarga el compilador: 
         sh

@@ -1,6 +1,7 @@
 # External Modules (Out-of-Tree)
 
-External modules provide a convenient mechanism for developers to manage/group proprietary modules that they want add to (or update in) PX4 firmware. External modules can use the same includes as internal modules and can interact with internal modules via uORB.
+External modules provide a convenient mechanism for developers to manage/group proprietary modules that they want add to (or update in) PX4 firmware.
+External modules can use the same includes as internal modules and can interact with internal modules via uORB.
 
 This topic explains how to add an external ("out of tree") module to the PX4 build.
 
@@ -11,11 +12,12 @@ This topic explains how to add an external ("out of tree") module to the PX4 bui
 To create an external module:
 
 - Create an *external directory* directory for grouping the external modules:
-  - This can be located anywhere outside of the **Firmware** tree.
-  - It must have the same structure as **Firmware** (i.e. it must contain a directory called **src**).
+  - This can be located anywhere outside of the **PX4-Autopilot** tree.
+  - It must have the same structure as **PX4-Autopilot** (i.e. it must contain a directory called **src**).
   - Later we refer to this directory using `EXTERNAL_MODULES_LOCATION`.
 - Copy an existing module (e.g. **examples/px4_simple_app**) to the external directory, or directly create a new module.
-- Rename the module (including `MODULE` in **CMakeLists.txt**) or remove it from the existing Firmware *cmake* build config. This is to avoid conflicts with internal modules.
+- Rename the module (including `MODULE` in **CMakeLists.txt**) or remove it from the existing PX4-Autopilot *cmake* build config.
+  This is to avoid conflicts with internal modules.
 - Add a file **CMakeLists.txt** in the external directory with content:
   ```
   set(config_module_list_external
@@ -40,7 +42,8 @@ To create an external module:
   ```
 
 
-## Out-of-Tree uORB Message Definitions {#uorb_message_definitions}
+<a id="uorb_message_definitions"></a>
+## Out-of-Tree uORB Message Definitions
 
 uORB messages can also be defined out-of-tree. For this, the `$EXTERNAL_MODULES_LOCATION/msg` folder must exist.
 
@@ -67,7 +70,8 @@ The new uORB messages can be used like any other uORB message as described [here
 > **Warning** The out-of-tree uORB message definitions cannot have the same name as any of the normal uORB messages.
 
 
-## Building External Modules and uORB Messages {#building}
+<a id="building"></a>
+## Building External Modules and uORB Messages
 
 Execute `make px4_sitl EXTERNAL_MODULES_LOCATION=<path>`.
  

@@ -4,7 +4,8 @@
 Source: [systemcmds/bl_update](https://github.com/PX4/Firmware/tree/master/src/systemcmds/bl_update)
 
 Utility to flash the bootloader from a file
-### Usage {#bl_update_usage}
+<a id="bl_update_usage"></a>
+### Usage
 ```
 bl_update [arguments...]
    setopt        Set option bits to unlock the FLASH (only needed if in locked
@@ -12,36 +13,12 @@ bl_update [arguments...]
 
    <file>        Bootloader bin file
 ```
-## config
-Source: [systemcmds/config](https://github.com/PX4/Firmware/tree/master/src/systemcmds/config)
-
-Configure a sensor driver (sampling & publication rate, etc.)
-### Usage {#config_usage}
-```
-config <command> [arguments...]
- Commands:
-
- The <file:dev> argument is typically one of /dev/{gyro,accel,mag}i
-   block         Block sensor topic publication
-     <file:dev>  Sensor device file
-
-   unblock       Unblock sensor topic publication
-     <file:dev>  Sensor device file
-
-   sampling      Set sensor sampling rate
-     <file:dev> <rate> Sensor device file and sampling rate in Hz
-
-   rate          Set sensor publication rate
-     <file:dev> <rate> Sensor device file and publication rate in Hz
-
-   check         Perform sensor self-test (and print info)
-     <file:dev>  Sensor device file
-```
 ## dumpfile
 Source: [systemcmds/dumpfile](https://github.com/PX4/Firmware/tree/master/src/systemcmds/dumpfile)
 
 Dump file utility. Prints file size and contents in binary mode (don't replace LF with CR LF) to stdout.
-### Usage {#dumpfile_usage}
+<a id="dumpfile_usage"></a>
+### Usage
 ```
 dumpfile [arguments...]
      <file>      File to dump
@@ -59,7 +36,8 @@ dyn ./hello.px4mod start
 ```
 
 
-### Usage {#dyn_usage}
+<a id="dyn_usage"></a>
+### Usage
 ```
 dyn [arguments...]
      <file>      File containing the module
@@ -76,7 +54,8 @@ Calibration procedure (running the command will guide you through it):
 - Make sure safety is off
 - Run this command
 
-### Usage {#esc_calib_usage}
+<a id="esc_calib_usage"></a>
+### Usage
 ```
 esc_calib [arguments...]
      [-d <val>]  Select PWM output device
@@ -90,6 +69,52 @@ esc_calib [arguments...]
      [-m <val>]  Select channels via bitmask (eg. 0xF, 3)
      [-a]        Select all channels
 ```
+## failure
+Source: [systemcmds/failure](https://github.com/PX4/Firmware/tree/master/src/systemcmds/failure)
+
+
+### Description
+Inject failures into system.
+
+### Implementation
+This system command sends a vehicle command over uORB to trigger failure.
+
+### Examples
+Test the GPS failsafe by stopping GPS:
+
+failure gps off
+
+<a id="failure_usage"></a>
+### Usage
+```
+failure [arguments...]
+   help          Show this help text
+
+   gps|...       Specify component
+
+   ok|off|...    Specify failure type
+     [-i <val>]  sensor instance (0=all)
+                 default: 0
+```
+## gpio
+Source: [systemcmds/gpio](https://github.com/PX4/Firmware/tree/master/src/systemcmds/gpio)
+
+This command is used to read and write GPIOs.
+<a id="gpio_usage"></a>
+### Usage
+```
+gpio [arguments...]
+   read
+     <PORT> <PIN> GPIO port and pin
+     [PULLDOWN|PULLUP] Pulldown/Pullup
+     [--force]   Force (ignore board gpio list)
+
+   write
+     <PORT> <PIN> GPIO port and pin
+     <VALUE>     Value to write
+     [PULLDOWN|PULLUP] Pulldown/Pullup
+     [--force]   Force (ignore board gpio list)
+```
 ## hardfault_log
 Source: [systemcmds/hardfault_log](https://github.com/PX4/Firmware/tree/master/src/systemcmds/hardfault_log)
 
@@ -97,7 +122,8 @@ Hardfault utility
 
 Used in startup scripts to handle hardfaults
 
-### Usage {#hardfault_log_usage}
+<a id="hardfault_log_usage"></a>
+### Usage
 ```
 hardfault_log <command> [arguments...]
  Commands:
@@ -120,7 +146,8 @@ hardfault_log <command> [arguments...]
 Source: [systemcmds/i2cdetect](https://github.com/PX4/Firmware/tree/master/src/systemcmds/i2cdetect)
 
 Utility to scan for I2C devices on a particular bus.
-### Usage {#i2cdetect_usage}
+<a id="i2cdetect_usage"></a>
+### Usage
 ```
 i2cdetect [arguments...]
      [-b <val>]  I2C bus
@@ -146,7 +173,8 @@ led_control blink -c blue -l 0 -n 5
 ```
 
 
-### Usage {#led_control_usage}
+<a id="led_control_usage"></a>
+### Usage
 ```
 led_control <command> [arguments...]
  Commands:
@@ -184,7 +212,8 @@ Utility to listen on uORB topics and print the data to the console.
 
 The listener can be exited any time by pressing Ctrl+C, Esc, or Q.
 
-### Usage {#listener_usage}
+<a id="listener_usage"></a>
+### Usage
 ```
 listener <command> [arguments...]
  Commands:
@@ -196,6 +225,17 @@ listener <command> [arguments...]
      [-r <val>]  Subscription rate (unlimited if 0)
                  default: 0
 ```
+## mfd
+Source: [systemcmds/mft](https://github.com/PX4/Firmware/tree/master/src/systemcmds/mft)
+
+Utility interact with the manifest
+<a id="mfd_usage"></a>
+### Usage
+```
+mfd <command> [arguments...]
+ Commands:
+   query         Returns true if not existed
+```
 ## mixer
 Source: [systemcmds/mixer](https://github.com/PX4/Firmware/tree/master/src/systemcmds/mixer)
 
@@ -205,7 +245,8 @@ Load or append mixer files to the ESC driver.
 
 Note that the driver must support the used ioctl's, which is the case on NuttX, but for example not on RPi.
 
-### Usage {#mixer_usage}
+<a id="mixer_usage"></a>
+### Usage
 ```
 mixer <command> [arguments...]
  Commands:
@@ -235,7 +276,8 @@ When starting, a background task is started, runs for several seconds (as specif
 motor_ramp sine -a 1100 -r 0.5
 ```
 
-### Usage {#motor_ramp_usage}
+<a id="motor_ramp_usage"></a>
+### Usage
 ```
 motor_ramp [arguments...]
      ramp|sine|square mode
@@ -257,12 +299,13 @@ Utility to test motors.
 
 WARNING: remove all props before using this command.
 
-### Usage {#motor_test_usage}
+<a id="motor_test_usage"></a>
+### Usage
 ```
 motor_test <command> [arguments...]
  Commands:
    test          Set motor(s) to a specific output value
-     [-m <val>]  Motor to test (0...7, all if not specified)
+     [-m <val>]  Motor to test (1...8, all if not specified)
      [-p <val>]  Power (0...100)
                  default: 0
      [-t <val>]  Timeout in seconds (default=no timeout)
@@ -278,13 +321,12 @@ motor_test <command> [arguments...]
 Source: [systemcmds/mtd](https://github.com/PX4/Firmware/tree/master/src/systemcmds/mtd)
 
 Utility to mount and test partitions (based on FRAM/EEPROM storage as defined by the board)
-### Usage {#mtd_usage}
+<a id="mtd_usage"></a>
+### Usage
 ```
 mtd <command> [arguments...]
  Commands:
    status        Print status information
-
-   start         Mount partitions
 
    readtest      Perform read test
 
@@ -292,8 +334,11 @@ mtd <command> [arguments...]
 
    erase         Erase partition(s)
 
- The commands 'start', 'readtest', 'rwtest' and 'erase' have an optional
- parameter:
+ The commands 'readtest' and 'rwtest' have an optional instance index:
+     [-i <val>]  storage index (if the board has multiple storages)
+                 default: 0
+
+ The commands 'readtest', 'rwtest' and 'erase' have an optional parameter:
      [<partition_name1> [<partition_name2> ...]] Partition names (eg.
                  /fs/mtd_params), use system default if not provided
 ```
@@ -305,7 +350,8 @@ Start an NSH shell on a given port.
 This was previously used to start a shell on the USB serial port.
 Now there runs mavlink, and it is possible to use a shell over mavlink.
 
-### Usage {#nshterm_usage}
+<a id="nshterm_usage"></a>
+### Usage
 ```
 nshterm [arguments...]
      <file:dev>  Device on which to start the shell (eg. /dev/ttyACM0)
@@ -338,7 +384,8 @@ param set SYS_AUTOCONFIG 1
 reboot
 ```
 
-### Usage {#param_usage}
+<a id="param_usage"></a>
+### Usage
 ```
 param <command> [arguments...]
  Commands:
@@ -356,9 +403,11 @@ param <command> [arguments...]
 
    show          Show parameter values
      [-a]        Show all parameters (not just used)
-     [-c]        Show only changed and used params
+     [-c]        Show only changed params (unused too)
      [-q]        quiet mode, print only param value (name needs to be exact)
      [<filter>]  Filter by param name (wildcard at end allowed, eg. sys_*)
+
+   show-for-airframe Show changed params for airframe config
 
    status        Print status of parameter system
 
@@ -379,12 +428,10 @@ param <command> [arguments...]
    touch         Mark a parameter as used
      [<param_name1> [<param_name2>]] Parameter name (one or more)
 
-   reset         Reset params to default
-     [<exclude1> [<exclude2>]] Do not reset matching params (wildcard at end
-                 allowed)
+   reset         Reset only specified params to default
+     [<param1> [<param2>]] Parameter names to reset (wildcard at end allowed)
 
-   reset_nostart Reset params to default, but keep SYS_AUTOSTART and
-                 SYS_AUTOCONFIG
+   reset_all     Reset all params to default
      [<exclude1> [<exclude2>]] Do not reset matching params (wildcard at end
                  allowed)
 
@@ -401,7 +448,8 @@ param <command> [arguments...]
 Source: [systemcmds/perf](https://github.com/PX4/Firmware/tree/master/src/systemcmds/perf)
 
 Tool to print performance counters
-### Usage {#perf_usage}
+<a id="perf_usage"></a>
+### Usage
 ```
 perf [arguments...]
    reset         Reset all counters
@@ -446,7 +494,8 @@ pwm test -c 13 -p 1200
 ```
 
 
-### Usage {#pwm_usage}
+<a id="pwm_usage"></a>
+### Usage
 ```
 pwm <command> [arguments...]
  Commands:
@@ -506,7 +555,8 @@ pwm <command> [arguments...]
 Source: [systemcmds/reboot](https://github.com/PX4/Firmware/tree/master/src/systemcmds/reboot)
 
 Reboot the system
-### Usage {#reboot_usage}
+<a id="reboot_usage"></a>
+### Usage
 ```
 reboot [arguments...]
      [-b]        Reboot into bootloader
@@ -516,7 +566,8 @@ reboot [arguments...]
 Source: [systemcmds/sd_bench](https://github.com/PX4/Firmware/tree/master/src/systemcmds/sd_bench)
 
 Test the speed of an SD Card
-### Usage {#sd_bench_usage}
+<a id="sd_bench_usage"></a>
+### Usage
 ```
 sd_bench [arguments...]
      [-b <val>]  Block size for each read/write
@@ -527,11 +578,37 @@ sd_bench [arguments...]
                  default: 2000
      [-s]        Call fsync after each block (default=at end of each run)
 ```
+## system_time
+Source: [systemcmds/system_time](https://github.com/PX4/Firmware/tree/master/src/systemcmds/system_time)
+
+
+### Description
+
+Command-line tool to set and get system time.
+
+### Examples
+
+Set the system time and read it back
+```
+system_time set 1600775044
+system_time get
+```
+
+<a id="system_time_usage"></a>
+### Usage
+```
+system_time <command> [arguments...]
+ Commands:
+   set           Set the system time, provide time in unix epoch time format
+
+   get           Get the system time
+```
 ## top
 Source: [systemcmds/top](https://github.com/PX4/Firmware/tree/master/src/systemcmds/top)
 
 Monitor running processes and their CPU, stack usage, priority and state
-### Usage {#top_usage}
+<a id="top_usage"></a>
+### Usage
 ```
 top [arguments...]
    once          print load only once
@@ -541,7 +618,8 @@ Source: [systemcmds/usb_connected](https://github.com/PX4/Firmware/tree/master/s
 
 Utility to check if USB is connected. Was previously used in startup scripts.
 A return value of 0 means USB is connected, 1 otherwise.
-### Usage {#usb_connected_usage}
+<a id="usb_connected_usage"></a>
+### Usage
 ```
 usb_connected [arguments...]
 ```
@@ -549,7 +627,8 @@ usb_connected [arguments...]
 Source: [systemcmds/ver](https://github.com/PX4/Firmware/tree/master/src/systemcmds/ver)
 
 Tool to print various version information
-### Usage {#ver_usage}
+<a id="ver_usage"></a>
+### Usage
 ```
 ver <command> [arguments...]
  Commands:

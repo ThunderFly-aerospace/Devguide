@@ -1,14 +1,16 @@
-# Modules Reference: Estimator
+# 모듈 참고: 추정자
 
 ## AttitudeEstimatorQ
 
 Source: [modules/attitude_estimator_q](https://github.com/PX4/Firmware/tree/master/src/modules/attitude_estimator_q)
 
-### Description
+### 설명
 
-Attitude estimator q.
+자세 추정자 Q 입니다.
 
-### Usage {#AttitudeEstimatorQ_usage}
+<a id="AttitudeEstimatorQ_usage"></a>
+
+### Usage
 
     AttitudeEstimatorQ <command> [arguments...]
      Commands:
@@ -23,11 +25,13 @@ Attitude estimator q.
 
 Source: [modules/airspeed_selector](https://github.com/PX4/Firmware/tree/master/src/modules/airspeed_selector)
 
-### Description
+### 설명
 
-This module provides a single airspeed_validated topic, containing an indicated (IAS), equivalent (EAS), true airspeed (TAS) and the information if the estimation currently is invalid and if based sensor readings or on groundspeed minus windspeed. Supporting the input of multiple "raw" airspeed inputs, this module automatically switches to a valid sensor in case of failure detection. For failure detection as well as for the estimation of a scale factor from IAS to EAS, it runs several wind estimators and also publishes those.
+This module provides a single airspeed_validated topic, containing indicated (IAS), calibrated (CAS), true airspeed (TAS) and the information if the estimation currently is invalid and if based sensor readings or on groundspeed minus windspeed. Supporting the input of multiple "raw" airspeed inputs, this module automatically switches to a valid sensor in case of failure detection. For failure detection as well as for the estimation of a scale factor from IAS to CAS, it runs several wind estimators and also publishes those.
 
-### Usage {#airspeed_estimator_usage}
+<a id="airspeed_estimator_usage"></a>
+
+### Usage
 
     airspeed_estimator <command> [arguments...]
      Commands:
@@ -42,15 +46,17 @@ This module provides a single airspeed_validated topic, containing an indicated 
 
 Source: [modules/ekf2](https://github.com/PX4/Firmware/tree/master/src/modules/ekf2)
 
-### Description
+### 설명
 
 Attitude and position estimator using an Extended Kalman Filter. It is used for Multirotors and Fixed-Wing.
 
-The documentation can be found on the [ECL/EKF Overview & Tuning](https://docs.px4.io/en/advanced_config/tuning_the_ecl_ekf.html) page.
+The documentation can be found on the [ECL/EKF Overview & Tuning](https://docs.px4.io/master/en/advanced_config/tuning_the_ecl_ekf.html) page.
 
 ekf2 can be started in replay mode (`-r`): in this mode it does not access the system time, but only uses the timestamps from the sensor topics.
 
-### Usage {#ekf2_usage}
+<a id="ekf2_usage"></a>
+
+### Usage
 
     ekf2 <command> [arguments...]
      Commands:
@@ -66,11 +72,13 @@ ekf2 can be started in replay mode (`-r`): in this mode it does not access the s
 
 Source: [modules/local_position_estimator](https://github.com/PX4/Firmware/tree/master/src/modules/local_position_estimator)
 
-### Description
+### 설명
 
 Attitude and position estimator using an Extended Kalman Filter.
 
-### Usage {#local_position_estimator_usage}
+<a id="local_position_estimator_usage"></a>
+
+### Usage
 
     local_position_estimator <command> [arguments...]
      Commands:
@@ -85,9 +93,11 @@ Attitude and position estimator using an Extended Kalman Filter.
 
 Source: [modules/mc_hover_thrust_estimator](https://github.com/PX4/Firmware/tree/master/src/modules/mc_hover_thrust_estimator)
 
-### Description
+### 설명
 
-### Usage {#mc_hover_thrust_estimator_usage}
+<a id="mc_hover_thrust_estimator_usage"></a>
+
+### Usage
 
     mc_hover_thrust_estimator <command> [arguments...]
      Commands:

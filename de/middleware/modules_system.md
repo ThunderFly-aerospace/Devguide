@@ -1,5 +1,24 @@
 # Modules Reference: System
 
+## battery_simulator
+
+Source: [modules/simulator/battery_simulator](https://github.com/PX4/Firmware/tree/master/src/modules/simulator/battery_simulator)
+
+### Description
+
+<a id="battery_simulator_usage"></a>
+
+### Usage
+
+    battery_simulator <command> [arguments...]
+     Commands:
+       start
+    
+       stop
+    
+       status        print status info
+    
+
 ## battery_status
 
 Source: [modules/battery_status](https://github.com/PX4/Firmware/tree/master/src/modules/battery_status)
@@ -14,7 +33,9 @@ The provided functionality includes:
 
 It runs in its own thread and polls on the currently selected gyro topic.
 
-### Usage {#battery_status_usage}
+<a id="battery_status_usage"></a>
+
+### Usage
 
     battery_status <command> [arguments...]
      Commands:
@@ -31,7 +52,9 @@ Source: [modules/camera_feedback](https://github.com/PX4/Firmware/tree/master/sr
 
 ### Description
 
-### Usage {#camera_feedback_usage}
+<a id="camera_feedback_usage"></a>
+
+### Usage
 
     camera_feedback <command> [arguments...]
      Commands:
@@ -50,7 +73,9 @@ Source: [modules/commander](https://github.com/PX4/Firmware/tree/master/src/modu
 
 The commander module contains the state machine for mode switching and failsafe behavior.
 
-### Usage {#commander_usage}
+<a id="commander_usage"></a>
+
+### Usage
 
     commander <command> [arguments...]
      Commands:
@@ -59,6 +84,7 @@ The commander module contains the state machine for mode switching and failsafe 
     
        calibrate     Run sensor calibration
          mag|accel|gyro|level|esc|airspeed Calibration type
+         quick       Quick calibration (accel only, not recommended)
     
        check         Run preflight checks
     
@@ -106,7 +132,9 @@ Reading and writing a single item is always atomic. If multiple items need to be
 
 **DM_KEY_FENCE_POINTS** and **DM_KEY_SAFE_POINTS** items: the first data element is a `mission_stats_entry_s` struct, which stores the number of items for these types. These items are always updated atomically in one transaction (from the mavlink mission manager). During that time, navigator will try to acquire the geofence item lock, fail, and will not check for geofence violations.
 
-### Usage {#dataman_usage}
+<a id="dataman_usage"></a>
+
+### Usage
 
     dataman <command> [arguments...]
      Commands:
@@ -143,7 +171,9 @@ Keep printing all messages in the background:
     dmesg -f &
     
 
-### Usage {#dmesg_usage}
+<a id="dmesg_usage"></a>
+
+### Usage
 
     dmesg <command> [arguments...]
      Commands:
@@ -158,9 +188,30 @@ Source: [modules/esc_battery](https://github.com/PX4/Firmware/tree/master/src/mo
 
 This implements using information from the ESC status and publish it as battery status.
 
-### Usage {#esc_battery_usage}
+<a id="esc_battery_usage"></a>
+
+### Usage
 
     esc_battery <command> [arguments...]
+     Commands:
+       start
+    
+       stop
+    
+       status        print status info
+    
+
+## gyro_fft
+
+Source: [examples/gyro_fft](https://github.com/PX4/Firmware/tree/master/src/examples/gyro_fft)
+
+### Description
+
+<a id="gyro_fft_usage"></a>
+
+### Usage
+
+    gyro_fft <command> [arguments...]
      Commands:
        start
     
@@ -179,7 +230,9 @@ Background process running periodically on the LP work queue to regulate IMU tem
 
 This task can be started at boot from the startup scripts by setting SENS_EN_THERMAL or via CLI.
 
-### Usage {#heater_usage}
+<a id="heater_usage"></a>
+
+### Usage
 
     heater <command> [arguments...]
      Commands:
@@ -212,12 +265,14 @@ Every type is implemented in its own class with a common base class. The base cl
 
 The module runs periodically on the HP work queue.
 
-### Usage {#land_detector_usage}
+<a id="land_detector_usage"></a>
+
+### Usage
 
     land_detector <command> [arguments...]
      Commands:
        start         Start the background task
-         fixedwing|multicopter|vtol|rover Select vehicle type
+         fixedwing|multicopter|vtol|rover|airship Select vehicle type
     
        stop
     
@@ -230,11 +285,13 @@ Source: [modules/load_mon](https://github.com/PX4/Firmware/tree/master/src/modul
 
 ### Description
 
-Background process running periodically with 1 Hz on the LP work queue to calculate the CPU load and RAM usage and publish the `cpuload` topic.
+Background process running periodically on the low priority work queue to calculate the CPU load and RAM usage and publish the `cpuload` topic.
 
 On NuttX it also checks the stack usage of each process and if it falls below 300 bytes, a warning is output, which will also appear in the log file.
 
-### Usage {#load_mon_usage}
+<a id="load_mon_usage"></a>
+
+### Usage
 
     load_mon <command> [arguments...]
      Commands:
@@ -283,7 +340,9 @@ Or if already running:
     logger on
     
 
-### Usage {#logger_usage}
+<a id="logger_usage"></a>
+
+### Usage
 
     logger <command> [arguments...]
      Commands:
@@ -320,7 +379,9 @@ Source: [drivers/pwm_input](https://github.com/PX4/Firmware/tree/master/src/driv
 
 Measures the PWM input on AUX5 (or MAIN5) via a timer capture ISR and publishes via the uORB 'pwm_input` message.
 
-### Usage {#pwm_input_usage}
+<a id="pwm_input_usage"></a>
+
+### Usage
 
     pwm_input <command> [arguments...]
      Commands:
@@ -339,13 +400,15 @@ Source: [modules/rc_update](https://github.com/PX4/Firmware/tree/master/src/modu
 
 ### Description
 
-The rc_update module handles RC channel mapping: read the raw input channels (`input_rc`), then apply the calibration, map the RC channels to the configured channels & mode switches, low-pass filter, and then publish as `rc_channels` and `manual_control_setpoint`.
+The rc_update module handles RC channel mapping: read the raw input channels (`input_rc`), then apply the calibration, map the RC channels to the configured channels & mode switches and then publish as `rc_channels` and `manual_control_setpoint`.
 
 ### Implementation
 
 To reduce control latency, the module is scheduled on input_rc publications.
 
-### Usage {#rc_update_usage}
+<a id="rc_update_usage"></a>
+
+### Usage
 
     rc_update <command> [arguments...]
      Commands:
@@ -371,9 +434,11 @@ There are 2 environment variables used for configuration: `replay`, which must b
 
 The module is typically used together with uORB publisher rules, to specify which messages should be replayed. The replay module will just publish all messages that are found in the log. It also applies the parameters from the log.
 
-The replay procedure is documented on the [System-wide Replay](https://dev.px4.io/en/debug/system_wide_replay.html) page.
+The replay procedure is documented on the [System-wide Replay](https://dev.px4.io/master/en/debug/system_wide_replay.html) page.
 
-### Usage {#replay_usage}
+<a id="replay_usage"></a>
+
+### Usage
 
     replay <command> [arguments...]
      Commands:
@@ -398,7 +463,9 @@ Background process running periodically on the LP work queue to perform housekee
 
 The tasks can be started via CLI or uORB topics (vehicle_command from MAVLink, etc.).
 
-### Usage {#send_event_usage}
+<a id="send_event_usage"></a>
+
+### Usage
 
     send_event <command> [arguments...]
      Commands:
@@ -421,13 +488,15 @@ The provided functionality includes:
 
 - Read the output from the sensor drivers (`sensor_gyro`, etc.). If there are multiple of the same type, do voting and failover handling. Then apply the board rotation and temperature calibration (if enabled). And finally publish the data; one of the topics is `sensor_combined`, used by many parts of the system.
 - Make sure the sensor drivers get the updated calibration parameters (scale & offset) when the parameters change or on startup. The sensor drivers use the ioctl interface for parameter updates. For this to work properly, the sensor drivers must already be running when `sensors` is started.
-- Do preflight sensor consistency checks and publish the `sensor_preflight` topic.
+- Do sensor consistency checks and publish the `sensors_status_imu` topic.
 
 ### Implementation
 
 It runs in its own thread and polls on the currently selected gyro topic.
 
-### Usage {#sensors_usage}
+<a id="sensors_usage"></a>
+
+### Usage
 
     sensors <command> [arguments...]
      Commands:
@@ -445,14 +514,16 @@ Source: [modules/temperature_compensation](https://github.com/PX4/Firmware/tree/
 
 ### Description
 
-The temperature compensation module allows all of the gyro(s), accel(s), and baro(s) in the system to be temperature compensated. The module monitors the data coming from the sensors and updates the associated sensor_thermal_cal topic whenever a change in temperature is detected. The module can also be configured to perform the coeffecient calculation routine at next boot, which allows the thermal calibration coeffecients to be calculated while the vehicle undergoes a temperature cycle.
+The temperature compensation module allows all of the gyro(s), accel(s), and baro(s) in the system to be temperature compensated. The module monitors the data coming from the sensors and updates the associated sensor_correction topic whenever a change in temperature is detected. The module can also be configured to perform the coeffecient calculation routine at next boot, which allows the thermal calibration coeffecients to be calculated while the vehicle undergoes a temperature cycle.
 
-### Usage {#temperature_compensation_usage}
+<a id="temperature_compensation_usage"></a>
+
+### Usage
 
     temperature_compensation <command> [arguments...]
      Commands:
        start         Start the module, which monitors the sensors and updates the
-                     sensor_thermal_cal topic
+                     sensor_correction topic
     
        calibrate     Run temperature calibration process
          [-g]        calibrate the gyro
@@ -484,11 +555,14 @@ Play system tune #2:
     tune_control play -t 2
     
 
-### Usage {#tune_control_usage}
+<a id="tune_control_usage"></a>
+
+### Usage
 
     tune_control <command> [arguments...]
      Commands:
        play          Play system tune or single note.
+         error       Play error tune
          [-t <val>]  Play predefined system tune
                      default: 1
          [-f <val>]  Frequency of note in Hz (0-22kHz)
@@ -511,7 +585,9 @@ Source: [systemcmds/work_queue](https://github.com/PX4/Firmware/tree/master/src/
 
 Command-line tool to show work queue status.
 
-### Usage {#work_queue_usage}
+<a id="work_queue_usage"></a>
+
+### Usage
 
     work_queue <command> [arguments...]
      Commands:

@@ -2,19 +2,21 @@
 ## adis16448
 Source: [drivers/imu/adis16448](https://github.com/PX4/Firmware/tree/master/src/drivers/imu/adis16448)
 
-### Usage {#adis16448_usage}
+<a id="adis16448_usage"></a>
+### Usage
 ```
 adis16448 <command> [arguments...]
  Commands:
    start
      [-s]        Internal SPI bus(es)
      [-S]        External SPI bus(es)
-     [-b <val>]  bus (board-specific internal (default=all) or n-th external
+     [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                  (default=1))
      [-c <val>]  chip-select index (for external SPI)
                  default: 1
      [-m <val>]  SPI mode
      [-f <val>]  bus frequency in kHz
+     [-q]        quiet startup (no message if no device found)
      [-R <val>]  Rotation
                  default: 0
 
@@ -25,19 +27,21 @@ adis16448 <command> [arguments...]
 ## adis16477
 Source: [drivers/imu/adis16477](https://github.com/PX4/Firmware/tree/master/src/drivers/imu/adis16477)
 
-### Usage {#adis16477_usage}
+<a id="adis16477_usage"></a>
+### Usage
 ```
 adis16477 <command> [arguments...]
  Commands:
    start
      [-s]        Internal SPI bus(es)
      [-S]        External SPI bus(es)
-     [-b <val>]  bus (board-specific internal (default=all) or n-th external
+     [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                  (default=1))
      [-c <val>]  chip-select index (for external SPI)
                  default: 1
      [-m <val>]  SPI mode
      [-f <val>]  bus frequency in kHz
+     [-q]        quiet startup (no message if no device found)
      [-R <val>]  Rotation
                  default: 0
 
@@ -48,19 +52,21 @@ adis16477 <command> [arguments...]
 ## adis16497
 Source: [drivers/imu/adis16497](https://github.com/PX4/Firmware/tree/master/src/drivers/imu/adis16497)
 
-### Usage {#adis16497_usage}
+<a id="adis16497_usage"></a>
+### Usage
 ```
 adis16497 <command> [arguments...]
  Commands:
    start
      [-s]        Internal SPI bus(es)
      [-S]        External SPI bus(es)
-     [-b <val>]  bus (board-specific internal (default=all) or n-th external
+     [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                  (default=1))
      [-c <val>]  chip-select index (for external SPI)
                  default: 1
      [-m <val>]  SPI mode
      [-f <val>]  bus frequency in kHz
+     [-q]        quiet startup (no message if no device found)
      [-R <val>]  Rotation
                  default: 0
 
@@ -71,19 +77,21 @@ adis16497 <command> [arguments...]
 ## bma180
 Source: [drivers/imu/bma180](https://github.com/PX4/Firmware/tree/master/src/drivers/imu/bma180)
 
-### Usage {#bma180_usage}
+<a id="bma180_usage"></a>
+### Usage
 ```
 bma180 <command> [arguments...]
  Commands:
    start
      [-s]        Internal SPI bus(es)
      [-S]        External SPI bus(es)
-     [-b <val>]  bus (board-specific internal (default=all) or n-th external
+     [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                  (default=1))
      [-c <val>]  chip-select index (for external SPI)
                  default: 1
      [-m <val>]  SPI mode
      [-f <val>]  bus frequency in kHz
+     [-q]        quiet startup (no message if no device found)
      [-R <val>]  Rotation
                  default: 0
 
@@ -92,9 +100,10 @@ bma180 <command> [arguments...]
    status        print status info
 ```
 ## bmi055
-Source: [drivers/imu/bmi055](https://github.com/PX4/Firmware/tree/master/src/drivers/imu/bmi055)
+Source: [drivers/imu/bosch/bmi055](https://github.com/PX4/Firmware/tree/master/src/drivers/imu/bosch/bmi055)
 
-### Usage {#bmi055_usage}
+<a id="bmi055_usage"></a>
+### Usage
 ```
 bmi055 <command> [arguments...]
  Commands:
@@ -103,27 +112,25 @@ bmi055 <command> [arguments...]
      [-G]        Gyro
      [-s]        Internal SPI bus(es)
      [-S]        External SPI bus(es)
-     [-b <val>]  bus (board-specific internal (default=all) or n-th external
+     [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                  (default=1))
      [-c <val>]  chip-select index (for external SPI)
                  default: 1
      [-m <val>]  SPI mode
      [-f <val>]  bus frequency in kHz
+     [-q]        quiet startup (no message if no device found)
      [-R <val>]  Rotation
                  default: 0
-
-   regdump
-
-   testerror
 
    stop
 
    status        print status info
 ```
 ## bmi088
-Source: [drivers/imu/bmi088](https://github.com/PX4/Firmware/tree/master/src/drivers/imu/bmi088)
+Source: [drivers/imu/bosch/bmi088](https://github.com/PX4/Firmware/tree/master/src/drivers/imu/bosch/bmi088)
 
-### Usage {#bmi088_usage}
+<a id="bmi088_usage"></a>
+### Usage
 ```
 bmi088 <command> [arguments...]
  Commands:
@@ -132,18 +139,15 @@ bmi088 <command> [arguments...]
      [-G]        Gyro
      [-s]        Internal SPI bus(es)
      [-S]        External SPI bus(es)
-     [-b <val>]  bus (board-specific internal (default=all) or n-th external
+     [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                  (default=1))
      [-c <val>]  chip-select index (for external SPI)
                  default: 1
      [-m <val>]  SPI mode
      [-f <val>]  bus frequency in kHz
+     [-q]        quiet startup (no message if no device found)
      [-R <val>]  Rotation
                  default: 0
-
-   regdump
-
-   testerror
 
    stop
 
@@ -152,27 +156,23 @@ bmi088 <command> [arguments...]
 ## bmi160
 Source: [drivers/imu/bmi160](https://github.com/PX4/Firmware/tree/master/src/drivers/imu/bmi160)
 
-### Usage {#bmi160_usage}
+<a id="bmi160_usage"></a>
+### Usage
 ```
 bmi160 <command> [arguments...]
  Commands:
    start
      [-s]        Internal SPI bus(es)
      [-S]        External SPI bus(es)
-     [-b <val>]  bus (board-specific internal (default=all) or n-th external
+     [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                  (default=1))
      [-c <val>]  chip-select index (for external SPI)
                  default: 1
      [-m <val>]  SPI mode
      [-f <val>]  bus frequency in kHz
+     [-q]        quiet startup (no message if no device found)
      [-R <val>]  Rotation
                  default: 0
-
-   reset
-
-   regdump
-
-   testerror
 
    stop
 
@@ -181,19 +181,25 @@ bmi160 <command> [arguments...]
 ## fxas21002c
 Source: [drivers/imu/fxas21002c](https://github.com/PX4/Firmware/tree/master/src/drivers/imu/fxas21002c)
 
-### Usage {#fxas21002c_usage}
+<a id="fxas21002c_usage"></a>
+### Usage
 ```
 fxas21002c <command> [arguments...]
  Commands:
    start
+     [-I]        Internal I2C bus(es)
+     [-X]        External I2C bus(es)
      [-s]        Internal SPI bus(es)
      [-S]        External SPI bus(es)
-     [-b <val>]  bus (board-specific internal (default=all) or n-th external
+     [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                  (default=1))
      [-c <val>]  chip-select index (for external SPI)
                  default: 1
      [-m <val>]  SPI mode
      [-f <val>]  bus frequency in kHz
+     [-q]        quiet startup (no message if no device found)
+     [-a <val>]  I2C address
+                 default: 32
      [-R <val>]  Rotation
                  default: 0
 
@@ -208,19 +214,25 @@ fxas21002c <command> [arguments...]
 ## fxos8701cq
 Source: [drivers/imu/fxos8701cq](https://github.com/PX4/Firmware/tree/master/src/drivers/imu/fxos8701cq)
 
-### Usage {#fxos8701cq_usage}
+<a id="fxos8701cq_usage"></a>
+### Usage
 ```
 fxos8701cq <command> [arguments...]
  Commands:
    start
+     [-I]        Internal I2C bus(es)
+     [-X]        External I2C bus(es)
      [-s]        Internal SPI bus(es)
      [-S]        External SPI bus(es)
-     [-b <val>]  bus (board-specific internal (default=all) or n-th external
+     [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                  (default=1))
      [-c <val>]  chip-select index (for external SPI)
                  default: 1
      [-m <val>]  SPI mode
      [-f <val>]  bus frequency in kHz
+     [-q]        quiet startup (no message if no device found)
+     [-a <val>]  I2C address
+                 default: 30
      [-R <val>]  Rotation
                  default: 0
 
@@ -235,19 +247,21 @@ fxos8701cq <command> [arguments...]
 ## icm20602
 Source: [drivers/imu/invensense/icm20602](https://github.com/PX4/Firmware/tree/master/src/drivers/imu/invensense/icm20602)
 
-### Usage {#icm20602_usage}
+<a id="icm20602_usage"></a>
+### Usage
 ```
 icm20602 <command> [arguments...]
  Commands:
    start
      [-s]        Internal SPI bus(es)
      [-S]        External SPI bus(es)
-     [-b <val>]  bus (board-specific internal (default=all) or n-th external
+     [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                  (default=1))
      [-c <val>]  chip-select index (for external SPI)
                  default: 1
      [-m <val>]  SPI mode
      [-f <val>]  bus frequency in kHz
+     [-q]        quiet startup (no message if no device found)
      [-R <val>]  Rotation
                  default: 0
 
@@ -258,19 +272,46 @@ icm20602 <command> [arguments...]
 ## icm20608g
 Source: [drivers/imu/invensense/icm20608g](https://github.com/PX4/Firmware/tree/master/src/drivers/imu/invensense/icm20608g)
 
-### Usage {#icm20608g_usage}
+<a id="icm20608g_usage"></a>
+### Usage
 ```
 icm20608g <command> [arguments...]
  Commands:
    start
      [-s]        Internal SPI bus(es)
      [-S]        External SPI bus(es)
-     [-b <val>]  bus (board-specific internal (default=all) or n-th external
+     [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                  (default=1))
      [-c <val>]  chip-select index (for external SPI)
                  default: 1
      [-m <val>]  SPI mode
      [-f <val>]  bus frequency in kHz
+     [-q]        quiet startup (no message if no device found)
+     [-R <val>]  Rotation
+                 default: 0
+
+   stop
+
+   status        print status info
+```
+## icm20649
+Source: [drivers/imu/invensense/icm20649](https://github.com/PX4/Firmware/tree/master/src/drivers/imu/invensense/icm20649)
+
+<a id="icm20649_usage"></a>
+### Usage
+```
+icm20649 <command> [arguments...]
+ Commands:
+   start
+     [-s]        Internal SPI bus(es)
+     [-S]        External SPI bus(es)
+     [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
+                 (default=1))
+     [-c <val>]  chip-select index (for external SPI)
+                 default: 1
+     [-m <val>]  SPI mode
+     [-f <val>]  bus frequency in kHz
+     [-q]        quiet startup (no message if no device found)
      [-R <val>]  Rotation
                  default: 0
 
@@ -281,19 +322,21 @@ icm20608g <command> [arguments...]
 ## icm20689
 Source: [drivers/imu/invensense/icm20689](https://github.com/PX4/Firmware/tree/master/src/drivers/imu/invensense/icm20689)
 
-### Usage {#icm20689_usage}
+<a id="icm20689_usage"></a>
+### Usage
 ```
 icm20689 <command> [arguments...]
  Commands:
    start
      [-s]        Internal SPI bus(es)
      [-S]        External SPI bus(es)
-     [-b <val>]  bus (board-specific internal (default=all) or n-th external
+     [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                  (default=1))
      [-c <val>]  chip-select index (for external SPI)
                  default: 1
      [-m <val>]  SPI mode
      [-f <val>]  bus frequency in kHz
+     [-q]        quiet startup (no message if no device found)
      [-R <val>]  Rotation
                  default: 0
 
@@ -302,23 +345,24 @@ icm20689 <command> [arguments...]
    status        print status info
 ```
 ## icm20948
-Source: [drivers/imu/icm20948](https://github.com/PX4/Firmware/tree/master/src/drivers/imu/icm20948)
+Source: [drivers/imu/invensense/icm20948](https://github.com/PX4/Firmware/tree/master/src/drivers/imu/invensense/icm20948)
 
-### Usage {#icm20948_usage}
+<a id="icm20948_usage"></a>
+### Usage
 ```
 icm20948 <command> [arguments...]
  Commands:
    start
-     [-I]        Internal I2C bus(es)
-     [-X]        External I2C bus(es)
      [-s]        Internal SPI bus(es)
      [-S]        External SPI bus(es)
-     [-b <val>]  bus (board-specific internal (default=all) or n-th external
+     [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                  (default=1))
      [-c <val>]  chip-select index (for external SPI)
                  default: 1
      [-m <val>]  SPI mode
      [-f <val>]  bus frequency in kHz
+     [-q]        quiet startup (no message if no device found)
+     [-M]        Enable Magnetometer (AK8963)
      [-R <val>]  Rotation
                  default: 0
 
@@ -329,19 +373,46 @@ icm20948 <command> [arguments...]
 ## icm40609d
 Source: [drivers/imu/invensense/icm40609d](https://github.com/PX4/Firmware/tree/master/src/drivers/imu/invensense/icm40609d)
 
-### Usage {#icm40609d_usage}
+<a id="icm40609d_usage"></a>
+### Usage
 ```
 icm40609d <command> [arguments...]
  Commands:
    start
      [-s]        Internal SPI bus(es)
      [-S]        External SPI bus(es)
-     [-b <val>]  bus (board-specific internal (default=all) or n-th external
+     [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                  (default=1))
      [-c <val>]  chip-select index (for external SPI)
                  default: 1
      [-m <val>]  SPI mode
      [-f <val>]  bus frequency in kHz
+     [-q]        quiet startup (no message if no device found)
+     [-R <val>]  Rotation
+                 default: 0
+
+   stop
+
+   status        print status info
+```
+## icm42605
+Source: [drivers/imu/invensense/icm42605](https://github.com/PX4/Firmware/tree/master/src/drivers/imu/invensense/icm42605)
+
+<a id="icm42605_usage"></a>
+### Usage
+```
+icm42605 <command> [arguments...]
+ Commands:
+   start
+     [-s]        Internal SPI bus(es)
+     [-S]        External SPI bus(es)
+     [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
+                 (default=1))
+     [-c <val>]  chip-select index (for external SPI)
+                 default: 1
+     [-m <val>]  SPI mode
+     [-f <val>]  bus frequency in kHz
+     [-q]        quiet startup (no message if no device found)
      [-R <val>]  Rotation
                  default: 0
 
@@ -352,19 +423,21 @@ icm40609d <command> [arguments...]
 ## icm42688p
 Source: [drivers/imu/invensense/icm42688p](https://github.com/PX4/Firmware/tree/master/src/drivers/imu/invensense/icm42688p)
 
-### Usage {#icm42688p_usage}
+<a id="icm42688p_usage"></a>
+### Usage
 ```
 icm42688p <command> [arguments...]
  Commands:
    start
      [-s]        Internal SPI bus(es)
      [-S]        External SPI bus(es)
-     [-b <val>]  bus (board-specific internal (default=all) or n-th external
+     [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                  (default=1))
      [-c <val>]  chip-select index (for external SPI)
                  default: 1
      [-m <val>]  SPI mode
      [-f <val>]  bus frequency in kHz
+     [-q]        quiet startup (no message if no device found)
      [-R <val>]  Rotation
                  default: 0
 
@@ -375,19 +448,21 @@ icm42688p <command> [arguments...]
 ## ism330dlc
 Source: [drivers/imu/st/ism330dlc](https://github.com/PX4/Firmware/tree/master/src/drivers/imu/st/ism330dlc)
 
-### Usage {#ism330dlc_usage}
+<a id="ism330dlc_usage"></a>
+### Usage
 ```
 ism330dlc <command> [arguments...]
  Commands:
    start
      [-s]        Internal SPI bus(es)
      [-S]        External SPI bus(es)
-     [-b <val>]  bus (board-specific internal (default=all) or n-th external
+     [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                  (default=1))
      [-c <val>]  chip-select index (for external SPI)
                  default: 1
      [-m <val>]  SPI mode
      [-f <val>]  bus frequency in kHz
+     [-q]        quiet startup (no message if no device found)
      [-R <val>]  Rotation
                  default: 0
 
@@ -400,19 +475,21 @@ ism330dlc <command> [arguments...]
 ## l3gd20
 Source: [drivers/imu/l3gd20](https://github.com/PX4/Firmware/tree/master/src/drivers/imu/l3gd20)
 
-### Usage {#l3gd20_usage}
+<a id="l3gd20_usage"></a>
+### Usage
 ```
 l3gd20 <command> [arguments...]
  Commands:
    start
      [-s]        Internal SPI bus(es)
      [-S]        External SPI bus(es)
-     [-b <val>]  bus (board-specific internal (default=all) or n-th external
+     [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                  (default=1))
      [-c <val>]  chip-select index (for external SPI)
                  default: 1
      [-m <val>]  SPI mode
      [-f <val>]  bus frequency in kHz
+     [-q]        quiet startup (no message if no device found)
      [-R <val>]  Rotation
                  default: 0
 
@@ -427,19 +504,21 @@ l3gd20 <command> [arguments...]
 ## lsm303d
 Source: [drivers/imu/lsm303d](https://github.com/PX4/Firmware/tree/master/src/drivers/imu/lsm303d)
 
-### Usage {#lsm303d_usage}
+<a id="lsm303d_usage"></a>
+### Usage
 ```
 lsm303d <command> [arguments...]
  Commands:
    start
      [-s]        Internal SPI bus(es)
      [-S]        External SPI bus(es)
-     [-b <val>]  bus (board-specific internal (default=all) or n-th external
+     [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                  (default=1))
      [-c <val>]  chip-select index (for external SPI)
                  default: 1
      [-m <val>]  SPI mode
      [-f <val>]  bus frequency in kHz
+     [-q]        quiet startup (no message if no device found)
      [-R <val>]  Rotation
                  default: 0
 
@@ -450,19 +529,21 @@ lsm303d <command> [arguments...]
 ## lsm9ds1
 Source: [drivers/imu/st/lsm9ds1](https://github.com/PX4/Firmware/tree/master/src/drivers/imu/st/lsm9ds1)
 
-### Usage {#lsm9ds1_usage}
+<a id="lsm9ds1_usage"></a>
+### Usage
 ```
 lsm9ds1 <command> [arguments...]
  Commands:
    start
      [-s]        Internal SPI bus(es)
      [-S]        External SPI bus(es)
-     [-b <val>]  bus (board-specific internal (default=all) or n-th external
+     [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                  (default=1))
      [-c <val>]  chip-select index (for external SPI)
                  default: 1
      [-m <val>]  SPI mode
      [-f <val>]  bus frequency in kHz
+     [-q]        quiet startup (no message if no device found)
      [-R <val>]  Rotation
                  default: 0
 
@@ -473,19 +554,21 @@ lsm9ds1 <command> [arguments...]
 ## mpu6000
 Source: [drivers/imu/invensense/mpu6000](https://github.com/PX4/Firmware/tree/master/src/drivers/imu/invensense/mpu6000)
 
-### Usage {#mpu6000_usage}
+<a id="mpu6000_usage"></a>
+### Usage
 ```
 mpu6000 <command> [arguments...]
  Commands:
    start
      [-s]        Internal SPI bus(es)
      [-S]        External SPI bus(es)
-     [-b <val>]  bus (board-specific internal (default=all) or n-th external
+     [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                  (default=1))
      [-c <val>]  chip-select index (for external SPI)
                  default: 1
      [-m <val>]  SPI mode
      [-f <val>]  bus frequency in kHz
+     [-q]        quiet startup (no message if no device found)
      [-R <val>]  Rotation
                  default: 0
 
@@ -496,7 +579,8 @@ mpu6000 <command> [arguments...]
 ## mpu9250
 Source: [drivers/imu/mpu9250](https://github.com/PX4/Firmware/tree/master/src/drivers/imu/mpu9250)
 
-### Usage {#mpu9250_usage}
+<a id="mpu9250_usage"></a>
+### Usage
 ```
 mpu9250 <command> [arguments...]
  Commands:
@@ -505,12 +589,13 @@ mpu9250 <command> [arguments...]
      [-X]        External I2C bus(es)
      [-s]        Internal SPI bus(es)
      [-S]        External SPI bus(es)
-     [-b <val>]  bus (board-specific internal (default=all) or n-th external
+     [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                  (default=1))
      [-c <val>]  chip-select index (for external SPI)
                  default: 1
      [-m <val>]  SPI mode
      [-f <val>]  bus frequency in kHz
+     [-q]        quiet startup (no message if no device found)
      [-R <val>]  Rotation
                  default: 0
 
@@ -521,19 +606,21 @@ mpu9250 <command> [arguments...]
 ## mpu9520
 Source: [drivers/imu/invensense/mpu6500](https://github.com/PX4/Firmware/tree/master/src/drivers/imu/invensense/mpu6500)
 
-### Usage {#mpu9520_usage}
+<a id="mpu9520_usage"></a>
+### Usage
 ```
 mpu9520 <command> [arguments...]
  Commands:
    start
      [-s]        Internal SPI bus(es)
      [-S]        External SPI bus(es)
-     [-b <val>]  bus (board-specific internal (default=all) or n-th external
+     [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                  (default=1))
      [-c <val>]  chip-select index (for external SPI)
                  default: 1
      [-m <val>]  SPI mode
      [-f <val>]  bus frequency in kHz
+     [-q]        quiet startup (no message if no device found)
      [-R <val>]  Rotation
                  default: 0
 

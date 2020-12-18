@@ -5,8 +5,9 @@
 Source: [drivers/telemetry/frsky_telemetry](https://github.com/PX4/Firmware/tree/master/src/drivers/telemetry/frsky_telemetry)
 
 FrSky Telemetry support. Auto-detects D or S.PORT protocol.
+<a id="frsky_telemetry_usage"></a>
 
-### Usage {#frsky_telemetry_usage}
+### Usage
 
     frsky_telemetry <command> [arguments...]
      Commands:
@@ -16,7 +17,8 @@ FrSky Telemetry support. Auto-detects D or S.PORT protocol.
          [-t <val>]  Scanning timeout [s] (default: no timeout)
                      default: 0
          [-m <val>]  Select protocol (default: auto-detect)
-                     values: sport|sport_single|dtype, default: auto
+                     values: sport|sport_single|sport_single_invert|dtype, default:
+                     auto
     
        stop
     
@@ -54,7 +56,9 @@ Start mavlink on UDP port 14556 and enable the HIGHRES_IMU message with 50Hz:
     mavlink stream -u 14556 -s HIGHRES_IMU -r 50
     
 
-### Usage {#mavlink_usage}
+<a id="mavlink_usage"></a>
+
+### Usage
 
     mavlink <command> [arguments...]
      Commands:
@@ -85,7 +89,8 @@ Start mavlink on UDP port 14556 and enable the HIGHRES_IMU message with 50Hz:
          [-f]        Enable message forwarding to other Mavlink instances
          [-w]        Wait to send, until first message received
          [-x]        Enable FTP
-         [-z]        Force flow control always on
+         [-z]        Force hardware flow control always on
+         [-Z]        Force hardware flow control always off
     
        stop-all      Stop all instances
     
@@ -107,7 +112,9 @@ Start mavlink on UDP port 14556 and enable the HIGHRES_IMU message with 50Hz:
 
 Source: [modules/micrortps_bridge/micrortps_client](https://github.com/PX4/Firmware/tree/master/src/modules/micrortps_bridge/micrortps_client)
 
-### Usage {#micrortps_client_usage}
+<a id="micrortps_client_usage"></a>
+
+### Usage
 
     micrortps_client <command> [arguments...]
      Commands:
@@ -130,6 +137,9 @@ Source: [modules/micrortps_bridge/micrortps_client](https://github.com/PX4/Firmw
                      default: 2020
          [-i <val>]  Select IP address (remote)
                      values: <x.x.x.x>, default: 127.0.0.1
+         [-f]        Activate UART link SW flow control
+         [-h]        Activate UART link HW flow control
+         [-v]        Add more verbosity
     
        stop
     
@@ -165,7 +175,9 @@ Monitor topic publication rates. Besides `top`, this is an important command for
     uorb top
     
 
-### Usage {#uorb_usage}
+<a id="uorb_usage"></a>
+
+### Usage
 
     uorb <command> [arguments...]
      Commands:
@@ -174,6 +186,7 @@ Monitor topic publication rates. Besides `top`, this is an important command for
        status        Print topic statistics
     
        top           Monitor topic publication rates
-         [-a]        print all instead of only currently publishing topics
+         [-a]        print all instead of only currently publishing topics with
+                     subscribers
          [-1]        run only once, then exit
          [<filter1> [<filter2>]] topic(s) to match (implies -a)

@@ -6,23 +6,51 @@ Subcategories:
 - [Distance Sensor](modules_driver_distance_sensor.md)
 - [Airspeed Sensor](modules_driver_airspeed_sensor.md)
 - [Baro](modules_driver_baro.md)
+- [Optical Flow](modules_driver_optical_flow.md)
 - [Magnetometer](modules_driver_magnetometer.md)
 
 ## adc
 
-Source: [drivers/adc](https://github.com/PX4/Firmware/tree/master/src/drivers/adc)
+Source: [drivers/adc/board_adc](https://github.com/PX4/Firmware/tree/master/src/drivers/adc/board_adc)
 
 ### Description
 
 ADC driver.
 
-### Usage {#adc_usage}
+<a id="adc_usage"></a>
+
+### Usage
 
     adc <command> [arguments...]
      Commands:
        start
     
        test
+    
+       stop
+    
+       status        print status info
+    
+
+## ads1115
+
+Source: [drivers/adc/ads1115](https://github.com/PX4/Firmware/tree/master/src/drivers/adc/ads1115)
+
+<a id="ads1115_usage"></a>
+
+### Usage
+
+    ads1115 <command> [arguments...]
+     Commands:
+       start
+         [-I]        Internal I2C bus(es)
+         [-X]        External I2C bus(es)
+         [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
+                     (default=1))
+         [-f <val>]  bus frequency in kHz
+         [-q]        quiet startup (no message if no device found)
+         [-a <val>]  I2C address
+                     default: 72
     
        stop
     
@@ -39,19 +67,22 @@ OSD driver for the ATXXXX chip that is mounted on the OmnibusF4SD board for exam
 
 It can be enabled with the OSD_ATXXXX_CFG parameter.
 
-### Usage {#atxxxx_usage}
+<a id="atxxxx_usage"></a>
+
+### Usage
 
     atxxxx <command> [arguments...]
      Commands:
        start
          [-s]        Internal SPI bus(es)
          [-S]        External SPI bus(es)
-         [-b <val>]  bus (board-specific internal (default=all) or n-th external
+         [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                      (default=1))
          [-c <val>]  chip-select index (for external SPI)
                      default: 1
          [-m <val>]  SPI mode
          [-f <val>]  bus frequency in kHz
+         [-q]        quiet startup (no message if no device found)
     
        stop
     
@@ -73,16 +104,19 @@ To write to flash to set parameters. address, number_of_bytes, byte0, ... , byte
     batt_smbus -X write_flash 19069 2 27 0
     
 
-### Usage {#batt_smbus_usage}
+<a id="batt_smbus_usage"></a>
+
+### Usage
 
     batt_smbus <command> [arguments...]
      Commands:
        start
          [-I]        Internal I2C bus(es)
          [-X]        External I2C bus(es)
-         [-b <val>]  bus (board-specific internal (default=all) or n-th external
+         [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                      (default=1))
          [-f <val>]  bus frequency in kHz
+         [-q]        quiet startup (no message if no device found)
          [-a <val>]  I2C address
                      default: 11
     
@@ -112,16 +146,19 @@ To write to flash to set parameters. address, number_of_bytes, byte0, ... , byte
 
 Source: [drivers/lights/blinkm](https://github.com/PX4/Firmware/tree/master/src/drivers/lights/blinkm)
 
-### Usage {#blinkm_usage}
+<a id="blinkm_usage"></a>
+
+### Usage
 
     blinkm <command> [arguments...]
      Commands:
        start
          [-I]        Internal I2C bus(es)
          [-X]        External I2C bus(es)
-         [-b <val>]  bus (board-specific internal (default=all) or n-th external
+         [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                      (default=1))
          [-f <val>]  bus frequency in kHz
+         [-q]        quiet startup (no message if no device found)
          [-a <val>]  I2C address
                      default: 9
     
@@ -144,16 +181,19 @@ Source: [drivers/lights/blinkm](https://github.com/PX4/Firmware/tree/master/src/
 
 Source: [drivers/telemetry/bst](https://github.com/PX4/Firmware/tree/master/src/drivers/telemetry/bst)
 
-### Usage {#bst_usage}
+<a id="bst_usage"></a>
+
+### Usage
 
     bst <command> [arguments...]
      Commands:
        start
          [-I]        Internal I2C bus(es)
          [-X]        External I2C bus(es)
-         [-b <val>]  bus (board-specific internal (default=all) or n-th external
+         [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                      (default=1))
          [-f <val>]  bus frequency in kHz
+         [-q]        quiet startup (no message if no device found)
          [-a <val>]  I2C address
                      default: 118
     
@@ -186,7 +226,9 @@ Permanently reverse motor 1:
 
 After saving, the reversed direction will be regarded as the normal one. So to reverse again repeat the same commands.
 
-### Usage {#dshot_usage}
+<a id="dshot_usage"></a>
+
+### Usage
 
     dshot <command> [arguments...]
      Commands:
@@ -264,6 +306,46 @@ After saving, the reversed direction will be regarded as the normal one. So to r
        status        print status info
     
 
+## fake_gyro
+
+Source: [examples/fake_gyro](https://github.com/PX4/Firmware/tree/master/src/examples/fake_gyro)
+
+### Description
+
+<a id="fake_gyro_usage"></a>
+
+### Usage
+
+    fake_gyro <command> [arguments...]
+     Commands:
+       start
+    
+       stop
+    
+       status        print status info
+    
+
+## fake_magnetometer
+
+Source: [examples/fake_magnetometer](https://github.com/PX4/Firmware/tree/master/src/examples/fake_magnetometer)
+
+### Description
+
+Publish the earth magnetic field as a fake magnetometer (sensor_mag). Requires vehicle_attitude and vehicle_gps_position.
+
+<a id="fake_magnetometer_usage"></a>
+
+### Usage
+
+    fake_magnetometer <command> [arguments...]
+     Commands:
+       start
+    
+       stop
+    
+       status        print status info
+    
+
 ## gps
 
 Source: [drivers/gps](https://github.com/PX4/Firmware/tree/master/src/drivers/gps)
@@ -296,7 +378,9 @@ Initiate warm restart of GPS device
     gps reset warm
     
 
-### Usage {#gps_usage}
+<a id="gps_usage"></a>
+
+### Usage
 
     gps <command> [arguments...]
      Commands:
@@ -312,6 +396,8 @@ Initiate warm restart of GPS device
          [-f]        Fake a GPS signal (useful for testing)
          [-s]        Enable publication of satellite info
          [-i <val>]  GPS interface
+                     values: spi|uart, default: uart
+         [-j <val>]  secondary GPS interface
                      values: spi|uart, default: uart
          [-p <val>]  GPS Protocol (default=auto select)
                      values: ubx|mtk|ash|eml
@@ -338,16 +424,19 @@ For example, one instance can run on Bus 2, address 0x41, and one can run on Bus
 
 If the INA226 module is not powered, then by default, initialization of the driver will fail. To change this, use the -f flag. If this flag is set, then if initialization fails, the driver will keep trying to initialize again every 0.5 seconds. With this flag set, you can plug in a battery after the driver starts, and it will work. Without this flag set, the battery must be plugged in before starting the driver.
 
-### Usage {#ina226_usage}
+<a id="ina226_usage"></a>
+
+### Usage
 
     ina226 <command> [arguments...]
      Commands:
        start
          [-I]        Internal I2C bus(es)
          [-X]        External I2C bus(es)
-         [-b <val>]  bus (board-specific internal (default=all) or n-th external
+         [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                      (default=1))
          [-f <val>]  bus frequency in kHz
+         [-q]        quiet startup (no message if no device found)
          [-a <val>]  I2C address
                      default: 65
          [-k]        if initialization (probing) fails, keep retrying periodically
@@ -363,20 +452,21 @@ If the INA226 module is not powered, then by default, initialization of the driv
 
 Source: [drivers/irlock](https://github.com/PX4/Firmware/tree/master/src/drivers/irlock)
 
-### Usage {#irlock_usage}
+<a id="irlock_usage"></a>
+
+### Usage
 
     irlock <command> [arguments...]
      Commands:
        start
          [-I]        Internal I2C bus(es)
          [-X]        External I2C bus(es)
-         [-b <val>]  bus (board-specific internal (default=all) or n-th external
+         [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                      (default=1))
          [-f <val>]  bus frequency in kHz
+         [-q]        quiet startup (no message if no device found)
          [-a <val>]  I2C address
                      default: 84
-    
-       test
     
        stop
     
@@ -387,19 +477,22 @@ Source: [drivers/irlock](https://github.com/PX4/Firmware/tree/master/src/drivers
 
 Source: [drivers/magnetometer/lsm303agr](https://github.com/PX4/Firmware/tree/master/src/drivers/magnetometer/lsm303agr)
 
-### Usage {#lsm303agr_usage}
+<a id="lsm303agr_usage"></a>
+
+### Usage
 
     lsm303agr <command> [arguments...]
      Commands:
        start
          [-s]        Internal SPI bus(es)
          [-S]        External SPI bus(es)
-         [-b <val>]  bus (board-specific internal (default=all) or n-th external
+         [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                      (default=1))
          [-c <val>]  chip-select index (for external SPI)
                      default: 1
          [-m <val>]  SPI mode
          [-f <val>]  bus frequency in kHz
+         [-q]        quiet startup (no message if no device found)
          [-R <val>]  Rotation
                      default: 0
     
@@ -412,20 +505,23 @@ Source: [drivers/magnetometer/lsm303agr](https://github.com/PX4/Firmware/tree/ma
 
 Source: [drivers/optical_flow/paw3902](https://github.com/PX4/Firmware/tree/master/src/drivers/optical_flow/paw3902)
 
-### Usage {#paw3902_usage}
+<a id="paw3902_usage"></a>
+
+### Usage
 
     paw3902 <command> [arguments...]
      Commands:
        start
          [-s]        Internal SPI bus(es)
          [-S]        External SPI bus(es)
-         [-b <val>]  bus (board-specific internal (default=all) or n-th external
+         [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                      (default=1))
          [-c <val>]  chip-select index (for external SPI)
                      default: 1
          [-m <val>]  SPI mode
          [-f <val>]  bus frequency in kHz
-         [-R <val>]  Rotation
+         [-q]        quiet startup (no message if no device found)
+         [-Y <val>]  custom yaw rotation (degrees)
                      default: 0
     
        stop
@@ -437,16 +533,19 @@ Source: [drivers/optical_flow/paw3902](https://github.com/PX4/Firmware/tree/mast
 
 Source: [drivers/pca9685](https://github.com/PX4/Firmware/tree/master/src/drivers/pca9685)
 
-### Usage {#pca9685_usage}
+<a id="pca9685_usage"></a>
+
+### Usage
 
     pca9685 <command> [arguments...]
      Commands:
        start
          [-I]        Internal I2C bus(es)
          [-X]        External I2C bus(es)
-         [-b <val>]  bus (board-specific internal (default=all) or n-th external
+         [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                      (default=1))
          [-f <val>]  bus frequency in kHz
+         [-q]        quiet startup (no message if no device found)
     
        reset
     
@@ -478,9 +577,11 @@ It is typically started with:
     pca9685_pwm_out start -a 64 -b 1
     
 
-Use the `mixer` command to load mixer files. `mixer load /dev/pca9685 ROMFS/px4fmu_common/mixers/quad_x.main.mix`
+Use the `mixer` command to load mixer files. `mixer load /dev/pwm_outputX etc/mixers/quad_x.main.mix` The number X can be acquired by executing `pca9685_pwm_out status` when this driver is running.
 
-### Usage {#pca9685_pwm_out_usage}
+<a id="pca9685_pwm_out_usage"></a>
+
+### Usage
 
     pca9685_pwm_out <command> [arguments...]
      Commands:
@@ -489,6 +590,8 @@ Use the `mixer` command to load mixer files. `mixer load /dev/pca9685 ROMFS/px4f
                      default: 64
          [-b <val>]  bus that pca9685 is connected to
                      default: 1
+         [-r <val>]  schedule rate limit
+                     default: 400
     
        stop
     
@@ -499,16 +602,19 @@ Use the `mixer` command to load mixer files. `mixer load /dev/pca9685 ROMFS/px4f
 
 Source: [drivers/rpm/pcf8583](https://github.com/PX4/Firmware/tree/master/src/drivers/rpm/pcf8583)
 
-### Usage {#pcf8583_usage}
+<a id="pcf8583_usage"></a>
+
+### Usage
 
     pcf8583 <command> [arguments...]
      Commands:
        start
          [-I]        Internal I2C bus(es)
          [-X]        External I2C bus(es)
-         [-b <val>]  bus (board-specific internal (default=all) or n-th external
+         [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                      (default=1))
          [-f <val>]  bus frequency in kHz
+         [-q]        quiet startup (no message if no device found)
     
        stop
     
@@ -519,19 +625,22 @@ Source: [drivers/rpm/pcf8583](https://github.com/PX4/Firmware/tree/master/src/dr
 
 Source: [drivers/optical_flow/pmw3901](https://github.com/PX4/Firmware/tree/master/src/drivers/optical_flow/pmw3901)
 
-### Usage {#pmw3901_usage}
+<a id="pmw3901_usage"></a>
+
+### Usage
 
     pmw3901 <command> [arguments...]
      Commands:
        start
          [-s]        Internal SPI bus(es)
          [-S]        External SPI bus(es)
-         [-b <val>]  bus (board-specific internal (default=all) or n-th external
+         [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                      (default=1))
          [-c <val>]  chip-select index (for external SPI)
                      default: 1
          [-m <val>]  SPI mode
          [-f <val>]  bus frequency in kHz
+         [-q]        quiet startup (no message if no device found)
          [-R <val>]  Rotation
                      default: 0
     
@@ -577,7 +686,9 @@ This will enable capturing on the 4th pin. Then do:
 
 Use the `pwm` command for further configurations (PWM rate, levels, ...), and the `mixer` command to load mixer files.
 
-### Usage {#pwm_out_usage}
+<a id="pwm_out_usage"></a>
+
+### Usage
 
     pwm_out <command> [arguments...]
      Commands:
@@ -642,7 +753,9 @@ Its only function is to take `actuator_control` uORB messages, mix them with any
 
 It is used in SITL and HITL.
 
-### Usage {#pwm_out_sim_usage}
+<a id="pwm_out_sim_usage"></a>
+
+### Usage
 
     pwm_out_sim <command> [arguments...]
      Commands:
@@ -659,16 +772,19 @@ It is used in SITL and HITL.
 
 Source: [drivers/optical_flow/px4flow](https://github.com/PX4/Firmware/tree/master/src/drivers/optical_flow/px4flow)
 
-### Usage {#px4flow_usage}
+<a id="px4flow_usage"></a>
+
+### Usage
 
     px4flow <command> [arguments...]
      Commands:
        start
          [-I]        Internal I2C bus(es)
          [-X]        External I2C bus(es)
-         [-b <val>]  bus (board-specific internal (default=all) or n-th external
+         [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                      (default=1))
          [-f <val>]  bus frequency in kHz
+         [-q]        quiet startup (no message if no device found)
          [-a <val>]  I2C address
                      default: 66
          [-R <val>]  Rotation (default=downwards)
@@ -694,7 +810,9 @@ This module does the RC input parsing and auto-selecting the method. Supported m
 - ST24
 - TBS Crossfire (CRSF)
 
-### Usage {#rc_input_usage}
+<a id="rc_input_usage"></a>
+
+### Usage
 
     rc_input <command> [arguments...]
      Commands:
@@ -713,16 +831,19 @@ This module does the RC input parsing and auto-selecting the method. Supported m
 
 Source: [drivers/lights/rgbled_ncp5623c](https://github.com/PX4/Firmware/tree/master/src/drivers/lights/rgbled_ncp5623c)
 
-### Usage {#rgbled_usage}
+<a id="rgbled_usage"></a>
+
+### Usage
 
     rgbled <command> [arguments...]
      Commands:
        start
          [-I]        Internal I2C bus(es)
          [-X]        External I2C bus(es)
-         [-b <val>]  bus (board-specific internal (default=all) or n-th external
+         [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                      (default=1))
          [-f <val>]  bus frequency in kHz
+         [-q]        quiet startup (no message if no device found)
          [-a <val>]  I2C address
                      default: 57
     
@@ -769,7 +890,9 @@ All available commands are:
 - `$ roboclaw status`
 - `$ roboclaw stop`
 
-### Usage {#roboclaw_usage}
+<a id="roboclaw_usage"></a>
+
+### Usage
 
     roboclaw <command> [arguments...]
      Commands:
@@ -783,7 +906,9 @@ Source: [drivers/safety_button](https://github.com/PX4/Firmware/tree/master/src/
 
 This module is responsible for the safety button. Pressing the safety button 3 times quickly will trigger a GCS pairing request.
 
-### Usage {#safety_button_usage}
+<a id="safety_button_usage"></a>
+
+### Usage
 
     safety_button <command> [arguments...]
      Commands:
@@ -810,7 +935,9 @@ Currently the module is implementd as a threaded version only, meaning that it r
 
 The module is typically started with: tap_esc start -d /dev/ttyS2 -n <1-8>
 
-### Usage {#tap_esc_usage}
+<a id="tap_esc_usage"></a>
+
+### Usage
 
     tap_esc <command> [arguments...]
      Commands:
@@ -821,6 +948,27 @@ The module is typically started with: tap_esc start -d /dev/ttyS2 -n <1-8>
                      default: 4
     
 
+## tone_alarm
+
+Source: [drivers/tone_alarm](https://github.com/PX4/Firmware/tree/master/src/drivers/tone_alarm)
+
+### Description
+
+This module is responsible for the tone alarm.
+
+<a id="tone_alarm_usage"></a>
+
+### Usage
+
+    tone_alarm <command> [arguments...]
+     Commands:
+       start
+    
+       stop
+    
+       status        print status info
+    
+
 ## vmount
 
 Source: [modules/vmount](https://github.com/PX4/Firmware/tree/master/src/modules/vmount)
@@ -829,7 +977,7 @@ Source: [modules/vmount](https://github.com/PX4/Firmware/tree/master/src/modules
 
 Mount (Gimbal) control driver. It maps several different input methods (eg. RC or MAVLink) to a configured output (eg. AUX channels or MAVLink).
 
-Documentation how to use it is on the [gimbal_control](https://dev.px4.io/en/advanced/gimbal_control.html) page.
+Documentation how to use it is on the [gimbal_control](https://dev.px4.io/master/en/advanced/gimbal_control.html) page.
 
 ### Implementation
 
@@ -843,7 +991,9 @@ Test the output by setting a fixed yaw angle (and the other axes to 0):
     vmount test yaw 30
     
 
-### Usage {#vmount_usage}
+<a id="vmount_usage"></a>
+
+### Usage
 
     vmount <command> [arguments...]
      Commands:
@@ -862,17 +1012,21 @@ Test the output by setting a fixed yaw angle (and the other axes to 0):
 
 Source: [drivers/power_monitor/voxlpm](https://github.com/PX4/Firmware/tree/master/src/drivers/power_monitor/voxlpm)
 
-### Usage {#voxlpm_usage}
+<a id="voxlpm_usage"></a>
+
+### Usage
 
     voxlpm [arguments...]
        start
          [-I]        Internal I2C bus(es)
          [-X]        External I2C bus(es)
-         [-b <val>]  bus (board-specific internal (default=all) or n-th external
+         [-b <val>]  board-specific bus (default=all) (external SPI: n-th bus
                      (default=1))
          [-f <val>]  bus frequency in kHz
+         [-q]        quiet startup (no message if no device found)
          [-T <val>]  Type
-                     values: VBATT|P5VDC, default: VBATT
+                     values: VBATT|P5VDC|P12VDC, default: VBATT
+         [-k]        if initialization (probing) fails, keep retrying periodically
     
        stop
     

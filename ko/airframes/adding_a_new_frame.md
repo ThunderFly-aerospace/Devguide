@@ -1,27 +1,31 @@
-# Adding a New Airframe Configuration
+# 새 에어프레임 설정 추가
 
-PX4 uses canned airframe configurations as starting point for airframes. The configurations are defined in [config files](#config-file) that are stored in the [ROMFS/px4fmu_common/init.d](https://github.com/PX4/Firmware/tree/master/ROMFS/px4fmu_common/init.d) folder. The config files reference [mixer files](#mixer-file) that describe the physical configuration of the system, and which are stored in the [ROMFS/px4fmu_common/mixers](https://github.com/PX4/Firmware/tree/master/ROMFS/px4fmu_common/mixers) folder.
+PX4에서는 에어프레임 시작점과 같은 설정값을 잘 포장한 에어프레임 설정을 활용합니다. 설정값들은 [ROMFS/px4fmu_common/init.d](https://github.com/PX4/PX4-Autopilot/tree/master/ROMFS/px4fmu_common/init.d)폴더에 저장된 [설정 파일](#config-file) 에 정의되어 있습니다. 설정 파일들은 [믹서 파일](#mixer-file)을 참조합니다. 이 파일은 시스템의 물리 설정을 기술하며, [ROMFS/px4fmu_common/mixers](https://github.com/PX4/PX4-Autopilot/tree/master/ROMFS/px4fmu_common/mixers)폴더에 저장되어 있습니다.
 
-Adding a configuration is straightforward: create a new config file in the [init.d folder](https://github.com/PX4/Firmware/tree/master/ROMFS/px4fmu_common/init.d) (prepend the filename with an unused autostart ID), then [build and upload](../setup/building_px4.md) the software.
+Adding a configuration is straightforward: create a new config file in the [init.d/airframes folder](https://github.com/PX4/PX4-Autopilot/tree/master/ROMFS/px4fmu_common/init.d/airframes) (prepend the filename with an unused autostart ID), add the name of your new airframe config file to the [CMakeLists.txt](https://github.com/PX4/PX4-Autopilot/blob/master/ROMFS/px4fmu_common/init.d/airframes/CMakeLists.txt) in the relevant section, then [build and upload](../setup/building_px4.md) the software.
 
-Developers who do not want to create their own configuration can instead customize existing configurations using text files on the microSD card, as detailed on the [custom system startup](../concept/system_startup.md) page.
+자체 설정을 만들고 싶지 않은 개발자는 대신 [개별 시스템 시작](../concept/system_startup.md) 페이지에서 자세하게 설명한 대로 microSD 카드에서 텍스트 파일로 이루어진 기존 설정을 약간 고칠 수 있습니다.
 
-## Configuration File Overview
+> **Note** To determine which parameters/values need to be set in the configuration file, you can first assign a generic airframe and tune the vehicle, and then use [`param show-for-airframe`](../middleware/modules_command.html#param) to list the parameters that changed.
 
-The configuration in the config and mixer files consists of several main blocks:
+## 설정 파일 개요
 
-* Airframe documentation (used in the [Airframes Reference](../airframes/airframe_reference.md) and *QGroundControl*).
-* Vehicle-specific parameter settings, including [tuning gains](#tuning-gains).
-* The controllers and apps it should start, e.g. multicopter or fixed wing controllers, land detectors etc.
-* The physical configuration of the system (e.g. a plane, wing or multicopter). This is called a [mixer](../concept/mixing.md).
+설정 파일과 믹서 파일의 설정 내용은 몇가지 메인 블록으로 이루어져있습니다:
 
-These aspects are mostly independent, which means that many configurations share the same physical layout of the airframe, start the same applications and differ most in their tuning gains.
+* 에어프레임 문서([에어프레임 참조](../airframes/airframe_reference.md)와 *QGroundControl*에서 사용).
+* [게인 조정](#tuning-gains)을 동반한 기체별 매개변수 설정.
+* 시작해야 할 컨트롤러와 프로그램 (예: 멀티콥터, 고정익 컨트롤러, 착륙 감지자 등)
+* 시스템 물리 설정(예: 비행체, 날개, 멀티콥터 등). 이 부분을 [믹서](../concept/mixing.md)라 칭합니다.
+
+대부분 독립적인 측면이 있는데 많은 설정이 에어프레임의 동일한 물리 형체를 공유하고 동일한 프로그램을 시작하며, 게인 조정에 있어서만 다름을 의미합니다.
 
 > **Note** New airframe files are only automatically added to the build system after a clean build (run `make clean`).
 
-### Config File {#config-file}
+<a id="config-file"></a>
 
-A typical configuration file is shown below ([original file here](https://github.com/PX4/Firmware/blob/master/ROMFS/px4fmu_common/init.d/airframes/3033_wingwing)).
+### Config File
+
+A typical configuration file is shown below ([original file here](https://github.com/PX4/PX4-Autopilot/blob/master/ROMFS/px4fmu_common/init.d/airframes/3033_wingwing)).
 
 The first section is the airframe documentation. This is used in the [Airframes Reference](../airframes/airframe_reference.md) and *QGroundControl*.
 
@@ -30,7 +34,7 @@ The first section is the airframe documentation. This is used in the [Airframes 
 #
 # @name Wing Wing (aka Z-84) Flying Wing
 #
-# @url https://docs.px4.io/en/framebuild_plane/wing_wing_z84.html
+# @url https://docs.px4.io/master/en/framebuild_plane/wing_wing_z84.html
 #
 # @type Flying Wing
 # @class Plane
@@ -52,7 +56,7 @@ The next section specifies vehicle-specific parameters, including [tuning gains]
 ```bash
 sh /etc/init.d/rc.fw_defaults
 
-if [ $AUTOCNF == yes ]
+if [ $AUTOCNF = yes ]
 then
   param set BAT_N_CELLS 2
   param set FW_AIRSPD_MAX 15
@@ -98,11 +102,13 @@ set PWM_DISARMED 1000
 
 > **Warning** If you want to reverse a channel, never do this on your RC transmitter or with e.g `RC1_REV`. The channels are only reversed when flying in manual mode, when you switch in an autopilot flight mode, the channels output will still be wrong (it only inverts your RC signal). Thus for a correct channel assignment change either your PWM signals with `PWM_MAIN_REV1` (e.g. for channel one) or change the signs of the output scaling in the corresponding mixer (see below).
 
-### Mixer File {#mixer-file}
+<a id="mixer-file"></a>
+
+### Mixer File
 
 > **Note** First read [Concepts > Mixing](../concept/mixing.md). This provides background information required to interpret this mixer file.
 
-A typical mixer file is shown below ([original file here](https://github.com/PX4/Firmware/blob/master/ROMFS/px4fmu_common/mixers/wingwing.main.mix)). A mixer filename, in this case `wingwing.main.mix`, gives important information about the type of airframe (`wingwing`), the type of output (`.main` or `.aux`) and lastly that it is a mixer file (`.mix`).
+A typical mixer file is shown below ([original file here](https://github.com/PX4/PX4-Autopilot/blob/master/ROMFS/px4fmu_common/mixers/wingwing.main.mix)). A mixer filename, in this case `wingwing.main.mix`, gives important information about the type of airframe (`wingwing`), the type of output (`.main` or `.aux`) and lastly that it is a mixer file (`.mix`).
 
 The mixer file contains several blocks of code, each of which refers to one actuator or ESC. So if you have e.g. two servos and one ESC, the mixer file will contain three blocks of code.
 
@@ -120,12 +126,12 @@ A mixer is encoded in normalized units from -10000 to 10000, corresponding to -1
 
 Where each number from left to right means:
 
-* M: Indicates two scalers for two control inputs. It indicates the number of control inputs the mixer will receive.
-* O: Indicates the output scaling (*1 in negative, *1 in positive), offset (zero here), and output range (-1..+1 here).  
-  * If you want to invert your PWM signal, the signs of the output scalings have to be changed: ```O:      -10000  -10000      0 -10000  10000```
-  * This line can (and should) be omitted completely if it specifies the default scaling: ```O:      10000  10000   0 -10000  10000```
-* S: Indicates the first input scaler: It takes input from control group #0 (Flight Control) and the first input (roll). It scales the roll control input * 0.6 and reverts the sign (-0.6 becomes -6000 in scaled units). It applies no offset (0) and outputs to the full range (-1..+1)
-* S: Indicates the second input scaler: It takes input from control group #0 (Flight Control) and the second input (pitch). \ It scales the pitch control input * 0.65. It applies no offset (0) and outputs to the full range (-1..+1)
+* M: 두개의 제어 입력에 대해 스케일러가 둘 있음을 나타냅니다. 믹서가 받을 제어 입력의 수를 나타냅니다.
+* O: 출력 계수(음의 *1 , 양의 *1), 오프셋(여기서는 0), 출력 범위(여기서는 -1..+1)를 나타냅니다.  
+  * PWM 신호를 반전하려면 출력 계수를 바꾸어야 합니다: ```O:      -10000  -10000      0 -10000  10000```
+  * 기본 계수를 지정할 경우 이 행은 완전히 생략할 수 있습니다(또는 생략해야 합니다): ```O:      10000  10000   0 -10000  10000```
+* S: 첫 입력 계수를 나타냅니다. 제어 그룹 #0 (비행체 제어)와 처음 입력(roll - 좌우 회전각) 의 입력을 취합니다. 좌우 회전각 제어 입력의 0.6배 조정하며 부호를 반전합니다(스케일 단위에 따라 -0.6은 -6000이 됨). 오프셋을 반영하지 않으며, 전체 범위(-1..+1)로 출력합니다.
+* S: 두번째 입력 계수를 나타냅니다. 제어 그룹 #0 (비행체 제어)와 두번째 입력(roll - 상하 회전각)의 입력값을 취합니다. 상하 회전각 제어 입력의 0.65배로 조정합니다. 오프셋을 반영하지 않으며 전체 범위(-1..+1)로 출력합니다.
 
 > **Note** In short, the output of this mixer would be SERVO = ( (roll input \* -0.6 + 0) \* 1 + (pitch input \* 0.65 + 0) \* 1 ) \* 1 + 0
 
@@ -154,7 +160,7 @@ Elevon mixers
 Three scalers total (output, roll, pitch).
 
 The scaling factor for roll inputs is adjusted to implement differential travel
-for the elevons. 
+for the elevons.
 
 This first block of code is for Servo 0...
 
@@ -170,8 +176,8 @@ O:      10000  10000      0 -10000  10000
 S: 0 0  -6000  -6000      0 -10000  10000
 S: 0 1  -6500  -6500      0 -10000  10000
 
-Note that in principle, you could implement left/right wing asymmetric mixing, but in general the two blocks of code will be numerically equal, and just differ by the sign of the third line (S: 0 1), since to roll the plane, the two ailerons must move in OPPOSITE directions. 
-The signs of the second lines (S: 0 0) are indentical, since to pitch the plane, both servos need to move in the SAME direction. 
+Note that in principle, you could implement left/right wing asymmetric mixing, but in general the two blocks of code will be numerically equal, and just differ by the sign of the third line (S: 0 1), since to roll the plane, the two ailerons must move in OPPOSITE directions.
+The signs of the second lines (S: 0 0) are indentical, since to pitch the plane, both servos need to move in the SAME direction.
 
 Output 2
 --------
@@ -192,20 +198,20 @@ S: 0 3      0  20000 -10000 -10000  10000
 
 ```
 
-## Adding a New Airframe Group
+## 새 에어프레임 그룹 추가
 
-Airframe "groups" are used to group similar airframes for selection in [QGroundControl](https://docs.qgroundcontrol.com/en/SetupView/Airframe.html) and in the *Airframe Reference* documentation ([PX4 DevGuide](../airframes/airframe_reference.md) and [PX4 UserGuide](https://docs.px4.io/en/airframes/airframe_reference.html)). Every group has a name, and an associated svg image which shows the common geometry, number of motors, and direction of motor rotation for the grouped airframes.
+Airframe "groups" are used to group similar airframes for selection in [QGroundControl](https://docs.qgroundcontrol.com/en/SetupView/Airframe.html) and in the *Airframe Reference* documentation ([PX4 DevGuide](../airframes/airframe_reference.md) and [PX4 UserGuide](https://docs.px4.io/master/en/airframes/airframe_reference.html)). Every group has a name, and an associated svg image which shows the common geometry, number of motors, and direction of motor rotation for the grouped airframes.
 
 The airframe metadata files used by *QGroundControl* and the documentation source code are generated from the airframe description, via a script, using the build command: `make airframe_metadata`
 
-For a new airframe belonging to an existing group, you don't need to do anything more than provide documentation in the airframe description located at [ROMFS/px4fmu_common/init.d](https://github.com/PX4/Firmware/tree/master/ROMFS/px4fmu_common/init.d).
+For a new airframe belonging to an existing group, you don't need to do anything more than provide documentation in the airframe description located at [ROMFS/px4fmu_common/init.d](https://github.com/PX4/PX4-Autopilot/tree/master/ROMFS/px4fmu_common/init.d).
 
 If the airframe is for a **new group** you additionally need to:
 
-1. Add the svg image for the group into documentation repos (if no image is provided a placeholder image is displayed): 
-  * PX4 Development Guide: [assets/airframes/types](https://github.com/PX4/Devguide/tree/master/assets/airframes/types)
-  * PX4 User Guide: [assets/airframes/types](https://github.com/PX4/px4_user_guide/tree/master/assets/airframes/types)
-2. Add a mapping between the new group name and image filename in the [srcparser.py](https://github.com/PX4/Firmware/blob/master/Tools/px4airframes/srcparser.py) method `GetImageName()` (follow the pattern below): 
+1. 분류에 해당하는 svg 이미지를 문서 저장소에 추가하십시오(이미지를 넣지 않으면 삽입 안내 이미지가 뜹니다): 
+  * PX4 개발 안내서: [assets/airframes/types](https://github.com/PX4/Devguide/tree/master/assets/airframes/types)
+  * PX4 사용 안내서: [assets/airframes/types](https://github.com/PX4/px4_user_guide/tree/master/assets/airframes/types)
+2. Add a mapping between the new group name and image filename in the [srcparser.py](https://github.com/PX4/PX4-Autopilot/blob/master/Tools/px4airframes/srcparser.py) method `GetImageName()` (follow the pattern below): 
       def GetImageName(self):
            """
            Get parameter group image base name (w/o extension)
@@ -218,9 +224,9 @@ If the airframe is for a **new group** you additionally need to:
       ...
            return "AirframeUnknown"
 
-3. Update *QGroundControl*: 
-  * Add the svg image for the group into: [src/AutopilotPlugins/Common/images](https://github.com/mavlink/qgroundcontrol/tree/master/src/AutoPilotPlugins/Common/Images)
-  * Add reference to the svg image into [qgcimages.qrc](https://github.com/mavlink/qgroundcontrol/blob/master/qgcimages.qrc), following the pattern below: 
+3. *QGroundControl*을 업데이트하십시오: 
+  * 여러 svg 이미지를 [src/AutopilotPlugins/Common/images](https://github.com/mavlink/qgroundcontrol/tree/master/src/AutoPilotPlugins/Common/Images)에 추가하십시오
+  * 다음 반복 규칙을 참고하여 svg 이미지 참조를 [qgcimages.qrc](https://github.com/mavlink/qgroundcontrol/blob/master/qgcimages.qrc) 파일에 추가하십시오: 
         <qresource prefix="/qmlimages">
             ...
             <file alias="Airframe/AirframeSimulation">src/AutoPilotPlugins/Common/Images/AirframeSimulation.svg</file>
@@ -229,30 +235,30 @@ If the airframe is for a **new group** you additionally need to:
             <file alias="Airframe/FlyingWing">src/AutoPilotPlugins/Common/Images/FlyingWing.svg</file>
             ... > 
     
-    **Note** The remaining airframe metadata should be automatically included in the firmware (once **srcparser.py** is updated). 
+    **Note** 에어프레임 메타데이터의 이름을 바꾸면 (**srcparser.py**를 업데이트한 후) 펌웨어에 자동으로 반영(include)되어야 합니다.
 
-## Tuning Gains
+## 게인 조정
 
 The following *PX4 User Guide* topics explain how to tune the parameters that will be specified in the config file:
 
-* [Multicopter PID Tuning Guide](https://docs.px4.io/en/advanced_config/pid_tuning_guide_multicopter.html)
-* [Fixed Wing PID Tuning Guide](https://docs.px4.io/en/advanced_config/pid_tuning_guide_fixedwing.html)
-* [VTOL Configuration](https://docs.px4.io/en/config_vtol/)
+* [멀티콥터 PID 조정 안내](https://docs.px4.io/master/en/advanced_config/pid_tuning_guide_multicopter.html)
+* [고정익 PID 조정 안내](https://docs.px4.io/master/en/advanced_config/pid_tuning_guide_fixedwing.html)
+* [수직 이착륙기 설정](https://docs.px4.io/master/en/config_vtol/)
 
-## Add New Airframe to QGroundControl
+## QGroundControl에 새 에어프레임 추가
 
-To make a new airframe available for section in the *QGroundControl* [airframe configuration](https://docs.px4.io/en/config/airframe.html):
+To make a new airframe available for section in the *QGroundControl* [airframe configuration](https://docs.px4.io/master/en/config/airframe.html):
 
-1. Make a clean build (e.g. by running `make clean` and then `make px4_fmu-v5_default`)
-2. Open QGC and select **Custom firmware file...** as shown below:
+1. 빌드한 바이너리를 정리하고 다시 빌드하십시오(예: `make clean` 명령 수행 후 `make px4_fmu-v5_default` 실행)
+2. QGC를 열어 다음과 같이 **사용자 정의 펌웨어 파일...**을 선택하십시오:
   
-  ![QGC flash custom firmware](../../assets/gcs/qgc_flash_custom_firmware.png)
+  ![QGC 플래시 개별 펌웨어](../../assets/gcs/qgc_flash_custom_firmware.png)
   
-  You will be asked to choose the **.px4** firmware file to flash (this file is a zipped JSON file and contains the airframe metadata).
+  플래싱할 **.px4** 펌웨어 파일을 선택하라는 요청을 받습니다(이 파일은 zip으로 압축한 JSON 파일이며, 에어프레임 메타데이터가 들어있습니다).
 
-3. Navigate to the build folder and select the firmware file (e.g. **Firmware/build/px4_fmu-v5_default/px4_fmu-v5_default.px4**).
+3. Navigate to the build folder and select the firmware file (e.g. **PX4-Autopilot/build/px4_fmu-v5_default/px4_fmu-v5_default.px4**).
 
-4. Press **OK** to start flashing the firmware.
-5. Restart *QGroundControl*.
+4. **확인**을 눌러 펌웨어 플래싱을 시작하십시오.
+5. *QGroundControl*을 다시 시작하십시오.
 
 The new airframe will then be available for selection in *QGroundControl*.

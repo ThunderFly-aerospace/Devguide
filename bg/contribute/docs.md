@@ -123,7 +123,7 @@ In overview:
 * A file named **book.json** defines any dependencies of the build.
 * A web hook is used to track whenever files are merged into the master branch on this repository, causing the book to rebuild.
 
-## Style guide
+### Style guide
 
 1. Files/file names
 
@@ -187,7 +187,9 @@ Everything you need to install and build Gitbook locally is also explained in th
         sh
         gitbook help
 
-## Translations {#translation}
+<a id="translation"></a>
+
+## Translations
 
 We'd love your help to translate *QGroundControl* and our guides for PX4, *QGroundControl* and MAVLink. For more information see: [Translation](../contribute/translation.md).
 

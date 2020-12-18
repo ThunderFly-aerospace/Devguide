@@ -28,10 +28,10 @@ To setup the development environment:
 To build the firmware (i.e. for px4_fmu-v4):
 1. Enter the following commands in the bash shell:
    ```
-   cd ~/src/Firmware
+   cd ~/src/PX4-Autopilot
    make px4_fmu-v4_default
    ```
-   On successful completion you'll find the firmware here: `Firmware/build/px4_fmu-v4_default/px4_fmu-v4_default.px4`
+   On successful completion you'll find the firmware here: `PX4-Autopilot/build/px4_fmu-v4_default/px4_fmu-v4_default.px4`
 
    > **Note** The `make` commands to build firmware for other boards can be found in [Building the Code](../setup/building_px4.md#nuttx)
 
@@ -55,7 +55,7 @@ To run JMAVSim:
    ```
    The JMAVSim UI is then displayed in XMing as shown below:
 
-   ![jMAVSimOnWindows](../../assets/simulation/JMAVSim_on_Windows.PNG)
+   ![jMAVSimOnWindows](../../assets/simulation/jmavsim_on_windows.png)
 
 > **Caution** Gazebo can similarly be run within Ubuntu Bash for Windows, but too slow to be useful. To try this, follow the [ROS kinetic install guide](http://wiki.ros.org/kinetic/Installation/Ubuntu) and run Gazebo in the Bash shell as shown:
   ```sh
@@ -65,7 +65,8 @@ To run JMAVSim:
  ```
 
 
-### Build Script Details {#build_script_details}
+<a id="build_script_details"></a>
+### Build Script Details
 
 The <a href="https://raw.githubusercontent.com/PX4/Devguide/{{ book.px4_version }}/build_scripts/windows_bash_nuttx.sh">windows_bash_nuttx.sh</a> build script modifies the Ubuntu build instructions to remove Ubuntu-specific and UI-dependent components, including the *Qt Creator* IDE and the simulators.
 

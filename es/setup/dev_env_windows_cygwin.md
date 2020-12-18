@@ -12,47 +12,53 @@ La toolchain soporta:
 
 En esta página se explica cómo descargar y usar el entorno y cómo puede ser ampliado y actualizado si es necesario (por ejemplo, para utilizar un compilador diferente).
 
-## Instrucciones de Instalación {#installation}
+<a id="installation"></a>
+
+## Installation Instructions
 
 1. Download the latest version of the ready-to-use MSI installer from: [Github releases](https://github.com/PX4/windows-toolchain/releases) or [Amazon S3](https://s3-us-west-2.amazonaws.com/px4-tools/PX4+Windows+Cygwin+Toolchain/PX4+Windows+Cygwin+Toolchain+0.9.msi) (fast download).
-2. Run it, choose your desired installation location, let it install: ![jMAVSimOnWindows](../../assets/toolchain/cygwin_toolchain_installer.PNG)
+2. Run it, choose your desired installation location, let it install: ![jMAVSimOnWindows](../../assets/toolchain/cygwin_toolchain_installer.png)
 3. Marque la casilla al final de la instalación para *clonar el repositorio PX4, compilar y ejecuta la simulación con jMAVSim* (Esto simplifica el proceso para empezar).
     
-    > **Note** If you missed this step you will need to [clone the PX4 Firmware repository manually](#getting_started).
+    > **Note** If you missed this step you will need to [clone the PX4-Autopilot repository manually](#getting_started).
 
-## Primeros pasos {#getting_started}
+<a id="getting_started"></a>
 
-La toolchain utiliza una ventana de consola especialmente configurada (iniciada ejecutando el script **run-console.bat**) desde el que se puede llamar a los comandos de compilación de PX4:
+## Getting Started
+
+The toolchain uses a specially configured console window (started by running the **run-console.bat** script) from which you can call the normal PX4 build commands:
 
 1. Busque el directorio de instalación de la toolchain (por defecto **C:\PX4**)
 2. Ejecute **run-console.bat** (doble click) para iniciar la consola de bash de Cygwin
-3. Clone el repositorio de la PX4 Firmware desde la consola:
+3. Clone the PX4 PX4-Autopilot repository from within the console:
     
     > **Nota** ¡La clonación solo necesita hacerse una vez! Omita este paso si usted marcó la opción del instalador para *clonar el repositorio PX4, compilar y ejecutar la simulación con jMAVSim*.
     
     ```bash
-    # Clona el repositorio del Firmware PX4 en la carpeta de inicio & carga submódulos en paralelo
-    git clone--recursive-j8 https://github.com/PX4/Firmware.git
+    # Clone the PX4-Autopilot repository into the home folder & loads submodules in parallel
+    git clone --recursive -j8 https://github.com/PX4/PX4-Autopilot.git
     ```
     
-    Ahora puede usar el repositorio de Firmware de consola para compilar PX4.
+    You can now use the console/PX4-Autopilot repository to build PX4.
 
 4. Por ejemplo, para ejecutar JMAVSim:
     
     ```bash
-    # Navegue al repo Firmware
-    cd Firmware
-    # Compile y ejecute la simulación SITL con jMAVSim para probar la configuración
+    # Navigate to PX4-Autopilot repo
+    cd PX4-Autopilot
+    # Build and runs SITL simulation with jMAVSim to test the setup
     make px4_sitl jmavsim
     ```
     
     La consola mostrará:
     
-    ![jMAVSimOnWindows](../../assets/simulation/jmavsim_windows_cygwin.PNG)
+    ![jMAVSimOnWindows](../../assets/simulation/jmavsim_windows_cygwin.png)
 
-Continúe en las [instrucciones que detallan cómo compilar PX4](../setup/building_px4.md)(o consulte la siguiente sección para obtener instrucciones de uso más general).
+Continue next to [the detailed instructions on how to build PX4](../setup/building_px4.md) (or see the section below for more general usage instructions).
 
-## Instrucciones de uso {#usage_instructions}
+<a id="usage_instructions"></a>
+
+## Usage Instructions
 
 The installation directory (default: **C:\PX4**) contains a batch script for launching the PX4 SITL (linux like) bash console: **run-console.bat**
 
@@ -60,11 +66,17 @@ The installation directory (default: **C:\PX4**) contains a batch script for lau
 
 The ordinary workflow consists of starting a console window by double clicking on the **run-console.bat** script to manually run terminal commands.
 
-### Windows & Casos especiales en Git
+### File Monitoring Tools vs Toolchain Speed
+
+Antivirus and other background file monitoring tools can significantly slow down both installation of the toolchain and PX4 build times.
+
+You may wish to halt them temporarily during builds (at your own risk).
+
+### Windows & Git Special Cases
 
 #### Finales de linea Windows CR+LF vs Unix LF
 
-We recommend that you force Unix style LF endings for every repository you're working with using this toolchain (and use an editor which preserves them when saving your changes - e.g. Eclipse or VS Code). Compilation of source files also works with CR+LF endings checked out locally, but there are cases in Cygwin (e.g. execution of shell scripts) that require Unix line endings ( otherwise you get errors like `$'\r': Command not found.`). Luckily git can do this for you when you execute the two commands in the root directory of your repo:
+We recommend that you force Unix style LF endings for every repository you're working with using this toolchain (and use an editor which preserves them when saving your changes - e.g. Eclipse or VS Code). Compilation of source files also works with CR+LF endings checked out locally, but there are cases in Cygwin (e.g. execution of shell scripts) that require Unix line endings (otherwise you get errors like `$'\r': Command not found.`). Luckily git can do this for you when you execute the two commands in the root directory of your repo:
 
     git config core.autocrlf false
     git config core.eol lf
@@ -99,7 +111,9 @@ For existing repositories that have this problem caused by a local configuration
 
 ## Información adicional
 
-### Features / Issues {#features}
+<a id="features"></a>
+
+### Features / Issues
 
 The following features are known to work (version 2.0):
 
@@ -116,7 +130,9 @@ Omissions:
 * Only NuttX and JMAVSim/SITL builds are supported.
 * [Known problems](https://github.com/orgs/PX4/projects/6) (Also use to report issues).
 
-### Instalación Shell Script {#script_setup}
+<a id="script_setup"></a>
+
+### Shell Script Installation
 
 You can also install the environment using shell scripts in the Github project.
 
@@ -128,9 +144,11 @@ You can also install the environment using shell scripts in the Github project.
     
 
 1. Si desea instalar todos los componentes navegue a la carpeta recién clonada y haga doble clic en el script `install-all-components.bat` ubicado en la carpeta `toolchain`. Si solo necesitas ciertos componentes y quieres ahorrar tráfico de internet o espacio en disco puedes navegar a la carpeta de componente, como por ejemplo `toolchain\cygwin64`, y hacer click en el script **install-XXX.bat** para solo tener encuenta ese específico.
-2. Continúe con [Introducción](#getting_started) (o [Instrucciones de Uso](#usage_instructions)) 
+2. Continúe con [Introducción](#getting_started) (o [Instrucciones de Uso](#usage_instructions))
 
-### Manual de instalación (para desarrolladores de Toolchain) {#manual_setup}
+<a id="manual_setup"></a>
+
+### Manual Installation (for Toolchain Developers)
 
 This section describes how to setup the Cygwin toolchain manually yourself while pointing to the corresponding scripts from the script based installation repo. The result should be the same as using the scripts or MSI installer.
 
@@ -190,7 +208,7 @@ This section describes how to setup the Cygwin toolchain manually yourself while
 
 4. Instala el JDK:
     
-    * Descargar el [**Instalador de Kit de desarrollo Java**](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html).
+    * Download Java 14 from [Oracle](https://www.oracle.com/java/technologies/javase-jdk14-downloads.html) or [AdoptOpenJDK](https://adoptopenjdk.net/).
     * Porque lamentablemente no hay ningún archivo portable que contenga los binarios directamente, tienes que instalarlos.
     * Encuentra los binarios y muevelos/copialos a **C:\PX4\toolchain\jdk**.
     * Puede desinstalar el Kit de su sistema Windows otra vez, sólo necesitábamos los binarios para la toolchain.

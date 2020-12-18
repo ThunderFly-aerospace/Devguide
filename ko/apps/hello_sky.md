@@ -1,29 +1,29 @@
-# First Application Tutorial (Hello Sky)
+# 첫 프로그램 자습서(Hello Sky)
 
-This topic explains how to create and run your first onboard application. It covers all the basic concepts and APIs required for app development on PX4.
+이 주제에서는 보드상에서 처음 실행하는 프로그램을 작성하고 실행하는 방법을 설명합니다. PX4 기반 프로그램을 개발할 때 필요한 기본 개념과 API를 다룹니다.
 
-> **Note** For simplicity, more advanced features like start/stop functionality and command-line arguments are omitted. These are covered in [Application/Module Template](../apps/module_template.md).
+> **Note** 기능의 시작/중단, 명령행 인자와 같은 고급 기능은 간결성을 위하여 제외하였습니다. [프로그램/모듈 서식](../apps/module_template.md)에서 이러한 내용을 다룹니다.
 
-## Prerequisites
+## 사전 준비 사항
 
-You will require the following:
+다음의 항목이 필요합니다.
 
-* [PX4 SITL Simulator](../simulation/README.md) *or* a [PX4-compatible flight controller](https://docs.px4.io/master/en/flight_controller/#documented-boards).
-* [PX4 Development Toolchain](../setup/dev_env.md) for the desired target.
-* [Download the PX4 Source Code](../setup/building_px4.md#get_px4_code) from Github
+* [PX4 SITL 모의 시험환경](../simulation/README.md) * 혹은 * [PX4-호환 비행체 제어 장치](https://docs.px4.io/master/en/flight_controller/#documented-boards).
+* 사용할 타겟용 [PX4 개발 툴체인](../setup/dev_env.md).
+* Github에서 [PX4 소스 코드 다운로드](../setup/building_px4.md#get_px4_code)
 
-The source code [Firmware/src/examples/px4_simple_app](https://github.com/PX4/Firmware/tree/master/src/examples/px4_simple_app) directory contains a completed version of this tutorial that you can review if you get stuck.
+본 튜토리얼 진행 중 어려움에 막혔을 때 참고할 수 있는 완성된 버전은 [PX4-Autopilot/src/examples/px4_simple_app](https://github.com/PX4/PX4-Autopilot/tree/master/src/examples/px4_simple_app) 소스 코드 디렉터리에 있습니다.
 
-* Rename (or delete) the **px4_simple_app** directory. 
+* **px4_simple_app** 디렉터리의 이름을 변경(또는 삭제)하십시오. 
 
-## Minimal Application
+## 간단한 프로그램
 
-In this section we create a *minimal application* that just prints out `Hello Sky!`. This consists of a single *C* file and a *cmake* definition (which tells the toolchain how to build the application).
+여기에서는 `Hello Sky!` 만을 출력하는 *간단한 프로그램*을 만들어보겠습니다. 하나의 *C* 파일과 하나의 *cmake* 정의(프로그램 빌드 방법을 툴체인에게 지시)로 구성됩니다.
 
-1. Create a new directory **Firmware/src/examples/px4_simple_app**.
-2. Create a new C file in that directory named **px4_simple_app.c**:
+1. **PX4-Autopilot/src/examples/px4_simple_app** 디렉터리를 새로 만드십시오.
+2. **px4_simple_app.c** 이름의 C 파일을 새로 만드십시오:
 
-* Copy in the default header to the top of the page. This should be present in all contributed files!
+* 기본 헤더를 페이지 최상단에 복사하십시오. 이 BSD 3-Clauses 라이선스 주석은 모든 기여 파일에 있어야 합니다.
     
     ```c /**************************************************************************** *
     
@@ -57,7 +57,7 @@ In this section we create a *minimal application* that just prints out `Hello Sk
     * POSSIBILITY OF SUCH DAMAGE.
     * ****************************************************************************/ ```
 
-* Copy the following code below the default header. This should be present in all contributed files!
+* 기본 헤더 아래에 다음 코드를 복사하십시오. 소스 코드 설명과 작성자 시그니쳐는 모든 파일에 있어야합니다!
     
     ```c /**
     
@@ -72,13 +72,13 @@ In this section we create a *minimal application* that just prints out `Hello Sk
         
         int px4_simple_app_main(int argc, char *argv[]) { PX4_INFO("Hello Sky!"); return OK; } ```
         
-        > **Tip** The main function must be named `<module_name>_main` and exported from the module as shown.
+        > **Tip** 메인 함수의 이름은 `<module_name>_main`으로 붙어야 하며, 나타난 바와 같이 모듈로 뺄 수 있어야합니다.
         
         <span></span>
         
-        > **Tip** `PX4_INFO` is the equivalent of `printf` for the PX4 shell (included from **px4_platform_common/log.h**). There are different log levels: `PX4_INFO`, `PX4_WARN`, `PX4_ERR`, `PX4_DEBUG`. Warnings and errors are additionally added to the [ULog](../log/ulog_file_format.md) and shown on [Flight Review](https://logs.px4.io/).
+        > **Tip** PX4 쉘에서 `PX4_INFO`는 `printf`에 해당합니다(**px4_platform_common/log.h**에서 끌어옴) 4단계의 로그 레벨 `PX4_INFO`, `PX4_WARN`, `PX4_ERR`, `PX4_DEBUG`이 있습니다. 경고와 오류는 [ULog](../log/ulog_file_format.md)에 추가로 들어가고 [Flight Review](https://logs.px4.io/)에서 나타납니다.
 
-1. Create and open a new *cmake* definition file named **CMakeLists.txt**. Copy in the text below:
+1. **CMakeLists.txt**이름의 *cmake* 정의 파일을 만들고 여십시오. 아래 텍스트를 파일에 복사하십시오.
     
     ```cmake
     ############################################################################
@@ -123,53 +123,56 @@ In this section we create a *minimal application* that just prints out `Hello Sk
     )
     ```
     
-    The `px4_add_module()` method builds a static library from a module description. The `MAIN` block lists the name of the module - this registers the command with NuttX so that it can be called from the PX4 shell or SITL console.
+    `px4_add_module()` 메서드는 모듈 설명에 따라 정적 라이브러리를 빌드합니다.
     
-    > **Tip** The `px4_add_module()` format is documented in [Firmware/cmake/px4_add_module.cmake](https://github.com/PX4/Firmware/blob/{{ book.px4_version }}/cmake/px4_add_module.cmake).
+    * `MODULE` 블록에서는 모듈의 펌웨어 식별 이름입니다(작명 원칙에 따르면 모듈 이름은 `src` 뒤에 상위 디렉터리 이름으로 붙습니다).
+    * `MAIN` 블록에는 NuttX 명령을 등록하는 모듈 항목을 나열하므로, PX4 셸 또는 SITL 콘솔에서 호출할 수 있습니다.
+    
+    > **Tip** `px4_add_module()` 의 형식은 [PX4-Autopilot/cmake/px4_add_module.cmake](https://github.com/PX4/PX4-Autopilot/blob/{{ book.px4_version }}/cmake/px4_add_module.cmake)에 들어 있습니다.
     
     <span></span>
     
-    > **Note** If you specify `DYNAMIC` as an option to `px4_add_module`, a *shared library* is created instead of a static library on POSIX platforms (these can be loaded without having to recompile PX4, and shared to others as binaries rather than source code). Your app will not become a builtin command, but ends up in a separate file called `examples__px4_simple_app.px4mod`. You can then run your command by loading the file at runtime using the `dyn` command: `dyn ./examples__px4_simple_app.px4mod`
+    > **Note** `px4_add_module`의 옵션을 `DYNAMIC`로 지정한 경우, 정적 라이브러리 대신 POSIX 플랫폼상의 *공유 라이브러리*를 만듭니다. (PX4를 다시 컴파일하지 않아도 불러올 수 있으며, 다른 사람에게 소스 코드 대신 바이너리로 공유할 수 있습니다). 이 경우 앱은 내장 명령어로 나오지 않지만, `examples__px4_simple_app.px4mod`와 같은 별도의 파일이 나옵니다. 런타임에서 `dyn` 명령어를 이용하여 이 파일을 로드한 후 실행할 수 있음: `dyn ./examples__px4_simple_app.px4mod`
 
-## Build the Application/Firmware
+## 프로그램/펌웨어 빌드
 
-The application is now complete. In order to run it you first need to make sure that it is built as part of PX4. Applications are added to the build/firmware in the appropriate board-level *cmake* file for your target:
+이제 프로그램 작성이 끝났습니다. 이를 실행하려면 우선 이 프로그램을 PX4의 일부로 빌드해야합니다. 대상 보드에 넣을 적당한 보드레벨 *cmake* 파일에 빌드와 펌웨어로 들어갈 프로그램을 추가했습니다:
 
-* PX4 SITL (Simulator): [Firmware/boards/px4/sitl/default.cmake](https://github.com/PX4/Firmware/blob/master/boards/px4/sitl/default.cmake)
-* Pixhawk v1/2: [Firmware/boards/px4/fmu-v2/default.cmake](https://github.com/PX4/Firmware/blob/master/boards/px4/fmu-v2/default.cmake)
-* Pixracer (px4/fmu-v4): [Firmware/boards/px4/fmu-v4/default.cmake](https://github.com/PX4/Firmware/blob/master/boards/px4/fmu-v4/default.cmake)
-* *cmake* files for other boards can be found in [Firmware/boards/](https://github.com/PX4/Firmware/tree/master/boards)
+* PX4 SITL (시뮬레이터): [PX4-Autopilot/boards/px4/sitl/default.cmake](https://github.com/PX4/PX4-Autopilot/blob/master/boards/px4/sitl/default.cmake)
+* Pixhawk v1/2: [PX4-Autopilot/boards/px4/fmu-v2/default.cmake](https://github.com/PX4/PX4-Autopilot/blob/master/boards/px4/fmu-v2/default.cmake)
+* Pixracer (px4/fmu-v4): [PX4-Autopilot/boards/px4/fmu-v4/default.cmake](https://github.com/PX4/PX4-Autopilot/blob/master/boards/px4/fmu-v4/default.cmake)
+* 다른 보드용 *cmake* 파일은 [PX4-Autopilot/boards/](https://github.com/PX4/PX4-Autopilot/tree/master/boards)에서 확인 가능
 
-To enable the compilation of the application into the firmware create a new line for your application somewhere in the *cmake* file:
+프로그램을 펌웨어에 넣어 컴파일하려면 *cmake* 파일내에 프로그램 포함 내용 한 줄을 새로 작성하십시오:
 
     examples/px4_simple_app
     
 
-> **Note** The line will already be present for most files, because the examples are included in firmware by default.
+> **Note** 예제에는 기본적으로 펌웨어로 넣었기 때문에, 대부분의 파일에 이 라인이 있습니다.
 
-Build the example using the board-specific command:
+보드별 지정 명령으로 예제를 빌드하십시오:
 
-* jMAVSim Simulator: `make px4_sitl_default jmavsim`
-* Pixhawk v1/2: `make px4_fmu-v2_default` (or just `make px4_fmu-v2`)
+* jMAVSim 시뮬레이터: `make px4_sitl_default jmavsim`
+* Pixhawk v1/2: `make px4_fmu-v2_default` (혹은 단지 `make px4_fmu-v2`)
 * Pixhawk v3: `make px4_fmu-v4_default`
-* Other boards: [Building the Code](../setup/building_px4.md#building_nuttx)
+* 다른 보드: [Building the Code](../setup/building_px4.md#building_nuttx)
 
-## Test App (Hardware)
+## 프로그램 테스트 (하드웨어)
 
-### Upload the firmware to your board
+### 보드에 펌웨어 업로드
 
-Enable the uploader and then reset the board:
+업로더를 활성화하고 보드를 리셋하십시오:
 
 * Pixhawk v1/2: `make px4_fmu-v2_default upload`
 * Pixhawk v3: `make px4_fmu-v4_default upload`
 
-It should print before you reset the board a number of compile messages and at the end:
+보드를 리셋하기 전 여러줄의 컴파일 메시지가 나타나고 마지막에 다음과 같은 줄이 떠야 합니다:
 
 ```sh
 Loaded firmware for X,X, waiting for the bootloader...
 ```
 
-Once the board is reset, and uploads, it prints:
+보드를 재부팅하면 업로드를 진행하면서 다음 내용이 나타납니다:
 
 ```sh
 Erase  : [====================] 100.0%
@@ -180,15 +183,15 @@ Rebooting.
 [100%] Built target upload
 ```
 
-### Connect the Console
+### 콘솔 연결
 
-Now connect to the [system console](../debug/system_console.md) either via serial or USB. Hitting **ENTER** will bring up the shell prompt:
+이제 시리얼이나 USB를 통해 [시스템 콘솔](../debug/system_console.md)에 연결하십시오. **ENTER** 를 누르면 셸 프롬프트가 나타납니다:
 
 ```sh
 nsh>
 ```
 
-Type ''help'' and hit ENTER
+''help''를 입력하고 ENTER를 누르십시오.
 
 ```sh
 nsh> help
@@ -212,37 +215,37 @@ Builtin Apps:
   serdis
 ```
 
-Note that `px4_simple_app` is now part of the available commands. Start it by typing `px4_simple_app` and ENTER:
+이제 `px4_simple_app`가 사용가능한 명령어 중 일부임을 주목합니다. `px4_simple_app`와 ENTER를 입력하여 프로그램을 시작하십시오:
 
 ```sh
 nsh> px4_simple_app
 Hello Sky!
 ```
 
-The application is now correctly registered with the system and can be extended to actually perform useful tasks.
+이제 프로그램을 시스템에 올바르게 등록했고 실제로 쓸만한 동작을 하도록 프로그램을 확장할 수 있습니다.
 
-## Test App (SITL)
+## 프로그램 테스트 (SITL)
 
-If you're using SITL the *PX4 console* is automatically started (see [Building the Code > First Build (Using the jMAVSim Simulator)](../setup/building_px4.md#jmavsim_build)). As with the *nsh console* (see previous section) you can type `help` to see the list of built-in apps.
+SITL을 사용하는 경우, *PX4 콘솔*을 자동으로 실행합니다 ([Building the Code > First Build (Using the jMAVSim Simulator)](../setup/building_px4.md#jmavsim_build) 참고). *nsh 콘솔*처럼(이전 섹션 참고) `help`를 입력하여 내장 프로그램 목록을 볼 수 있습니다.
 
-Enter `px4_simple_app` to run the minimal app.
+`px4_simple_app` 입력하여 간단한 프로그램을 실행하십시오.
 
 ```sh
 pxh> px4_simple_app
 INFO  [px4_simple_app] Hello Sky!
 ```
 
-The application can now be extended to actually perform useful tasks.
+이제 진짜로 쓸만한 동작으로 프로그램을 확장할 수 있습니다.
 
-## Subscribing to Sensor Data
+## 센서 데이터 정기 수신
 
-To do something useful, the application needs to subscribe inputs and publish outputs (e.g. motor or servo commands).
+뭔가 쓸만한 동작을 하려면, 프로그램에서는 입력 값을 정기적으로 수신하고 출력 값(예: 모터 혹은 서보 명령)을 내보낼 필요가 있습니다.
 
-> **Tip** The benefits of the PX4 hardware abstraction comes into play here! There is no need to interact in any way with sensor drivers and no need to update your app if the board or sensors are updated.
+> **Tip** 이 시점에서 PX4 하드웨어 추상화의 이점이 나타납니다! 보드 또는 센서를 업데이트했을 때 센서 드라이버와 직접 통신하거나 프로그램을 업데이트할 필요가 없습니다.
 
-Individual message channels between applications are called [topics](../middleware/uorb.md). For this tutorial, we are interested in the [sensor_combined](https://github.com/PX4/Firmware/blob/master/msg/sensor_combined.msg) topic, which holds the synchronized sensor data of the complete system.
+프로그램간 주고 받는 개별 메세지 채널을 [토픽](../middleware/uorb.md)이라고 합니다. 이 자습서에서는 온전한 시스템에서 센서 데이터를 동기화 유지하는 [sensor_combined](https://github.com/PX4/PX4-Autopilot/blob/master/msg/sensor_combined.msg) 토픽을 살펴보겠습니다.
 
-Subscribing to a topic is straightforward:
+토픽을 정기적으로 수신하는 방법은 간단합니다:
 
 ```cpp
 #include <uORB/topics/sensor_combined.h>
@@ -250,9 +253,9 @@ Subscribing to a topic is straightforward:
 int sensor_sub_fd = orb_subscribe(ORB_ID(sensor_combined));
 ```
 
-The `sensor_sub_fd` is a topic handle and can be used to very efficiently perform a blocking wait for new data. The current thread goes to sleep and is woken up automatically by the scheduler once new data is available, not consuming any CPU cycles while waiting. To do this, we use the [poll()](http://pubs.opengroup.org/onlinepubs/007908799/xsh/poll.html) POSIX system call.
+`sensor_sub_fd` 은 토픽 핸들이며, 새 데이터를 수신할 때 블로킹 대기를 매우 효율적으로 수행하는 목적으로 활용할 수 있습니다. 현재 스레드는 대기 상태로 진입하며, 기다리는 동안 CPU 사이클을 소모하지 않고, 새 데이터가 나타나면 스케쥴러에서 자동으로 깨웁니다. 이러한 용도로 [poll()](http://pubs.opengroup.org/onlinepubs/007908799/xsh/poll.html) POSIX 시스템 콜을 사용합니다.
 
-Adding `poll()` to the subscription looks like (*pseudocode, look for the full implementation below*):
+정기 수신 노드에 `poll()`을 추가한 경우 (*의사코드임, 전체 구현은 아래를 볼 것*):
 
 ```cpp
 #include <poll.h>
@@ -282,21 +285,21 @@ while (true) {
 }
 ```
 
-Compile the app again by entering:
+다음 명령을 입력하여 프로그램을 컴파일하십시오:
 
 ```sh
 make
 ```
 
-### Testing the uORB Subscription
+### uORB 정기 수신 테스트
 
-The final step is to start your application as a background process/task by typing the following in the nsh shell:
+마지막 단계로, 다음 명령을 nsh 셸에서 입력하여 프로그램을 백그라운드 프로세스 작업으로 시작하십시오:
 
 ```sh
 px4_simple_app &
 ```
 
-Your app will display 5 sensor values in the console and then exit:
+프로그램은 센서 값 5개를 콘솔에 나타내고 끝냅니다:
 
 ```sh
 [px4_simple_app] Accelerometer:   0.0483          0.0821          0.0332
@@ -307,15 +310,15 @@ Your app will display 5 sensor values in the console and then exit:
 [px4_simple_app] Accelerometer:   0.0489          0.0804          0.0328
 ```
 
-> **Tip** The [Module Template for Full Applications](../apps/module_template.md) can be used to write background process that can be controlled from the command line.
+> **Tip** [전체 프로그램용 모듈 서식](../apps/module_template.md)으로 명령행에서 제어할 수 있는 백그라운드 프로세스를 작성할 수 있습니다.
 
-## Publishing Data
+## 데이터 내보내기
 
-To use the calculated outputs, the next step is to *publish* the results. Below we show how to publish the attitude topic.
+계산을 끝낸 출력 값을 사용할 다음 단계는 결과 값을 *내보내*는 동작입니다. 다음을 통해 고도 데이터만 따로 내보내는 방법을 보여드리겠습니다.
 
-> **Note** We've chosen `attitude` because we know that the *mavlink* app forwards it to the ground control station - providing an easy way to look at the results.
+> **Note** *mavlink*앱이 지상 통제 장치에 `attitude`를 전달하는 결과를 쉽게 볼 수 있어 이를 선정했습니다.
 
-The interface is pretty simple: initialize the `struct` of the topic to be published and advertise the topic:
+인터페이스는 매우 간단합니다. 내보낼 토픽의 `구조체(struct)`를 초기화하고 토픽을 내보냅니다:
 
 ```c
 #include <uORB/topics/vehicle_attitude.h>
@@ -326,15 +329,15 @@ memset(&att, 0, sizeof(att));
 orb_advert_t att_pub_fd = orb_advertise(ORB_ID(vehicle_attitude), &att);
 ```
 
-In the main loop, publish the information whenever its ready:
+main 루프에서 정보를 준비하는 대로 바로 내보냅니다:
 
 ```c
 orb_publish(ORB_ID(vehicle_attitude), att_pub_fd, &att);
 ```
 
-## Full Example Code
+## 전체 예제 코드
 
-The [complete example code](https://github.com/PX4/Firmware/blob/master/src/examples/px4_simple_app/px4_simple_app.c) is now:
+[전체 예제 코드](https://github.com/PX4/PX4-Autopilot/blob/master/src/examples/px4_simple_app/px4_simple_app.c)는 다음과 같습니다:
 
 ```c
 /****************************************************************************
@@ -469,20 +472,20 @@ int px4_simple_app_main(int argc, char *argv[])
 }
 ```
 
-## Running the Complete Example
+## 전체 예제 실행
 
-And finally run your app:
+마지막으로 프로그램을 실행해보십시오:
 
 ```sh
 px4_simple_app
 ```
 
-If you start *QGroundControl*, you can check the sensor values in the real time plot ([Analyze > MAVLink Inspector](https://docs.qgroundcontrol.com/en/analyze_view/mavlink_inspector.html)).
+*QGroundControl*을 실행하면, 센서 값을 실시간 플롯으로 확인할 수 있습니다 ([Analyze > MAVLink Inspector](https://docs.qgroundcontrol.com/en/analyze_view/mavlink_inspector.html)).
 
-## Wrap-Up
+## 마무리
 
-This tutorial covered everything needed to develop a basic PX4 autopilot application. Keep in mind that the full list of uORB messages/topics is [available here](https://github.com/PX4/Firmware/tree/master/msg/) and that the headers are well documented and serve as reference.
+본 자습서에서 PX4 오토파일럿 프로그램 개발에 필요한 모든 내용을 다루었습니다. 전체 uORB 메시지/토픽의 리스트는 [여기](https://github.com/PX4/PX4-Autopilot/tree/master/msg/)에 있고, 헤더에 문서화가 잘되어 있으며, 참고삼을 수 있음을 잊지 마시기 바랍니다.
 
-Further information and troubleshooting/common pitfalls can be found here: [uORB](../middleware/uorb.md).
+보다 상세한 정보와 문제 해결/흔히 빠지는 함정의 내용은 여기에서 찾을 수 있습니다: [uORB](../middleware/uorb.md).
 
-The next page presents a template for writing a full application with start and stop functionality.
+다음 페이지에서는 시작/멈춤 기능을 가진 완전한 프로그램 작성용 서식을 보여드리겠습니다.

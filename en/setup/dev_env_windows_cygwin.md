@@ -1,6 +1,6 @@
 # Windows Cygwin Toolchain
 
-This toolchain is portable, easy to install, and easy to use. 
+This toolchain is portable, easy to install, and easy to use.
 It is the newest and best performing toolchain for developing PX4 on Windows.
 
 > **Tip** This is the only officially supported toolchain for building PX4 on Windows (i.e. it is tested in our continuous integration system).
@@ -12,49 +12,52 @@ The toolchain supports:
 
 This topic explains how download and use the environment, and how it can be extended and updated if needed (for example, to use a different compiler).
 
-## Installation Instructions {#installation}
+<a id="installation"></a>
+## Installation Instructions
 
 1. Download the latest version of the ready-to-use MSI installer from: [Github releases](https://github.com/PX4/windows-toolchain/releases) or [Amazon S3](https://s3-us-west-2.amazonaws.com/px4-tools/PX4+Windows+Cygwin+Toolchain/PX4+Windows+Cygwin+Toolchain+0.9.msi) (fast download).
 1. Run it, choose your desired installation location, let it install:
-    ![jMAVSimOnWindows](../../assets/toolchain/cygwin_toolchain_installer.PNG)
-1. Tick the box at the end of the installation to *clone the PX4 repository, build and run simulation with jMAVSim* (this simplifies the process to get you started). 
+    ![jMAVSimOnWindows](../../assets/toolchain/cygwin_toolchain_installer.png)
+1. Tick the box at the end of the installation to *clone the PX4 repository, build and run simulation with jMAVSim* (this simplifies the process to get you started).
 
-   > **Note** If you missed this step you will need to [clone the PX4 Firmware repository manually](#getting_started).
+   > **Note** If you missed this step you will need to [clone the PX4-Autopilot repository manually](#getting_started).
 
 
-## Getting Started {#getting_started}
+<a id="getting_started"></a>
+## Getting Started
 
 The toolchain uses a specially configured console window (started by running the **run-console.bat** script) from which you can call the normal PX4 build commands:
 
 1. Browse to the toolchain installation directory (default **C:\PX4\**)
 1. Run **run-console.bat** (double click) to start the Cygwin bash console
-1. Clone the PX4 Firmware repository from within the console:
+1. Clone the PX4 PX4-Autopilot repository from within the console:
 
-   > **Note** Cloning only needs to be done once! 
+   > **Note** Cloning only needs to be done once!
      Skip this step if you ticked the installer option to *clone the PX4 repository, build and run simulation with jMAVSim*.
 
    ```bash
-   # Clone PX4 Firmware repository into the home folder & loads submodules in parallel
-   git clone --recursive -j8 https://github.com/PX4/Firmware.git
+   # Clone the PX4-Autopilot repository into the home folder & loads submodules in parallel
+   git clone --recursive -j8 https://github.com/PX4/PX4-Autopilot.git
    ```
-   
-   You can now use the console/Firmware repository to build PX4.
-   
+
+   You can now use the console/PX4-Autopilot repository to build PX4.
+
 1. For example, to run JMAVSim:
    ```bash
-   # Navigate to Firmware repo
-   cd Firmware
+   # Navigate to PX4-Autopilot repo
+   cd PX4-Autopilot
    # Build and runs SITL simulation with jMAVSim to test the setup
    make px4_sitl jmavsim
    ```
    The console will then display:
-   
-   ![jMAVSimOnWindows](../../assets/simulation/jmavsim_windows_cygwin.PNG)
+
+   ![jMAVSimOnWindows](../../assets/simulation/jmavsim_windows_cygwin.png)
 
 Continue next to [the detailed instructions on how to build PX4](../setup/building_px4.md) (or see the section below for more general usage instructions).
-   
-   
-## Usage Instructions {#usage_instructions}
+
+
+<a id="usage_instructions"></a>
+## Usage Instructions
 
 The installation directory (default: **C:\PX4\**) contains a batch script for launching the PX4 SITL (linux like) bash console: **run-console.bat**
 
@@ -73,7 +76,7 @@ You may wish to halt them temporarily during builds (at your own risk).
 #### Windows CR+LF vs Unix LF Line Endings
 
 We recommend that you force Unix style LF endings for every repository you're working with using this toolchain (and use an editor which preserves them when saving your changes - e.g. Eclipse or VS Code).
-Compilation of source files also works with CR+LF endings checked out locally, but there are cases in Cygwin (e.g. execution of shell scripts) that require Unix line endings ( otherwise you get errors like `$'\r': Command not found.`).
+Compilation of source files also works with CR+LF endings checked out locally, but there are cases in Cygwin (e.g. execution of shell scripts) that require Unix line endings (otherwise you get errors like `$'\r': Command not found.`).
 Luckily git can do this for you when you execute the two commands in the root directory of your repo:
 ```
 git config core.autocrlf false
@@ -88,9 +91,9 @@ This is not recommended because it may affect any other (unrelated) git use on y
 
 #### Unix Permissions Execution Bit
 
-Under Unix there's a flag in the permissions of each file that tells the OS whether or not the file is allowed to be executed. 
-*git* under Cygwin supports and cares about that bit (even though the Windows NTFS file system does not use it). 
-This often results in *git* finding "false-positive" differences in permissions. 
+Under Unix there's a flag in the permissions of each file that tells the OS whether or not the file is allowed to be executed.
+*git* under Cygwin supports and cares about that bit (even though the Windows NTFS file system does not use it).
+This often results in *git* finding "false-positive" differences in permissions.
 The resulting diff might look like this:
 ```
 diff --git ...
@@ -112,7 +115,8 @@ git submodule foreach --recursive git config --unset core.filemode # remove the 
 
 ## Additional Information
 
-### Features / Issues {#features}
+<a id="features"></a>
+### Features / Issues
 
 The following features are known to work (version 2.0):
 
@@ -128,7 +132,8 @@ Omissions:
 * Only NuttX and JMAVSim/SITL builds are supported.
 * [Known problems](https://github.com/orgs/PX4/projects/6) (Also use to report issues).
 
-### Shell Script Installation {#script_setup}
+<a id="script_setup"></a>
+### Shell Script Installation
 
 You can also install the environment using shell scripts in the Github project.
 
@@ -139,12 +144,14 @@ cd /c/
 git clone https://github.com/PX4/windows-toolchain PX4
 ```
 1. If you want to install all components navigate to the freshly cloned folder and double click on the script `install-all-components.bat` located in the folder `toolchain`. If you only need certain components and want to safe Internet traffic and or disk space you can navigate to the different component folders like e.g. `toolchain\cygwin64` and click on the **install-XXX.bat** scripts to only fetch something specific.
-1. Continue with [Getting Started](#getting_started) (or [Usage Instructions](#usage_instructions)) 
+1. Continue with [Getting Started](#getting_started) (or [Usage Instructions](#usage_instructions))
 
 
-### Manual Installation (for Toolchain Developers) {#manual_setup}
+<a id="manual_setup"></a>
+### Manual Installation (for Toolchain Developers)
 
-This section describes how to setup the Cygwin toolchain manually yourself while pointing to the corresponding scripts from the script based installation repo. The result should be the same as using the scripts or MSI installer.
+This section describes how to setup the Cygwin toolchain manually yourself while pointing to the corresponding scripts from the script based installation repo.
+The result should be the same as using the scripts or MSI installer.
 
 > **Note** The toolchain gets maintained and hence these instructions might not cover every detail of all the future changes.
 
@@ -180,9 +187,9 @@ This section describes how to setup the Cygwin toolchain manually yourself while
    <span></span>
    > **Note** That's what [cygwin64/install-cygwin-px4.bat](https://github.com/MaEtUgR/PX4Toolchain/blob/master/toolchain/cygwin64/install-cygwin-px4.bat) does.
 
-1. Write up or copy the **batch scripts** [`run-console.bat`](https://github.com/MaEtUgR/PX4Toolchain/blob/master/run-console.bat) and [`setup-environment.bat`](https://github.com/PX4/windows-toolchain/blob/master/toolchain/scripts/setup-environment.bat). 
-   
-   The reason to start all the development tools through the prepared batch script is they preconfigure the starting program to use the local, portable Cygwin environment inside the toolchain's folder. 
+1. Write up or copy the **batch scripts** [`run-console.bat`](https://github.com/MaEtUgR/PX4Toolchain/blob/master/run-console.bat) and [`setup-environment.bat`](https://github.com/PX4/windows-toolchain/blob/master/toolchain/scripts/setup-environment.bat).
+
+   The reason to start all the development tools through the prepared batch script is they preconfigure the starting program to use the local, portable Cygwin environment inside the toolchain's folder.
    This is done by always first calling the script [**setup-environment.bat**](https://github.com/PX4/windows-toolchain/blob/master/toolchain/scripts/setup-environment.bat) and the desired application like the console after that.
 
    The script [setup-environment.bat](https://github.com/PX4/windows-toolchain/blob/master/toolchain/scripts/setup-environment.bat) locally sets environmental variables for the workspace root directory `PX4_DIR`, all binary locations `PATH`, and the home directory of the unix environment `HOME`.
@@ -193,7 +200,7 @@ This section describes how to setup the Cygwin toolchain manually yourself while
    pip2 install pyserial
    pip2 install pyulog
    ```
-   
+
    > **Note** That's what [cygwin64/install-cygwin-python-packages.bat](https://github.com/MaEtUgR/PX4Toolchain/blob/master/toolchain/cygwin64/install-cygwin-python-packages.bat) does.
 
 1. Download the [**ARM GCC compiler**](https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads) as zip archive of the binaries for Windows and unpack the content to the folder `C:\PX4\toolchain\gcc-arm`.
@@ -201,7 +208,7 @@ This section describes how to setup the Cygwin toolchain manually yourself while
    > **Note** This is what the toolchain does in: [gcc-arm/install-gcc-arm.bat](https://github.com/MaEtUgR/PX4Toolchain/blob/master/toolchain/gcc-arm/install-gcc-arm.bat).
 
 1. Install the JDK:
-   * Download the [**Java Development Kit Installer**](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html).
+   * Download Java 14 from [Oracle](https://www.oracle.com/java/technologies/javase-jdk14-downloads.html) or [AdoptOpenJDK](https://adoptopenjdk.net/).
    * Because sadly there is no portable archive containing the binaries directly you have to install it.
    * Find the binaries and move/copy them to **C:\PX4\toolchain\jdk**.
    * You can uninstall the Kit from your Windows system again, we only needed the binaries for the toolchain.
@@ -232,4 +239,4 @@ This section describes how to setup the Cygwin toolchain manually yourself while
 
     > **Note** This is what the toolchain does in: [genromfs/install-genromfs.bat](https://github.com/MaEtUgR/PX4Toolchain/blob/master/toolchain/genromfs/install-genromfs.bat).
 
-1. Make sure all the binary folders of all the installed components are correctly listed in the `PATH` variable configured by [**setup-environment.bat**](https://github.com/PX4/windows-toolchain/blob/master/toolchain/scripts/setup-environment.bat). 
+1. Make sure all the binary folders of all the installed components are correctly listed in the `PATH` variable configured by [**setup-environment.bat**](https://github.com/PX4/windows-toolchain/blob/master/toolchain/scripts/setup-environment.bat).

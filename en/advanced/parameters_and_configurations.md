@@ -36,9 +36,12 @@ You can use the `-c` flag to show all parameters that have changed (from their d
 param show -c
 ```
 
+You can use `param show-for-airframe` to show all parameters that have changed from their defaults for just the current airframe's definition file (and defaults it imports).
+
+
 ### Exporting and Loading Parameters
 
-You can save any parameters that have been *touched* since all parameters were last reset to their firmware-defined defaults (this includes any parameters that have changed been changed, even if they have been changed back to their default).
+You can save any parameters that have been *touched* since all parameters were last reset to their firmware-defined defaults (this includes any parameters that have been changed, even if they have been changed back to their default).
 
 The standard `param save` command will store the parameters in the current default file:
 ```sh
@@ -213,7 +216,8 @@ param_get(my_param_handle, &my_param);
 ```
 
 
-## Parameter Meta Data {#parameter_metadata}
+<a id="parameter_metadata"></a>
+## Parameter Meta Data
 
 PX4 uses an extensive parameter metadata system to drive the user-facing presentation of parameters, and to set the default value for each parameter in firmware.
 
@@ -227,7 +231,8 @@ The build system extracts the metadata (using `make parameters_metadata`) to bui
 > **Warning** After adding a *new* parameter file you should call `make clean` before building to generate the new parameters (parameter files are added as part of the *cmake* configure step, which happens for clean builds and if a cmake file is modified).
 
 
-### c Parameter Metadata {#c_metadata}
+<a id="c_metadata"></a>
+### c Parameter Metadata
 
 The legacy approach for defining parameter metadata is in a file with extension **.c** (at time of writing this is the approach most commonly used in the source tree).
 
@@ -263,7 +268,7 @@ PARAM_DEFINE_INT32(ATT_ACC_COMP, 1);
 The `PARAM_DEFINE_*` macro at the end specifies the type of parameter (`PARAM_DEFINE_FLOAT` or `PARAM_DEFINE_INT32`), the name of the parameter (which must match the name used in code), and the default value in firmware.
 
 The lines in the comment block are all optional, and are primarily used to control display and editing options within a ground station.
-The purpose of each line is given below (for more detail see [module_schema.yaml](https://github.com/PX4/Firmware/blob/master/validation/module_schema.yaml)).
+The purpose of each line is given below (for more detail see [module_schema.yaml](https://github.com/PX4/PX4-Autopilot/blob/master/validation/module_schema.yaml)).
 
 ```cpp
 /**
@@ -282,19 +287,21 @@ The purpose of each line is given below (for more detail see [module_schema.yaml
  */
 ```
 
-### YAML Metadata {#yaml_metadata}
+<a id="yaml_metadata"></a>
+### YAML Metadata
 
 > **Note** At time of writing YAML parameter definitions cannot be used in *libraries*.
 
 YAML meta data is intended as a full replacement for the **.c** definitions. 
 It supports all the same metadata, along with new features like multi-instance definitions.
 
-- The YAML parameter metadata schema is here: [validation/module_schema.yaml](https://github.com/PX4/Firmware/blob/master/validation/module_schema.yaml).
-- An example of YAML definitions being used can be found in the MAVLink parameter definitions: [/src/modules/mavlink/module.yaml](https://github.com/PX4/Firmware/blob/master/src/modules/mavlink/module.yaml).
+- The YAML parameter metadata schema is here: [validation/module_schema.yaml](https://github.com/PX4/PX4-Autopilot/blob/master/validation/module_schema.yaml).
+- An example of YAML definitions being used can be found in the MAVLink parameter definitions: [/src/modules/mavlink/module.yaml](https://github.com/PX4/PX4-Autopilot/blob/master/src/modules/mavlink/module.yaml).
 
-#### Multi-Instance (Templated) Meta Data {#multi_instance_metadata}
+<a id="multi_instance_metadata"></a>
+#### Multi-Instance (Templated) Meta Data
 
-Templated parameter definitions are supported in [YAML parameter definitions](https://github.com/PX4/Firmware/blob/master/validation/module_schema.yaml) (templated parameter code is not supported).
+Templated parameter definitions are supported in [YAML parameter definitions](https://github.com/PX4/PX4-Autopilot/blob/master/validation/module_schema.yaml) (templated parameter code is not supported).
 
 The YAML allows you to define instance numbers in parameter names, descriptions, etc. using `${i}`.
 For example, below will generate MY_PARAM_1_RATE, MY_PARAM_2_RATE etc.
@@ -308,7 +315,7 @@ The following YAML definitions provide the start and end indexes.
 - `num_instances` (default 1): Number of instances to generate (>=1)
 - `instance_start` (default 0): First instance number. If 0, `${i}` expands to [0, N-1]`.
 
-For a full example see the MAVLink parameter definitions: [/src/modules/mavlink/module.yaml](https://github.com/PX4/Firmware/blob/master/src/modules/mavlink/module.yaml)
+For a full example see the MAVLink parameter definitions: [/src/modules/mavlink/module.yaml](https://github.com/PX4/PX4-Autopilot/blob/master/src/modules/mavlink/module.yaml)
 
 ## Further Information
 

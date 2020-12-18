@@ -4,35 +4,36 @@ The supported/tested Linux OS versions for PX4 development are [Ubuntu Linux LTS
 
 Bash scripts are provided to help make it easy to install development environment for different target platforms:
 
-* **[ubuntu.sh](https://github.com/PX4/Firmware/blob/{{ book.px4_version }}/Tools/setup/ubuntu.sh)**: Installs [Gazebo 9](../simulation/gazebo.md) and [jMAVSim](../simulation/jmavsim.md) simulators and/or [NuttX/Pixhawk](../setup/building_px4.md#nuttx) tools. Does not include dependencies for [FastRTPS](#fast_rtps).
+* **[ubuntu.sh](https://github.com/PX4/PX4-Autopilot/blob/{{ book.px4_version }}/Tools/setup/ubuntu.sh)**: Installs [Gazebo 9](../simulation/gazebo.md) and [jMAVSim](../simulation/jmavsim.md) simulators and/or [NuttX/Pixhawk](../setup/building_px4.md#nuttx) tools. Does not include dependencies for [FastRTPS](#fast_rtps).
 * **[ubuntu_sim_ros_melodic.sh](https://raw.githubusercontent.com/PX4/Devguide/{{ book.px4_version }}/build_scripts/ubuntu_sim_ros_melodic.sh)**: Installs [ROS "Melodic"](#rosgazebo) and PX4 on Ubuntu 18.04 LTS (and later).
 
 > **Tip** The scripts have been tested on *clean* Ubuntu 18.04 LTS and Ubuntu 20.04 LTS installations. They *may* not work as expected if installed "on top" of an existing system, or on a different Ubuntu release.
 
 The instructions below explain how to download and use the scripts.
 
-## Gazebo, JMAVSim and NuttX (Pixhawk) Targets {#sim_nuttx}
+<a id="sim_nuttx"></a>
 
-Use the [ubuntu.sh](https://github.com/PX4/Firmware/blob/{{ book.px4_version }}/Tools/setup/ubuntu.sh) script to set up a development environment that includes [Gazebo 9](../simulation/gazebo.md) and [jMAVSim](../simulation/jmavsim.md) simulators, and/or the [NuttX/Pixhawk](../setup/building_px4.md#nuttx) toolchain.
+## Gazebo, JMAVSim and NuttX (Pixhawk) Targets
+
+Use the [ubuntu.sh](https://github.com/PX4/PX4-Autopilot/blob/{{ book.px4_version }}/Tools/setup/ubuntu.sh) script to set up a development environment that includes [Gazebo 9](../simulation/gazebo.md) and [jMAVSim](../simulation/jmavsim.md) simulators, and/or the [NuttX/Pixhawk](../setup/building_px4.md#nuttx) toolchain.
 
 To install the toolchain:
 
 1. [Download PX4 Source Code](../setup/building_px4.md): 
         bash
-        git clone https://github.com/PX4/Firmware.git --recursive
+        git clone https://github.com/PX4/PX4-Autopilot.git --recursive
 
 2. Run the **ubuntu.sh** with no arguments (in a bash shell) to install everything: 
         bash
         bash ./Tools/setup/ubuntu.sh
     
-      
     * Acknowledge any prompts as the script progress.
     * You can use the `--no-nuttx` and `--no-sim-tools` to omit the nuttx and/or simulation tools.
 3. Restart the computer on completion.
 
-> **Note** You can alternatively download [ubuntu.sh](https://github.com/PX4/Firmware/blob/{{ book.px4_version }}/Tools/setup/ubuntu.sh) and [requirements.txt](https://github.com/PX4/Firmware/blob/{{ book.px4_version }}/Tools/setup/requirements.txt) from the PX4 source repository (**/Tools/setup/**) and run ubuntu.sh in place:   
-> `wget https://raw.githubusercontent.com/PX4/Firmware/{{ book.px4_version }}/Tools/setup/ubuntu.sh`   
-> `wget https://raw.githubusercontent.com/PX4/Firmware/{{ book.px4_version }}/Tools/setup/requirements.txt`   
+> **Note** You can alternatively download [ubuntu.sh](https://github.com/PX4/PX4-Autopilot/blob/{{ book.px4_version }}/Tools/setup/ubuntu.sh) and [requirements.txt](https://github.com/PX4/PX4-Autopilot/blob/{{ book.px4_version }}/Tools/setup/requirements.txt) from the PX4 source repository (**/Tools/setup/**) and run ubuntu.sh in place:   
+> `wget https://raw.githubusercontent.com/PX4/PX4-Autopilot/{{ book.px4_version }}/Tools/setup/ubuntu.sh`   
+> `wget https://raw.githubusercontent.com/PX4/PX4-Autopilot/{{ book.px4_version }}/Tools/setup/requirements.txt`   
 > `bash ubuntu.sh`
 
 Notes:
@@ -51,54 +52,69 @@ Notes:
     ```
 
 <!-- Do we need to add to our scripts or can we assume correct version installs over?
-Remove any old versions of the arm-none-eabi toolchain.</p>
-
-<pre><code class="sh">sudo apt-get remove gcc-arm-none-eabi gdb-arm-none-eabi binutils-arm-none-eabi gcc-arm-embedded
+Remove any old versions of the arm-none-eabi toolchain.
+```sh
+sudo apt-get remove gcc-arm-none-eabi gdb-arm-none-eabi binutils-arm-none-eabi gcc-arm-embedded
 sudo add-apt-repository --remove ppa:team-gcc-arm-embedded/ppa
-</code></pre>
+```
+-->
 
-<p>-->
+<a id="raspberry-pi-hardware"></a>
 
-## Raspberry Pi {#raspberry-pi-hardware}
+## Raspberry Pi
 
-<!-- NOTE: RaPi docker toolchain (for comparison) here: https://github.com/PX4/containers/blob/master/docker/Dockerfile_armhf -->
+The following instructions explain how to set up a build toolchain for RasPi on *Ubuntu 18.04*.
 
-To get the build toolchain for Raspberry Pi:
+> **Warning** To build for Ubuntu 20.04 (focal) you must use docker (the GCC toolchain on Ubuntu 20.04 can build PX4, but the generated binary files are too new to run on actual Pi). For more information see [PilotPi with Raspberry Pi OS
 
-1. Download [ubuntu.sh](https://github.com/PX4/Firmware/blob/{{ book.px4_version }}/Tools/setup/ubuntu.sh) and [requirements.txt](https://github.com/PX4/Firmware/blob/{{ book.px4_version }}/Tools/setup/requirements.txt) from the PX4 source repository (**/Tools/setup/**):   
-    `wget https://raw.githubusercontent.com/PX4/Firmware/{{ book.px4_version }}/Tools/setup/ubuntu.sh`   
-    `wget https://raw.githubusercontent.com/PX4/Firmware/{{ book.px4_version }}/Tools/setup/requirements.txt`
+# Developer Quick Start > Alternative build method using docker](https://docs.px4.io/master/en/flight_controller/raspberry_pi_pilotpi_rpios.html#alternative-build-method-using-docker).
+
+To get the common dependencies for Raspberry Pi:
+
+1. Download [ubuntu.sh](https://github.com/PX4/PX4-Autopilot/blob/{{ book.px4_version }}/Tools/setup/ubuntu.sh) and [requirements.txt](https://github.com/PX4/PX4-Autopilot/blob/{{ book.px4_version }}/Tools/setup/requirements.txt) from the PX4 source repository (**/Tools/setup/**):   
+    `wget https://raw.githubusercontent.com/PX4/PX4-Autopilot/{{ book.px4_version }}/Tools/setup/ubuntu.sh`   
+    `wget https://raw.githubusercontent.com/PX4/PX4-Autopilot/{{ book.px4_version }}/Tools/setup/requirements.txt`
 2. Run **ubuntu.sh** in a terminal to get just the common dependencies: 
         bash
         bash ubuntu.sh --no-nuttx --no-sim-tools
 
-3. Then setup an ARMv7 cross-compiler (either GCC or clang) as described in the following sections.
+3. Then setup an cross-compiler (either GCC or clang) as described in the following sections.
 
-### GCC
+### GCC (armhf)
 
-The official Raspberry Pi toolchains are not supported as PX4 has requires C++14 (which they do not support).
+Ubuntu software repository provides a set of pre-compiled toolchains. Note that Ubuntu Focal comes up with `gcc-9-arm-linux-gnueabihf` as its default installation which is not fully supported, so we must manually install `gcc-8-arm-linux-gnueabihf` and set it as the default toolchain. This guide also applies to earlier Ubuntu releases (Bionic). The following instruction assumes you haven't installed any version of arm-linux-gnueabihf, and will set up the default executable with `update-alternatives`. Install them with the terminal command:
 
-Ubuntu provides a set of pre-compiled toolchains that you can use instead. Install these with the terminal command:
+```sh
+sudo apt-get install -y gcc-8-arm-linux-gnueabihf g++-8-arm-linux-gnueabihf
+```
 
-    sudo apt-get install -y gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf
-    
+Set them as default:
 
-These package contains GCC/G++ 7.4.0 at time of writing. To test the toolchain, please execute:
+```sh
+sudo update-alternatives --install /usr/bin/arm-linux-gnueabihf-gcc arm-linux-gnueabihf-gcc /usr/bin/arm-linux-gnueabihf-8 100 --slave /usr/bin/arm-linux-gnueabihf-g++ arm-linux-gnueabihf-g++ /usr/bin/arm-linux-gnueabihf-g++-8
+sudo update-alternatives --config arm-linux-gnueabihf-gcc
+```
 
-    arm-linux-gnueabihf-gcc -v
-    arm-linux-gnueabihf-g++ -v
-    
+### GCC (aarch64)
 
-### Clang
+If you want to build PX4 for ARM64 devices, this section is required.
+
+```sh
+sudo apt-get install -y gcc-8-aarch64-linux-gnu g++-8-aarch64-linux-gnu
+sudo update-alternatives --install /usr/bin/aarch64-linux-gnu-gcc aarch64-linux-gnu-gcc /usr/bin/aarch64-linux-gnu-gcc-8 100 --slave /usr/bin/aarch64-linux-gnu-g++ aarch64-linux-gnu-g++ /usr/bin/aarch64-linux-gnu-g++-8
+sudo update-alternatives --config aarch64-linux-gnu-gcc
+```
+
+### Clang (optional)
 
 First [install GCC](#gcc) (needed to use clang).
 
-We recommend you to get clang from the Ubuntu software repository as follows:
+We recommend you to get clang from the Ubuntu software repository, as shown below:
 
     sudo apt-get install clang
     
 
-Example below for building PX4 firmware out of tree, using CMake.
+Example below for building PX4 firmware out of tree, using *CMake*.
 
 ```sh
 cd <PATH-TO-PX4-SRC>
@@ -115,11 +131,16 @@ cmake \
 make
 ```
 
-### Native Builds
+### Detailed Information
 
-Additional developer information for using PX4 on Raspberry Pi (including building PX4 natively) can be found here: [Raspberry Pi 2/3 Navio2 Autopilot](https://docs.px4.io/en/flight_controller/raspberry_pi_navio2.html).
+Additional developer information for using PX4 on Raspberry Pi (including building PX4 natively) can be found here:
 
-## ROS/Gazebo {#rosgazebo}
+* [Raspberry Pi 2/3 Navio2 Autopilot](https://docs.px4.io/master/en/flight_controller/raspberry_pi_navio2.html).
+* [Raspberry Pi 2/3/4 PilotPi Shield](https://docs.px4.io/master/en/flight_controller/raspberry_pi_pilotpi.html).
+
+<a id="rosgazebo"></a>
+
+## ROS/Gazebo
 
 This section explains how to install [ROS/Gazebo](../ros/README.md) ("Melodic") for use with PX4.
 
@@ -141,32 +162,17 @@ Note:
 
 Setup instructions for Snapdragon Flight are provided in the *PX4 User Guide*:
 
-* [Development Environment](https://docs.px4.io/en/flight_controller/snapdragon_flight_dev_environment_installation.html)
-* [Software Installation](https://docs.px4.io/en/flight_controller/snapdragon_flight_software_installation.html)
-* [Configuration](https://docs.px4.io/en/flight_controller/snapdragon_flight_configuration.html)
+* [Development Environment](https://docs.px4.io/master/en/flight_controller/snapdragon_flight_dev_environment_installation.html)
+* [Software Installation](https://docs.px4.io/master/en/flight_controller/snapdragon_flight_software_installation.html)
+* [Configuration](https://docs.px4.io/master/en/flight_controller/snapdragon_flight_configuration.html)
 
-## FastRTPS installation {#fast_rtps}
+<a id="fast_rtps"></a>
+
+## Fast RTPS installation
 
 [eProsima Fast RTPS](http://eprosima-fast-rtps.readthedocs.io/en/latest/) is a C++ implementation of the RTPS (Real Time Publish Subscribe) protocol. FastRTPS is used, via the [RTPS/ROS2 Interface: PX4-FastRTPS Bridge](../middleware/micrortps.md), to allow PX4 uORB topics to be shared with offboard components.
 
-The following instructions can be used to install the FastRTPS 1.7.1 binaries to your home directory.
-
-```sh
-wget https://www.eprosima.com/index.php/component/ars/repository/eprosima-fast-rtps/eprosima-fast-rtps-1-7-1/eprosima_fastrtps-1-7-1-linux-tar-gz -O eprosima_fastrtps-1-7-1-linux.tar.gz
-tar -xzf eprosima_fastrtps-1-7-1-linux.tar.gz eProsima_FastRTPS-1.7.1-Linux/
-tar -xzf eprosima_fastrtps-1-7-1-linux.tar.gz requiredcomponents
-tar -xzf requiredcomponents/eProsima_FastCDR-1.0.8-Linux.tar.gz
-```
-
-> **Note** In the following lines where we compile the FastCDR and FastRTPS libraries, the `make` command is issued with the `-j2` option. This option defines the number of parallel threads (or `j`obs) that are used to compile the source code. Change `-j2` to `-j<number_of_cpu_cores_in_your_system>` to speed up the compilation of the libraries.
-
-```sh
-(cd eProsima_FastCDR-1.0.8-Linux && ./configure --libdir=/usr/lib && make -j2 && sudo make install)
-(cd eProsima_FastRTPS-1.7.1-Linux && ./configure --libdir=/usr/lib && make -j2 && sudo make install)
-rm -rf requiredcomponents eprosima_fastrtps-1-7-1-linux.tar.gz
-```
-
-> **Note** More "generic" instructions, which additionally cover installation from source, can be found here: [Fast RTPS installation](../setup/fast-rtps-installation.md).
+Follow the instructions in [Fast RTPS Installation](../setup/fast-rtps-installation.md) to install it.
 
 ## Additional Tools
 

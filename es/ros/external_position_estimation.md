@@ -53,6 +53,8 @@ Regarding the orientation, keep the scalar part *w* of the quaternion the same a
 
 ## EKF2 Tuning/Configuration
 
+Note: this is a quick overview. For more detailed information, check the [EKF2 tuning guide](https://docs.px4.io/master/en/advanced_config/tuning_the_ecl_ekf.html)
+
 The following parameters must be set to use external position information with EKF2 (these can be set in *QGroundControl* > **Vehicle Setup > Parameters > EKF2**).
 
 | Parameter                                                                                                                                                                                                     | Setting for External Position Estimation                                                                                                               |
@@ -64,7 +66,9 @@ The following parameters must be set to use external position information with E
 
 > **Tip** Reboot the flight controller in order for parameter changes to take effect.
 
-#### Tuning EKF2_EV_DELAY {#tuning-EKF2_EV_DELAY}
+<a id="tuning-EKF2_EV_DELAY"></a>
+
+#### Tuning EKF2_EV_DELAY
 
 [EKF2_EV_DELAY](../advanced/parameter_reference.md#EKF2_EV_DELAY) is the *Vision Position Estimator delay relative to IMU measurements*.
 
@@ -117,25 +121,31 @@ VIO and MoCap systems have different ways of obtaining pose data, and have their
 
 The setup for specific systems is covered [below](#setup_specific_systems). For other systems consult the vendor setup documentation.
 
-### Relaying Pose Data to PX4 {#relaying_pose_data_to_px4}
+<a id="relaying_pose_data_to_px4"></a>
+
+### Relaying Pose Data to PX4
 
 MAVROS has plugins to relay a visual estimation from a VIO or MoCap system using the following pipelines:
 
-| ROS                      | MAVLink                                                                                                                                                                | uORB                      |
-| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------- |
-| /mavros/vision_pose/pose | [VISION_POSITION_ESTIMATE](https://mavlink.io/en/messages/common.html#VISION_POSITION_ESTIMATE)                                                                      | `vehicle_visual_odometry` |
-| /mavros/odometry/odom    | [ODOMETRY](https://mavlink.io/en/messages/common.html#ODOMETRY) (`frame_id =` [MAV_FRAME_LOCAL_FRD](https://mavlink.io/en/messages/common.html#MAV_FRAME_LOCAL_FRD)) | `vehicle_visual_odometry` |
-| /mavros/mocap/pose       | [ATT_POS_MOCAP](https://mavlink.io/en/messages/common.html#ATT_POS_MOCAP)                                                                                            | `vehicle_mocap_odometry`  |
-| /mavros/odometry/odom    | [ODOMETRY](https://mavlink.io/en/messages/common.html#ODOMETRY) (`frame_id =` [MAV_FRAME_MOCAP_NED](https://mavlink.io/en/messages/common.html#MAV_FRAME_MOCAP_NED)) | `vehicle_mocap_odometry`  |
+| ROS                                                                    | MAVLink                                                                                                                                                                | uORB                      |
+| ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------- |
+| /mavros/vision_pose/pose                                               | [VISION_POSITION_ESTIMATE](https://mavlink.io/en/messages/common.html#VISION_POSITION_ESTIMATE)                                                                      | `vehicle_visual_odometry` |
+| /mavros/odometry/out (`frame_id = odom`, `child_frame_id = base_link`) | [ODOMETRY](https://mavlink.io/en/messages/common.html#ODOMETRY) (`frame_id =` [MAV_FRAME_LOCAL_FRD](https://mavlink.io/en/messages/common.html#MAV_FRAME_LOCAL_FRD)) | `vehicle_visual_odometry` |
+| /mavros/mocap/pose                                                     | [ATT_POS_MOCAP](https://mavlink.io/en/messages/common.html#ATT_POS_MOCAP)                                                                                            | `vehicle_mocap_odometry`  |
+| /mavros/odometry/out (`frame_id = odom`, `child_frame_id = base_link`) | [ODOMETRY](https://mavlink.io/en/messages/common.html#ODOMETRY) (`frame_id =` [MAV_FRAME_LOCAL_FRD](https://mavlink.io/en/messages/common.html#MAV_FRAME_LOCAL_FRD)) | `vehicle_mocap_odometry`  |
 
 You can use any of the above pipelines with LPE.
 
 If you're working with EKF2, only the "vision" pipelines are supported. To use MoCap data with EKF2 you will have to [remap](http://wiki.ros.org/roslaunch/XML/remap) the pose topic that you get from MoCap:
 
 * MoCap ROS topics of type `geometry_msgs/PoseStamped` or `geometry_msgs/PoseWithCovarianceStamped` must be remapped to `/mavros/vision_pose/pose`. The `geometry_msgs/PoseStamped` topic is most common as MoCap doesn't usually have associated covariances to the data.
-* If you get data through a `nav_msgs/Odometry` ROS message then you will need to remap it to `/mavros/odometry/odom`.
+* If you get data through a `nav_msgs/Odometry` ROS message then you will need to remap it to `/mavros/odometry/out`, making sure to update the `frame_id` and `child_frame_id` accordingly.
+* The odometry frames `frame_id = odom`, `child_frame_id = base_link` can be changed by updating the file in `mavros/launch/px4_config.yaml`. However, the current version of mavros (`1.3.0`) needs to be able to use the tf tree to find a transform from `frame_id` to the hardcoded frame `odom_ned`. The same applies to the `child_frame_id`, which needs to be connected in the tf tree to the hardcoded frame `base_link_frd`. If you are using mavros `1.2.0` and you didn't update the file `mavros/launch/px4_config.yaml`, then you can safely use the odometry frames `frame_id = odom`, `child_frame_id = base_link` without much worry.
+* Note that if you are sending odometry data to px4 using `child_frame_id = base_link`, then then you need to make sure that the `twist` portion of the `nav_msgs/Odometry` message is **expressed in body frame**, **not in inertial frame!!!!!**.
 
-### Reference Frames and ROS {#ros_reference_frames}
+<a id="ros_reference_frames"></a>
+
+### Reference Frames and ROS
 
 The local/world and world frames used by ROS and PX4 are different.
 
@@ -172,7 +182,9 @@ If the reference frame has the z axis pointing upwards you can attached it witho
 
 > **Note** When using the MAVROS *odom* plugin, it is important that no other node is publishing a transform between the external pose's reference and child frame. This might break the *tf* tree.
 
-## Specific System Setups {#setup_specific_systems}
+<a id="setup_specific_systems"></a>
+
+## Specific System Setups
 
 ### OptiTrack MoCap
 
@@ -212,8 +224,8 @@ After setting up one of the (specific) systems described above you should now be
 
 Be sure to perform the following checks before your first flight:
 
-* Set the PX4 parameter `MAV_ODOM_LP` to 1. PX4 will therefore stream back the received external pose as MAVLink [ODOMETRY](https://mavlink.io/en/messages/common.html#ODOMETRY) messages.
-* It is recommended to check these MAVLink messages with e.g. the *Analyze* Widget of *QGroundControl*. In order to do this, yaw the vehicle until the quaternion of the ODOMETRY message is very close to a unit quaternion. (w=1, x=y=z=0)
+* Set the PX4 parameter `MAV_ODOM_LP` to 1. PX4 will then stream back the received external pose as MAVLink [ODOMETRY](https://mavlink.io/en/messages/common.html#ODOMETRY) messages.
+* You can check these MAVLink messages with the *QGroundControl* [MAVLink Inspector](https://docs.qgroundcontrol.com/en/analyze_view/mavlink_inspector.html) In order to do this, yaw the vehicle until the quaternion of the `ODOMETRY` message is very close to a unit quaternion. (w=1, x=y=z=0)
 * At this point the body frame is aligned with the reference frame of the external pose system. If you do not manage to get a quaternion close to the unit quaternion without rolling or pitching your vehicle, your frame probably still have a pitch or roll offset. Do not proceed if this is the case and check your coordinate frames again.
 * Once aligned you can pick the vehicle up from the ground and you should see the position's z coordinate decrease. Moving the vehicle in forward direction, should increase the position's x coordinate. While moving the vehicle to the right should increase the y coordinate. In the case you send also linear velocities from the external pose system, you should also check the linear velocities. Check that the linear velocities are in expressed in the *FRD* body frame reference frame.
 * Set the PX4 parameter `MAV_ODOM_LP` back to 0. PX4 will stop streaming this message back.
@@ -229,5 +241,3 @@ Put your left stick at the middle, this is the dead zone. With this stick value,
 Increase the value of the left stick and the robot will take off, put it back to the middle right after. Check if it is able to keep its position.
 
 If it works, you may want to set up an [offboard](offboard_control.md) experiment by sending position-setpoint from a remote ground station.
-
-### VIO First Flight

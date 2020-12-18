@@ -1,12 +1,13 @@
-# 모들 레퍼런스: 명령어
+# 모듈 참고서: 명령어
 
 ## bl_update
 
 Source: [systemcmds/bl_update](https://github.com/PX4/Firmware/tree/master/src/systemcmds/bl_update)
 
-파일에서 부트로터를 플래시하기 위한 유틸리티
+Utility to flash the bootloader from a file
+<a id="bl_update_usage"></a>
 
-### Usage {#bl_update_usage}
+### Usage
 
     bl_update [arguments...]
        setopt        Set option bits to unlock the FLASH (only needed if in locked
@@ -15,41 +16,14 @@ Source: [systemcmds/bl_update](https://github.com/PX4/Firmware/tree/master/src/s
        <file>        Bootloader bin file
     
 
-## config
-
-Source: [systemcmds/config](https://github.com/PX4/Firmware/tree/master/src/systemcmds/config)
-
-Configure a sensor driver (sampling & publication rate, etc.)
-
-### Usage {#config_usage}
-
-    config <command> [arguments...]
-     Commands:
-    
-     The <file:dev> argument is typically one of /dev/{gyro,accel,mag}i
-       block         Block sensor topic publication
-         <file:dev>  Sensor device file
-    
-       unblock       Unblock sensor topic publication
-         <file:dev>  Sensor device file
-    
-       sampling      Set sensor sampling rate
-         <file:dev> <rate> Sensor device file and sampling rate in Hz
-    
-       rate          Set sensor publication rate
-         <file:dev> <rate> Sensor device file and publication rate in Hz
-    
-       check         Perform sensor self-test (and print info)
-         <file:dev>  Sensor device file
-    
-
 ## dumpfile
 
 Source: [systemcmds/dumpfile](https://github.com/PX4/Firmware/tree/master/src/systemcmds/dumpfile)
 
-파일을 덤프하는 유틸리티. 바이너리모드에서 파일 크기와 내용을 출력한다 (LF/CRLF를 변경하지는 않음).
+덤프 파일 유틸리티. 파일 크기와 내용을 표준 출력(터미널 창)에 바이너리 모드(LF를 CR LF로 바꾸지 않음)로 출력합니다.
+<a id="dumpfile_usage"></a>
 
-### Usage {#dumpfile_usage}
+### Usage
 
     dumpfile [arguments...]
          <file>      File to dump
@@ -59,16 +33,18 @@ Source: [systemcmds/dumpfile](https://github.com/PX4/Firmware/tree/master/src/sy
 
 Source: [systemcmds/dyn](https://github.com/PX4/Firmware/tree/master/src/systemcmds/dyn)
 
-### Description
+### 설명
 
-PX4 바이너리에 컴파일 되지 않은 동적 PX4 모듈을 로드하고 실행한다.
+PX4 바이너리로 컴파일하지 않은 동적 PX4 모듈을 불러오고 실행합니다.
 
-### Example
+### 예시
 
     dyn ./hello.px4mod start
     
 
-### Usage {#dyn_usage}
+<a id="dyn_usage"></a>
+
+### Usage
 
     dyn [arguments...]
          <file>      File containing the module
@@ -79,16 +55,18 @@ PX4 바이너리에 컴파일 되지 않은 동적 PX4 모듈을 로드하고 �
 
 Source: [systemcmds/esc_calib](https://github.com/PX4/Firmware/tree/master/src/systemcmds/esc_calib)
 
-ESC calibration을 위한 툴
+Tool for ESC calibration
 
-Calibration 과정 (명령어를 실행하면 안내가 됩니다):
+Calibration procedure (running the command will guide you through it):
 
-- ESC의 프로브를 빼고 파워를 끄세요
-- Stop attitude and rate controllers: mc_rate_control stop, fw_att_control stop
-- safety가 off인지 확인하세요
-- 이 명령어를 실행하세요
+- 전동 변속기의 프로펠러를 제거하고 전원을 끄십시오
+- 고도, 속도 컨트롤러의 동작을 중단하십시오: mc_rate_control stop, fw_att_control stop
+- safety가 off인지 확인하십시오
+- 이 명령어를 실행하십시오
 
-### Usage {#esc_calib_usage}
+<a id="esc_calib_usage"></a>
+
+### Usage
 
     esc_calib [arguments...]
          [-d <val>]  Select PWM output device
@@ -103,15 +81,71 @@ Calibration 과정 (명령어를 실행하면 안내가 됩니다):
          [-a]        Select all channels
     
 
+## failure
+
+Source: [systemcmds/failure](https://github.com/PX4/Firmware/tree/master/src/systemcmds/failure)
+
+### Description
+
+Inject failures into system.
+
+### Implementation
+
+This system command sends a vehicle command over uORB to trigger failure.
+
+### Examples
+
+Test the GPS failsafe by stopping GPS:
+
+failure gps off
+
+<a id="failure_usage"></a>
+
+### Usage
+
+    failure [arguments...]
+       help          Show this help text
+    
+       gps|...       Specify component
+    
+       ok|off|...    Specify failure type
+         [-i <val>]  sensor instance (0=all)
+                     default: 0
+    
+
+## gpio
+
+Source: [systemcmds/gpio](https://github.com/PX4/Firmware/tree/master/src/systemcmds/gpio)
+
+This command is used to read and write GPIOs.
+<a id="gpio_usage"></a>
+
+### Usage
+
+    gpio [arguments...]
+       read
+         <PORT> <PIN> GPIO port and pin
+         [PULLDOWN|PULLUP] Pulldown/Pullup
+         [--force]   Force (ignore board gpio list)
+    
+       write
+         <PORT> <PIN> GPIO port and pin
+         <VALUE>     Value to write
+         [PULLDOWN|PULLUP] Pulldown/Pullup
+         [--force]   Force (ignore board gpio list)
+    
+
 ## hardfault_log
 
 Source: [systemcmds/hardfault_log](https://github.com/PX4/Firmware/tree/master/src/systemcmds/hardfault_log)
 
-하드웨어 문제를 다루는 유틸리티
+Hardfault utility
 
-하드웨어문제를 다루는 스타트업 스크립트에 사용됩니다.
+Used in startup scripts to handle hardfaults
 
-### Usage {#hardfault_log_usage}
+<a id="hardfault_log_usage"></a>
+
+### Usage
 
     hardfault_log <command> [arguments...]
      Commands:
@@ -135,9 +169,10 @@ Source: [systemcmds/hardfault_log](https://github.com/PX4/Firmware/tree/master/s
 
 Source: [systemcmds/i2cdetect](https://github.com/PX4/Firmware/tree/master/src/systemcmds/i2cdetect)
 
-특정 버스에 I2C 디바이스를 스캔하기 위한 유틸리티
+Utility to scan for I2C devices on a particular bus.
+<a id="i2cdetect_usage"></a>
 
-### Usage {#i2cdetect_usage}
+### Usage
 
     i2cdetect [arguments...]
          [-b <val>]  I2C bus
@@ -148,22 +183,24 @@ Source: [systemcmds/i2cdetect](https://github.com/PX4/Firmware/tree/master/src/s
 
 Source: [systemcmds/led_control](https://github.com/PX4/Firmware/tree/master/src/systemcmds/led_control)
 
-### Description
+### 설명
 
-(외부) LED를 제어하고 테스트하기 위한 CLI 툴
+Command-line tool to control & test the (external) LED's.
 
-사용하기 위해서는 led_control uORB 토픽을 다루는 드라이버가 수행중인지 확인해야합니다.
+To use it make sure there's a driver running, which handles the led_control uorb topic.
 
-우선순위가 있습니다. 예를 들어, 한 모듈이 낮은 우선 순위를 컬러를 출력하고 다른 모듈이 높은 우선 순위로 N번 깜빡이도록 한다면 LED는 깜빡인 후에 컬러가 변경될 것입니다. `reset` 명령어 또한 낮은 우선수위로 돌아가기 위해 사용될 수 있습니다.
+There are different priorities, such that for example one module can set a color with low priority, and another module can blink N times with high priority, and the LED's automatically return to the lower priority state after the blinking. The `reset` command can also be used to return to a lower priority.
 
 ### Examples
 
-첫번째 LED를 파란색으로 5회 깜빡이게:
+Blink the first LED 5 times in blue:
 
     led_control blink -c blue -l 0 -n 5
     
 
-### Usage {#led_control_usage}
+<a id="led_control_usage"></a>
+
+### Usage
 
     led_control <command> [arguments...]
      Commands:
@@ -198,11 +235,13 @@ Source: [systemcmds/led_control](https://github.com/PX4/Firmware/tree/master/src
 
 Source: [systemcmds/topic_listener](https://github.com/PX4/Firmware/tree/master/src/systemcmds/topic_listener)
 
-uORB 토픽을 수신하고 데이터를 콘솔로 출력하기 위한 유틸리티
+Utility to listen on uORB topics and print the data to the console.
 
-Ctrl+C, Esc, Q를 누르면 종료됩니다.
+The listener can be exited any time by pressing Ctrl+C, Esc, or Q.
 
-### Usage {#listener_usage}
+<a id="listener_usage"></a>
+
+### Usage
 
     listener <command> [arguments...]
      Commands:
@@ -215,17 +254,33 @@ Ctrl+C, Esc, Q를 누르면 종료됩니다.
                      default: 0
     
 
+## mfd
+
+Source: [systemcmds/mft](https://github.com/PX4/Firmware/tree/master/src/systemcmds/mft)
+
+Utility interact with the manifest
+<a id="mfd_usage"></a>
+
+### Usage
+
+    mfd <command> [arguments...]
+     Commands:
+       query         Returns true if not existed
+    
+
 ## mixer
 
 Source: [systemcmds/mixer](https://github.com/PX4/Firmware/tree/master/src/systemcmds/mixer)
 
 ### Description
 
-ESC 드라이버에 믹서를 로그하거나 추가합니다.
+Load or append mixer files to the ESC driver.
 
-RPi는 상관없지만, NuttX에서는 사용되는 ioctl 드라이버가 지원되어야 합니다.
+Note that the driver must support the used ioctl's, which is the case on NuttX, but for example not on RPi.
 
-### Usage {#mixer_usage}
+<a id="mixer_usage"></a>
+
+### Usage
 
     mixer <command> [arguments...]
      Commands:
@@ -242,22 +297,24 @@ Source: [systemcmds/motor_ramp](https://github.com/PX4/Firmware/tree/master/src/
 
 ### Description
 
-모터 ramp up 테스트를 위한 어플리케이션
+Application to test motor ramp up.
 
-실행하기 전에 기체 컨트롤러가 멈춰져있는지 확인해주세요
+Before starting, make sure to stop any running attitude controller:
 
     mc_rate_control stop
     fw_att_control stop
     
 
-시작할 때 하나의 백그라운드 작업이 시작되고 몇초(지정된만큼)간 수행된 후 종료됩니다.
+When starting, a background task is started, runs for several seconds (as specified), then exits.
 
 ### Example
 
     motor_ramp sine -a 1100 -r 0.5
     
 
-### Usage {#motor_ramp_usage}
+<a id="motor_ramp_usage"></a>
+
+### Usage
 
     motor_ramp [arguments...]
          ramp|sine|square mode
@@ -269,23 +326,25 @@ Source: [systemcmds/motor_ramp](https://github.com/PX4/Firmware/tree/master/src/
          [-r <val>]  Select motor ramp duration in sec
                      default: 1.0
     
-     WARNING: 모터는 최고 속도까지 ramp up 됩니다.
+     WARNING: motors will ramp up to full speed!
     
 
 ## motor_test
 
 Source: [systemcmds/motor_test](https://github.com/PX4/Firmware/tree/master/src/systemcmds/motor_test)
 
-모터를 테스트하기 위한 유틸리티
+Utility to test motors.
 
-WARNING: 이 명령어를 수행하려면 모든 프로브를 제거하세요.
+WARNING: remove all props before using this command.
 
-### Usage {#motor_test_usage}
+<a id="motor_test_usage"></a>
+
+### Usage
 
     motor_test <command> [arguments...]
      Commands:
        test          Set motor(s) to a specific output value
-         [-m <val>]  Motor to test (0...7, all if not specified)
+         [-m <val>]  Motor to test (1...8, all if not specified)
          [-p <val>]  Power (0...100)
                      default: 0
          [-t <val>]  Timeout in seconds (default=no timeout)
@@ -303,14 +362,13 @@ WARNING: 이 명령어를 수행하려면 모든 프로브를 제거하세요.
 Source: [systemcmds/mtd](https://github.com/PX4/Firmware/tree/master/src/systemcmds/mtd)
 
 Utility to mount and test partitions (based on FRAM/EEPROM storage as defined by the board)
+<a id="mtd_usage"></a>
 
-### Usage {#mtd_usage}
+### Usage
 
     mtd <command> [arguments...]
      Commands:
        status        Print status information
-    
-       start         Mount partitions
     
        readtest      Perform read test
     
@@ -318,8 +376,11 @@ Utility to mount and test partitions (based on FRAM/EEPROM storage as defined by
     
        erase         Erase partition(s)
     
-     The commands 'start', 'readtest', 'rwtest' and 'erase' have an optional
-     parameter:
+     The commands 'readtest' and 'rwtest' have an optional instance index:
+         [-i <val>]  storage index (if the board has multiple storages)
+                     default: 0
+    
+     The commands 'readtest', 'rwtest' and 'erase' have an optional parameter:
          [<partition_name1> [<partition_name2> ...]] Partition names (eg.
                      /fs/mtd_params), use system default if not provided
     
@@ -332,7 +393,9 @@ Start an NSH shell on a given port.
 
 This was previously used to start a shell on the USB serial port. Now there runs mavlink, and it is possible to use a shell over mavlink.
 
-### Usage {#nshterm_usage}
+<a id="nshterm_usage"></a>
+
+### Usage
 
     nshterm [arguments...]
          <file:dev>  Device on which to start the shell (eg. /dev/ttyACM0)
@@ -363,7 +426,9 @@ Change the airframe and make sure the airframe's default parameters are loaded:
     reboot
     
 
-### Usage {#param_usage}
+<a id="param_usage"></a>
+
+### Usage
 
     param <command> [arguments...]
      Commands:
@@ -381,9 +446,11 @@ Change the airframe and make sure the airframe's default parameters are loaded:
     
        show          Show parameter values
          [-a]        Show all parameters (not just used)
-         [-c]        Show only changed and used params
+         [-c]        Show only changed params (unused too)
          [-q]        quiet mode, print only param value (name needs to be exact)
          [<filter>]  Filter by param name (wildcard at end allowed, eg. sys_*)
+    
+       show-for-airframe Show changed params for airframe config
     
        status        Print status of parameter system
     
@@ -404,12 +471,10 @@ Change the airframe and make sure the airframe's default parameters are loaded:
        touch         Mark a parameter as used
          [<param_name1> [<param_name2>]] Parameter name (one or more)
     
-       reset         Reset params to default
-         [<exclude1> [<exclude2>]] Do not reset matching params (wildcard at end
-                     allowed)
+       reset         Reset only specified params to default
+         [<param1> [<param2>]] Parameter names to reset (wildcard at end allowed)
     
-       reset_nostart Reset params to default, but keep SYS_AUTOSTART and
-                     SYS_AUTOCONFIG
+       reset_all     Reset all params to default
          [<exclude1> [<exclude2>]] Do not reset matching params (wildcard at end
                      allowed)
     
@@ -428,8 +493,9 @@ Change the airframe and make sure the airframe's default parameters are loaded:
 Source: [systemcmds/perf](https://github.com/PX4/Firmware/tree/master/src/systemcmds/perf)
 
 Tool to print performance counters
+<a id="perf_usage"></a>
 
-### Usage {#perf_usage}
+### Usage
 
     perf [arguments...]
        reset         Reset all counters
@@ -472,7 +538,9 @@ Test the outputs of eg. channels 1 and 3, and set the PWM value to 1200 us:
     pwm test -c 13 -p 1200
     
 
-### Usage {#pwm_usage}
+<a id="pwm_usage"></a>
+
+### Usage
 
     pwm <command> [arguments...]
      Commands:
@@ -534,10 +602,13 @@ Test the outputs of eg. channels 1 and 3, and set the PWM value to 1200 us:
 Source: [systemcmds/reboot](https://github.com/PX4/Firmware/tree/master/src/systemcmds/reboot)
 
 Reboot the system
+<a id="reboot_usage"></a>
 
-### Reboot the system {#reboot_usage}
+### Usage
 
-    Usage
+    reboot [arguments...]
+         [-b]        Reboot into bootloader
+         [lock|unlock] Take/release the shutdown lock (for testing)
     
 
 ## sd_bench
@@ -545,8 +616,9 @@ Reboot the system
 Source: [systemcmds/sd_bench](https://github.com/PX4/Firmware/tree/master/src/systemcmds/sd_bench)
 
 Test the speed of an SD Card
+<a id="sd_bench_usage"></a>
 
-### Usage {#sd_bench_usage}
+### Usage
 
     sd_bench [arguments...]
          [-b <val>]  Block size for each read/write
@@ -558,13 +630,41 @@ Test the speed of an SD Card
          [-s]        Call fsync after each block (default=at end of each run)
     
 
+## system_time
+
+Source: [systemcmds/system_time](https://github.com/PX4/Firmware/tree/master/src/systemcmds/system_time)
+
+### Description
+
+Command-line tool to set and get system time.
+
+### Examples
+
+Set the system time and read it back
+
+    system_time set 1600775044
+    system_time get
+    
+
+<a id="system_time_usage"></a>
+
+### Usage
+
+    system_time <command> [arguments...]
+     Commands:
+       set           Set the system time, provide time in unix epoch time format
+    
+       get           Get the system time
+    
+
 ## top
 
 Source: [systemcmds/top](https://github.com/PX4/Firmware/tree/master/src/systemcmds/top)
 
 Monitor running processes and their CPU, stack usage, priority and state
+<a id="top_usage"></a>
 
-### Usage {#top_usage}
+### Usage
 
     top [arguments...]
        once          print load only once
@@ -575,8 +675,9 @@ Monitor running processes and their CPU, stack usage, priority and state
 Source: [systemcmds/usb_connected](https://github.com/PX4/Firmware/tree/master/src/systemcmds/usb_connected)
 
 Utility to check if USB is connected. Was previously used in startup scripts. A return value of 0 means USB is connected, 1 otherwise.
+<a id="usb_connected_usage"></a>
 
-### Usage {#usb_connected_usage}
+### Usage
 
     usb_connected [arguments...]
     
@@ -586,8 +687,9 @@ Utility to check if USB is connected. Was previously used in startup scripts. A 
 Source: [systemcmds/ver](https://github.com/PX4/Firmware/tree/master/src/systemcmds/ver)
 
 Tool to print various version information
+<a id="ver_usage"></a>
 
-### Usage {#ver_usage}
+### Usage
 
     ver <command> [arguments...]
      Commands:

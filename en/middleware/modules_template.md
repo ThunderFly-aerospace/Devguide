@@ -1,7 +1,7 @@
 # Modules Reference: Template
 
 ## module
-Source: [templates/module](https://github.com/PX4/Firmware/tree/master/src/templates/module)
+Source: [templates/template_module](https://github.com/PX4/Firmware/tree/master/src/templates/template_module)
 
 
 ### Description
@@ -19,7 +19,8 @@ module start -f -p 42
 ```
 
 
-### Usage {#module_usage}
+<a id="module_usage"></a>
+### Usage
 ```
 module <command> [arguments...]
  Commands:
@@ -40,7 +41,8 @@ Source: [examples/work_item](https://github.com/PX4/Firmware/tree/master/src/exa
 Example of a simple module running out of a work queue.
 
 
-### Usage {#work_item_example_usage}
+<a id="work_item_example_usage"></a>
+### Usage
 ```
 work_item_example <command> [arguments...]
  Commands:

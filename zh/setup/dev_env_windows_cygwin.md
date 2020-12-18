@@ -12,86 +12,98 @@
 
 这篇文章将解释怎样下载和使用该环境，并且在需要的时候怎样扩展和更新(比如，使用其他的编译器)。
 
-## 安装说明 {#installation}
+<a id="installation"></a>
+
+## Installation Instructions
 
 1. Download the latest version of the ready-to-use MSI installer from: [Github releases](https://github.com/PX4/windows-toolchain/releases) or [Amazon S3](https://s3-us-west-2.amazonaws.com/px4-tools/PX4+Windows+Cygwin+Toolchain/PX4+Windows+Cygwin+Toolchain+0.9.msi) (fast download).
-2. Run it, choose your desired installation location, let it install: ![jMAVSimOnWindows](../../assets/toolchain/cygwin_toolchain_installer.PNG)
+2. Run it, choose your desired installation location, let it install: ![jMAVSimOnWindows](../../assets/toolchain/cygwin_toolchain_installer.png)
 3. 在安装结束后勾选*clone the PX4 repository, build and run simulation with jMAVSim*(这简化了你的开始准备工作)
     
-    > **Note** If you missed this step you will need to [clone the PX4 Firmware repository manually](#getting_started).
+    > **Note** If you missed this step you will need to [clone the PX4-Autopilot repository manually](#getting_started).
 
-## 入门指南 {#getting_started}
+<a id="getting_started"></a>
 
-工具链使用专门配置的控制台(通过运行**run-console.bat**脚本)从而可以使用PX4编译命令
+## Getting Started
+
+The toolchain uses a specially configured console window (started by running the **run-console.bat** script) from which you can call the normal PX4 build commands:
 
 1. 进入到工具链的安装目录(默认**C:\PX4**)
 2. 运行**run-console.bat**(双击)启动Cygwin bash控制台
-3. 在控制台中运行克隆PX4 Firmware仓库命令
+3. Clone the PX4 PX4-Autopilot repository from within the console:
     
     > **注意**只需要克隆一次 如果你在安装程序最后选择了*clone the PX4 repository, build and run simulation with jMAVSim*，则可以跳过这一步。
     
     ```bash
-    # 克隆 PX4 Firmware 仓库到 home 目录 & 同时并行加载子模块
-    git clone --recursive -j8 https://github.com/PX4/Firmware.git
+    # Clone the PX4-Autopilot repository into the home folder & loads submodules in parallel
+    git clone --recursive -j8 https://github.com/PX4/PX4-Autopilot.git
     ```
     
-    你现在可以使用控制台中的Firmware仓库代码来编译PX4
+    You can now use the console/PX4-Autopilot repository to build PX4.
 
 4. 举例，要运行JMAVSim:
     
     ```bash
-    # 进入Firmware仓库目录
-    cd Firmware 
-    # 使用JMAVSim编译并运行SITL模拟器来验证 
+    # Navigate to PX4-Autopilot repo
+    cd PX4-Autopilot
+    # Build and runs SITL simulation with jMAVSim to test the setup
     make px4_sitl jmavsim
     ```
     
     控制台将会显示：
     
-    ![jMAVSimOnWindows](../../assets/simulation/jmavsim_windows_cygwin.PNG)
+    ![jMAVSimOnWindows](../../assets/simulation/jmavsim_windows_cygwin.png)
 
-下面[ 有关如何生成 PX4 的详细说明 ](../setup/building_px4.md) (或参阅下面的部分以了解更多常规用法说明)。
+Continue next to [the detailed instructions on how to build PX4](../setup/building_px4.md) (or see the section below for more general usage instructions).
 
-## 使用说明 {#usage_instructions}
+<a id="usage_instructions"></a>
 
-安装目录 （默认位置： **C:\PX4**） 用于开启PX4 SITL（类Linux）命令行窗口的脚本文件： **run-console.bat**
+## Usage Instructions
+
+The installation directory (default: **C:\PX4**) contains a batch script for launching the PX4 SITL (linux like) bash console: **run-console.bat**
 
 > **Tip** [Manual Setup](#manual_setup) 部分解释了为什么需要使用该脚本以及它的工作原理。
 
-普遍的工作流程都通过双击 **run-console. bat** 脚本来手动运行终端命令来启动控制台窗口。
+The ordinary workflow consists of starting a console window by double clicking on the **run-console.bat** script to manually run terminal commands.
 
-### Windows & Git 特殊情况
+### File Monitoring Tools vs Toolchain Speed
+
+Antivirus and other background file monitoring tools can significantly slow down both installation of the toolchain and PX4 build times.
+
+You may wish to halt them temporarily during builds (at your own risk).
+
+### Windows & Git Special Cases
 
 #### Windows CR+LF 对比 Unix LF 行结尾
 
-我们建议您所有的代码仓库都强制使用Unix的LF行结尾，并以此运行工具链（并且使用编辑器可以按照此格式保存您所做的修改 - 譬如 Eclipse 或者 VS Code）。 虽然编译以 CR+LF 行为结尾的本地源代码也是可行的， 但 Cygwin在某些情况下（如执行 shell 脚本）仍要求文件以 Unix 行结尾 (否则你会收到类似 `$'\r': Command not found.` 的错误信息）。 幸运的是, 只需要在代码仓库的根目录执行以下两条命令就可以让 git 自动为你完成此操作：
+We recommend that you force Unix style LF endings for every repository you're working with using this toolchain (and use an editor which preserves them when saving your changes - e.g. Eclipse or VS Code). Compilation of source files also works with CR+LF endings checked out locally, but there are cases in Cygwin (e.g. execution of shell scripts) that require Unix line endings (otherwise you get errors like `$'\r': Command not found.`). Luckily git can do this for you when you execute the two commands in the root directory of your repo:
 
     git config core.autocrlf false
     git config core.eol lf
     
 
-如果需要在多个代码仓库中使用此工具链,，你可以为你的计算机在全局范围内设置这两种配置：
+If you work with this toolchain on multiple repositories you can also set these two configurations globally for your machine:
 
     git config --global ...
     
 
-但我们并不建议这样做, 因为它可能会影响 Windows 计算机上的任何其他 (无关) git 使用。
+This is not recommended because it may affect any other (unrelated) git use on your Windows machine.
 
 #### Unix 执行权限
 
-在 Unix 下, 每个文件的权限中都有一个标志位, 它会告诉操作系统是否允许执行该文件。 Cygwin 下的 * git * 支持并遵守该标识位 (尽管 Windows 平台的NTFS文件系统并不使用该标志位)。 这一差异通常会导致 *git* 发现权限中的 "假阳性（false-positive）" 差异。 生成的差异可能如下所示:
+Under Unix there's a flag in the permissions of each file that tells the OS whether or not the file is allowed to be executed. *git* under Cygwin supports and cares about that bit (even though the Windows NTFS file system does not use it). This often results in *git* finding "false-positive" differences in permissions. The resulting diff might look like this:
 
     diff --git ...
     old mode 100644
     new mode 100755
     
 
-我们建议在 windows 平台上全局禁用权该限检查以避免这个问题：
+We recommend globally disabling the permission check on Windows to avoid the problem:
 
     git config --global core.fileMode false # disable execution bit check globally for the machine
     
 
-对于由局部配置引起此问题的现有存储库，你可以使用如下命令：
+For existing repositories that have this problem caused by a local configuration, additionally:
 
     git config --unset core.filemode # 移除当前存储库的局部配置，改用全局配置
     git submodule foreach --recursive git config --unset core.filemode # 移除所有子模块的局部配置
@@ -99,9 +111,11 @@
 
 ## 附加信息
 
-### 特性/问题 {#features}
+<a id="features"></a>
 
-以下已知正常功能 (版本 2.0):
+### Features / Issues
+
+The following features are known to work (version 2.0):
 
 * 使用 jMAVSim 编译和运行 SITL, 其性能明显优于虚拟机 (Cygwin会生成一个本机 windows 二进制文件 ** px4.exe **)。
 * 编译和上传 NuttX 二进制文件（例如：px4_fmu-v2 和 px4_fmu-v4）。
@@ -110,15 +124,17 @@
 * 绿色安装！ 安装程序不会影响您的系统和全局路径设置 (它只修改选定的安装目录, 例如 ** C:\PX4 \ ** 并使用临时本地路径变量)。
 * 安装程序支持更新到最新版本, 同时保持您的个人更改在工具链文件夹中。
 
-补充:
+Omissions:
 
 * Simulation: Gazebo and ROS are not supported.
 * 仅支持 NuttX 和 JMAVSim/SITL 编译。
 * [Known problems](https://github.com/orgs/PX4/projects/6) (Also use to report issues).
 
-### Shell 脚本安装 {#script_setup}
+<a id="script_setup"></a>
 
-你还可以使用 Github 项目中的 shell 脚本进行开发环境的安装。
+### Shell Script Installation
+
+You can also install the environment using shell scripts in the Github project.
 
 1. 请确保安装了 [ Windows Git ](https://git-scm.com/download/win)。
 2. 将代码仓库 https://github.com/PX4/windows-toolchain 克隆到要安装工具链的位置。 打开 ` Git Bash ` 并执行以下操作，打开后会自动进入默认的安装目录:
@@ -128,11 +144,13 @@
     
 
 1. 如果要安装所有组件, 请进入到新克隆的代码仓库文件夹, 然后双击位于文件夹 `toolchain`目录中的脚本 ` install-all-components.bat`。 如果您只需要某些组件并希望占用有限的Internet 数据和磁盘空间, 则可以进入到不同的组件文件夹, 如 ` toolchain\cygwin64 `, 然后单击 ** install-XXX.bat ** 脚本以获取特定的内容。
-2. 继续 [ 入门指南 ](#getting_started) (或 [ 使用说明 ](#usage_instructions)) 
+2. 继续 [ 入门指南 ](#getting_started) (或 [ 使用说明 ](#usage_instructions))
 
-### 手动安装 (对于开发人员) {#manual_setup}
+<a id="manual_setup"></a>
 
-本节介绍如何在从基于脚本安装目录中通过相应的脚本手动安装 Cygwin 工具链。 使用脚本进行开发环境安装的结果与使用 MSI 安装程序进行安装的结果是一致的。
+### Manual Installation (for Toolchain Developers)
+
+This section describes how to setup the Cygwin toolchain manually yourself while pointing to the corresponding scripts from the script based installation repo. The result should be the same as using the scripts or MSI installer.
 
 > **注意：** 因为工具链的更新，下述指令可能无法涵盖未来所有更改的每个细节。
 
@@ -190,7 +208,7 @@
 
 4. 安装 JDK
     
-    * 下载 [** Java Development Kit Installer **](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)。
+    * Download Java 14 from [Oracle](https://www.oracle.com/java/technologies/javase-jdk14-downloads.html) or [AdoptOpenJDK](https://adoptopenjdk.net/).
     * 因为不幸的是, 没有绿色的归档文件直接包含二进制文件, 所以您必须安装它。
     * 查找二进制文件并将其移动/复制到 ** C:\PX4\toolchain\jdk **。
     * 您可以再次从 Windows 系统中卸载该JDK工具包, 我们只需要工具链的二进制文件。

@@ -1,13 +1,16 @@
 # PX4 Development Guide ({{ book.px4_version }})
 
-[![Releases](https://img.shields.io/badge/release-{{ book.px4_version }}-blue.svg)](https://github.com/PX4/Firmware/releases) [![Discuss](https://img.shields.io/badge/discuss-px4-ff69b4.svg)](http://discuss.px4.io/) [![Slack](https://px4-slack.herokuapp.com/badge.svg)](http://slack.px4.io)
+[![Releases](https://img.shields.io/badge/release-{{ book.px4_version }}-blue.svg)](https://github.com/PX4/PX4-Autopilot/releases) [![Discuss](https://img.shields.io/badge/discuss-px4-ff69b4.svg)](http://discuss.px4.io/) [![Slack](https://px4-slack.herokuapp.com/badge.svg)](http://slack.px4.io)
 
+> **Warning** This guide has been [merged into the PX4 User Guide](http://localhost:8080/px4_user_guide/en/development/development.html). It is now frozen for contributions and may be out of date. Please make any further edits, updates and translations in the user guide. 
+
+<span></span>
 > **Info** This guide is for primarily for software developers and (new) hardware integrators.
-> To fly, build and modify vehicles using supported hardware see the [PX4 User Guide](https://docs.px4.io/en/).
+> To fly, build and modify vehicles using supported hardware see the [PX4 User Guide](https://docs.px4.io/master/en/).
 
 This guide explains how to:
 
-* Get a [minimum developer setup](setup/config_initial.md), [build PX4 from source](setup/building_px4.md) and deploy on [numerous supported autopilots](https://docs.px4.io/en/flight_controller/).
+* Get a [minimum developer setup](setup/config_initial.md), [build PX4 from source](setup/building_px4.md) and deploy on [numerous supported autopilots](https://docs.px4.io/master/en/flight_controller/).
 * Understand the [PX4 System Architecture](concept/architecture.md) and other core concepts.
 * Learn how to modify the flight stack and middleware:
   - Modify flight algorithms and add new [flight modes](concept/flight_modes.md).
@@ -19,7 +22,7 @@ This guide explains how to:
 * Communicate/integrate with external robotics APIs.
 
 
-## Support {#support}
+## Support
 
 [Support](contribute/support.md) provide links to the [discussion boards](http://discuss.px4.io/) and other support channels.
 
@@ -45,7 +48,8 @@ You can access these by clicking the language-switcher icon:
 ![Gitbook Language Selector](../assets/gitbook/gitbook_language_selector.png)
 
 
-## Calendar & Events {#calendar}
+<a id="calendar"></a>
+## Calendar & Events
 
 The *Dronecode Calendar* shows important events for platform developers and users. 
 Select the links below to display the calendar in your timezone (and to add it to your own calendar):

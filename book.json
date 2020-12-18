@@ -19,7 +19,7 @@
         "validate-links",
         "versions-select@git+https://github.com/Dronecode/gitbook-plugin-versions-select.git",
         "mathjax@git+https://github.com/Dronecode/plugin-mathjax.git#update_cdn",
-        "mermaid",
+        "-mermaid",
         "-stub-out-blocks@git+https://github.com/hamishwillee/gitbook-plugin-stub-out-blocks.git",
         "theme-dronecode@git+https://github.com/dronecode/theme-dronecode.git"
 
@@ -50,19 +50,13 @@
                     "label": "Bug tracker",
                     "icon": "fa fa-bug",
                     "position" : "left",
-                    "url": "https://github.com/PX4/Devguide/issues/new?title=Doc+Bug:+{{title}}&body=DESCRIBE+PROBLEM+WITH+DOCS+HERE%0A%0ABug+Page:+[{{title}}]({{url}})"
+                    "url": "https://github.com/PX4/PX4-user_guide/issues/new?title=DeveloperBug:+{{title}}&body=DESCRIBE+PROBLEM+WITH+DOCS+HERE%0A%0ABug+Page:+[{{title}}]({{url}})"
                     
                 },
                 {
                     "label": "GitHub",
                     "icon": "fa fa-github",
                     "url": "https://github.com/PX4/Devguide"
-                },
-                {
-                    "label": "Edit page on github",
-                    "icon": "fa fa-pencil-square-o",
-                    "position" : "left",
-                    "url": "https://github.com/PX4/Devguide/edit/master/{{filepath_lang}}"
                 }
             ]
         },
@@ -75,8 +69,12 @@
                     "text": "master"
                 },
                 {
+                    "value": "https://dev.px4.io/v1.11/en/",
+                    "text": "1.11 - stable"
+                },
+                {
                     "value": "https://dev.px4.io/v1.10/en/",
-                    "text": "1.10 - stable"
+                    "text": "1.10"
                 },
                 {
                     "value": "https://dev.px4.io/v1.9.0/en/",

@@ -1,10 +1,12 @@
 # Adding a New Airframe Configuration
 
-PX4 uses canned airframe configurations as starting point for airframes. The configurations are defined in [config files](#config-file) that are stored in the [ROMFS/px4fmu_common/init.d](https://github.com/PX4/Firmware/tree/master/ROMFS/px4fmu_common/init.d) folder. The config files reference [mixer files](#mixer-file) that describe the physical configuration of the system, and which are stored in the [ROMFS/px4fmu_common/mixers](https://github.com/PX4/Firmware/tree/master/ROMFS/px4fmu_common/mixers) folder.
+PX4 uses canned airframe configurations as starting point for airframes. The configurations are defined in [config files](#config-file) that are stored in the [ROMFS/px4fmu_common/init.d](https://github.com/PX4/PX4-Autopilot/tree/master/ROMFS/px4fmu_common/init.d) folder. The config files reference [mixer files](#mixer-file) that describe the physical configuration of the system, and which are stored in the [ROMFS/px4fmu_common/mixers](https://github.com/PX4/PX4-Autopilot/tree/master/ROMFS/px4fmu_common/mixers) folder.
 
-Adding a configuration is straightforward: create a new config file in the [init.d folder](https://github.com/PX4/Firmware/tree/master/ROMFS/px4fmu_common/init.d) (prepend the filename with an unused autostart ID), then [build and upload](../setup/building_px4.md) the software.
+Adding a configuration is straightforward: create a new config file in the [init.d/airframes folder](https://github.com/PX4/PX4-Autopilot/tree/master/ROMFS/px4fmu_common/init.d/airframes) (prepend the filename with an unused autostart ID), add the name of your new airframe config file to the [CMakeLists.txt](https://github.com/PX4/PX4-Autopilot/blob/master/ROMFS/px4fmu_common/init.d/airframes/CMakeLists.txt) in the relevant section, then [build and upload](../setup/building_px4.md) the software.
 
 Developers who do not want to create their own configuration can instead customize existing configurations using text files on the microSD card, as detailed on the [custom system startup](../concept/system_startup.md) page.
+
+> **Note** To determine which parameters/values need to be set in the configuration file, you can first assign a generic airframe and tune the vehicle, and then use [`param show-for-airframe`](../middleware/modules_command.html#param) to list the parameters that changed.
 
 ## Configuration File Overview
 
@@ -19,9 +21,11 @@ These aspects are mostly independent, which means that many configurations share
 
 > **Note** New airframe files are only automatically added to the build system after a clean build (run `make clean`).
 
-### Config File {#config-file}
+<a id="config-file"></a>
 
-A typical configuration file is shown below ([original file here](https://github.com/PX4/Firmware/blob/master/ROMFS/px4fmu_common/init.d/airframes/3033_wingwing)).
+### Config File
+
+A typical configuration file is shown below ([original file here](https://github.com/PX4/PX4-Autopilot/blob/master/ROMFS/px4fmu_common/init.d/airframes/3033_wingwing)).
 
 The first section is the airframe documentation. This is used in the [Airframes Reference](../airframes/airframe_reference.md) and *QGroundControl*.
 
@@ -30,7 +34,7 @@ The first section is the airframe documentation. This is used in the [Airframes 
 #
 # @name Wing Wing (aka Z-84) Flying Wing
 #
-# @url https://docs.px4.io/en/framebuild_plane/wing_wing_z84.html
+# @url https://docs.px4.io/master/en/framebuild_plane/wing_wing_z84.html
 #
 # @type Flying Wing
 # @class Plane
@@ -52,7 +56,7 @@ The next section specifies vehicle-specific parameters, including [tuning gains]
 ```bash
 sh /etc/init.d/rc.fw_defaults
 
-if [ $AUTOCNF == yes ]
+if [ $AUTOCNF = yes ]
 then
   param set BAT_N_CELLS 2
   param set FW_AIRSPD_MAX 15
@@ -98,11 +102,13 @@ set PWM_DISARMED 1000
 
 > **Warning** If you want to reverse a channel, never do this on your RC transmitter or with e.g `RC1_REV`. The channels are only reversed when flying in manual mode, when you switch in an autopilot flight mode, the channels output will still be wrong (it only inverts your RC signal). Thus for a correct channel assignment change either your PWM signals with `PWM_MAIN_REV1` (e.g. for channel one) or change the signs of the output scaling in the corresponding mixer (see below).
 
-### Mixer File {#mixer-file}
+<a id="mixer-file"></a>
+
+### Mixer File
 
 > **Note** First read [Concepts > Mixing](../concept/mixing.md). This provides background information required to interpret this mixer file.
 
-A typical mixer file is shown below ([original file here](https://github.com/PX4/Firmware/blob/master/ROMFS/px4fmu_common/mixers/wingwing.main.mix)). A mixer filename, in this case `wingwing.main.mix`, gives important information about the type of airframe (`wingwing`), the type of output (`.main` or `.aux`) and lastly that it is a mixer file (`.mix`).
+A typical mixer file is shown below ([original file here](https://github.com/PX4/PX4-Autopilot/blob/master/ROMFS/px4fmu_common/mixers/wingwing.main.mix)). A mixer filename, in this case `wingwing.main.mix`, gives important information about the type of airframe (`wingwing`), the type of output (`.main` or `.aux`) and lastly that it is a mixer file (`.mix`).
 
 The mixer file contains several blocks of code, each of which refers to one actuator or ESC. So if you have e.g. two servos and one ESC, the mixer file will contain three blocks of code.
 
@@ -154,7 +160,7 @@ Elevon mixers
 Three scalers total (output, roll, pitch).
 
 The scaling factor for roll inputs is adjusted to implement differential travel
-for the elevons. 
+for the elevons.
 
 This first block of code is for Servo 0...
 
@@ -170,8 +176,8 @@ O:      10000  10000      0 -10000  10000
 S: 0 0  -6000  -6000      0 -10000  10000
 S: 0 1  -6500  -6500      0 -10000  10000
 
-Note that in principle, you could implement left/right wing asymmetric mixing, but in general the two blocks of code will be numerically equal, and just differ by the sign of the third line (S: 0 1), since to roll the plane, the two ailerons must move in OPPOSITE directions. 
-The signs of the second lines (S: 0 0) are indentical, since to pitch the plane, both servos need to move in the SAME direction. 
+Note that in principle, you could implement left/right wing asymmetric mixing, but in general the two blocks of code will be numerically equal, and just differ by the sign of the third line (S: 0 1), since to roll the plane, the two ailerons must move in OPPOSITE directions.
+The signs of the second lines (S: 0 0) are indentical, since to pitch the plane, both servos need to move in the SAME direction.
 
 Output 2
 --------
@@ -194,18 +200,18 @@ S: 0 3      0  20000 -10000 -10000  10000
 
 ## Adding a New Airframe Group
 
-Airframe "groups" are used to group similar airframes for selection in [QGroundControl](https://docs.qgroundcontrol.com/en/SetupView/Airframe.html) and in the *Airframe Reference* documentation ([PX4 DevGuide](../airframes/airframe_reference.md) and [PX4 UserGuide](https://docs.px4.io/en/airframes/airframe_reference.html)). Every group has a name, and an associated svg image which shows the common geometry, number of motors, and direction of motor rotation for the grouped airframes.
+Airframe "groups" are used to group similar airframes for selection in [QGroundControl](https://docs.qgroundcontrol.com/en/SetupView/Airframe.html) and in the *Airframe Reference* documentation ([PX4 DevGuide](../airframes/airframe_reference.md) and [PX4 UserGuide](https://docs.px4.io/master/en/airframes/airframe_reference.html)). Every group has a name, and an associated svg image which shows the common geometry, number of motors, and direction of motor rotation for the grouped airframes.
 
 The airframe metadata files used by *QGroundControl* and the documentation source code are generated from the airframe description, via a script, using the build command: `make airframe_metadata`
 
-For a new airframe belonging to an existing group, you don't need to do anything more than provide documentation in the airframe description located at [ROMFS/px4fmu_common/init.d](https://github.com/PX4/Firmware/tree/master/ROMFS/px4fmu_common/init.d).
+For a new airframe belonging to an existing group, you don't need to do anything more than provide documentation in the airframe description located at [ROMFS/px4fmu_common/init.d](https://github.com/PX4/PX4-Autopilot/tree/master/ROMFS/px4fmu_common/init.d).
 
 If the airframe is for a **new group** you additionally need to:
 
 1. Add the svg image for the group into documentation repos (if no image is provided a placeholder image is displayed): 
   * PX4 Development Guide: [assets/airframes/types](https://github.com/PX4/Devguide/tree/master/assets/airframes/types)
   * PX4 User Guide: [assets/airframes/types](https://github.com/PX4/px4_user_guide/tree/master/assets/airframes/types)
-2. Add a mapping between the new group name and image filename in the [srcparser.py](https://github.com/PX4/Firmware/blob/master/Tools/px4airframes/srcparser.py) method `GetImageName()` (follow the pattern below): 
+2. Add a mapping between the new group name and image filename in the [srcparser.py](https://github.com/PX4/PX4-Autopilot/blob/master/Tools/px4airframes/srcparser.py) method `GetImageName()` (follow the pattern below): 
       def GetImageName(self):
            """
            Get parameter group image base name (w/o extension)
@@ -229,19 +235,19 @@ If the airframe is for a **new group** you additionally need to:
             <file alias="Airframe/FlyingWing">src/AutoPilotPlugins/Common/Images/FlyingWing.svg</file>
             ... > 
     
-    **Note** The remaining airframe metadata should be automatically included in the firmware (once **srcparser.py** is updated). 
+    **Note** The remaining airframe metadata should be automatically included in the firmware (once **srcparser.py** is updated).
 
 ## Tuning Gains
 
 The following *PX4 User Guide* topics explain how to tune the parameters that will be specified in the config file:
 
-* [Multicopter PID Tuning Guide](https://docs.px4.io/en/advanced_config/pid_tuning_guide_multicopter.html)
-* [Fixed Wing PID Tuning Guide](https://docs.px4.io/en/advanced_config/pid_tuning_guide_fixedwing.html)
-* [VTOL Configuration](https://docs.px4.io/en/config_vtol/)
+* [Multicopter PID Tuning Guide](https://docs.px4.io/master/en/advanced_config/pid_tuning_guide_multicopter.html)
+* [Fixed Wing PID Tuning Guide](https://docs.px4.io/master/en/advanced_config/pid_tuning_guide_fixedwing.html)
+* [VTOL Configuration](https://docs.px4.io/master/en/config_vtol/)
 
 ## Add New Airframe to QGroundControl
 
-To make a new airframe available for section in the *QGroundControl* [airframe configuration](https://docs.px4.io/en/config/airframe.html):
+To make a new airframe available for section in the *QGroundControl* [airframe configuration](https://docs.px4.io/master/en/config/airframe.html):
 
 1. Make a clean build (e.g. by running `make clean` and then `make px4_fmu-v5_default`)
 2. Open QGC and select **Custom firmware file...** as shown below:
@@ -250,7 +256,7 @@ To make a new airframe available for section in the *QGroundControl* [airframe c
   
   You will be asked to choose the **.px4** firmware file to flash (this file is a zipped JSON file and contains the airframe metadata).
 
-3. Navigate to the build folder and select the firmware file (e.g. **Firmware/build/px4_fmu-v5_default/px4_fmu-v5_default.px4**).
+3. Navigate to the build folder and select the firmware file (e.g. **PX4-Autopilot/build/px4_fmu-v5_default/px4_fmu-v5_default.px4**).
 
 4. Press **OK** to start flashing the firmware.
 5. Restart *QGroundControl*.

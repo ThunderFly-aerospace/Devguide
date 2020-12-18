@@ -18,15 +18,18 @@ The following simulators work with PX4 for HITL and/or SITL simulation.
 
 Simulator |Description
 ---|---
-[Gazebo](../simulation/gazebo.md) | <p><strong>This simulator is highly recommended.</strong></p><p>A powerful 3D simulation environment that is particularly suitable for testing object-avoidance and computer vision. It can also be used for <a href="../simulation/multi-vehicle-simulation.md">multi-vehicle simulation</a> and is commonly used with <a href="../simulation/ros_interface.md">ROS</a>, a collection of tools for automating vehicle control. </p><p><strong>Supported Vehicles:</strong> Quad (<a href="../airframes/airframe_reference.md#copter_quadrotor_wide_3dr_iris_quadrotor">Iris</a> and <a href="../airframes/airframe_reference.md#copter_quadrotor_x_3dr_solo">Solo</a>), Hex (Typhoon H480), <a href="../airframes/airframe_reference.md#vtol_standard_vtol_generic_quad_delta_vtol">Generic quad delta VTOL</a>, Tailsitter, Plane, Rover, Submarine (coming soon!) </p>
+[Gazebo](../simulation/gazebo.md) | <p><strong>This simulator is highly recommended.</strong></p><p>A powerful 3D simulation environment that is particularly suitable for testing object-avoidance and computer vision. It can also be used for <a href="../simulation/multi-vehicle-simulation.md">multi-vehicle simulation</a> and is commonly used with <a href="../simulation/ros_interface.md">ROS</a>, a collection of tools for automating vehicle control. </p><p><strong>Supported Vehicles:</strong> Quad (<a href="../airframes/airframe_reference.md#copter_quadrotor_wide_3dr_iris_quadrotor">Iris</a> and <a href="../airframes/airframe_reference.md#copter_quadrotor_x_3dr_solo">Solo</a>), Hex (Typhoon H480), <a href="../airframes/airframe_reference.md#vtol_standard_vtol_generic_quad_delta_vtol">Generic quad delta VTOL</a>, Tailsitter, Plane, Rover, Submarine </p>
+[FlightGear](../simulation/flightgear.md) | <p>A simulator that provides physically and visually realistic simulations. In particular it can simulate many weather conditions, including thunderstorms, snow, rain and hail, and can also simulate thermals and different types of atmospheric flows. <a href="../simulation/multi_vehicle_flightgear.md">Multi-vehicle simulation</a> is also supported.</p> <p><strong>Supported Vehicles:</strong> Plane, Autogyro, Rover</p>
+[JSBSim](../simulation/jsbsim.md) | <p>A simulator that provides advanced flight dynamics models. This can be used to model realistic flight dynamics based on wind tunnel data.</p> <p><strong>Supported Vehicles:</strong> Plane, Quad, Hex</p>
 [jMAVSim](../simulation/jmavsim.md) | A simple multirotor simulator that allows you to fly *copter* type vehicles around a simulated world. <p>It is easy to set up and can be used to test that your vehicle can take off, fly, land, and responds appropriately to various fail conditions (e.g. GPS failure). It can also be used for <a href="../simulation/multi_vehicle_jmavsim.md">multi-vehicle simulation</a>.</p><p><strong>Supported Vehicles:</strong> Quad</p>
-[AirSim](../simulation/airsim.md) | A cross platform simulator that provides physically and visually realistic simulations. This simulator is resource intensive, and requires a very significantly more powerful computer than the other simulators described here. <p><strong>Supported Vehicles:</strong> Iris (MultiRotor model and a configuration for PX4 QuadRotor in the X configuration).</p>
-[Simulation-In-Hardware](../simulation/simulation-in-hardware.md) (SIH) | An alternative to HITL that offers a hard real-time simulation directly on the hardware autopilot.<br><p><strong>Supported Vehicles:</strong> Quad</p>
+[AirSim](../simulation/airsim.md) | <p>A cross platform simulator that provides physically and visually realistic simulations. This simulator is resource intensive, and requires a very significantly more powerful computer than the other simulators described here.</p><p><strong>Supported Vehicles:</strong> Iris (MultiRotor model and a configuration for PX4 QuadRotor in the X configuration).</p>
+[Simulation-In-Hardware](../simulation/simulation-in-hardware.md) (SIH) | <p>An alternative to HITL that offers a hard real-time simulation directly on the hardware autopilot.</p><p><strong>Supported Vehicles:</strong> Quad</p>
 
 Instructions for how to setup and use the simulators are in the topics linked above.
 
 ---
-The remainder of this topic is a "somewhat generic" description of how the simulation infrastructure works. It is not required to *use* the simulators.
+The remainder of this topic is a "somewhat generic" description of how the simulation infrastructure works.
+It is not required to *use* the simulators.
 
 
 ## Simulator MAVLink API
@@ -37,8 +40,9 @@ The image below shows the message flow.
 
 ![Simulator MAVLink API](../../assets/simulation/px4_simulator_messages.png)
 
-> **Note** A SITL build of PX4 uses [simulator_mavlink.cpp](https://github.com/PX4/Firmware/blob/master/src/modules/simulator/simulator_mavlink.cpp) to handle these messages while a hardware build in HIL mode uses [mavlink_receiver.cpp](https://github.com/PX4/Firmware/blob/master/src/modules/mavlink/mavlink_receiver.cpp).
-  Sensor data from the simulator is written to PX4 uORB topics. All motors / actuators are blocked, but internal software is fully operational.
+> **Note** A SITL build of PX4 uses [simulator_mavlink.cpp](https://github.com/PX4/PX4-Autopilot/blob/master/src/modules/simulator/simulator_mavlink.cpp) to handle these messages while a hardware build in HIL mode uses [mavlink_receiver.cpp](https://github.com/PX4/PX4-Autopilot/blob/master/src/modules/mavlink/mavlink_receiver.cpp).
+  Sensor data from the simulator is written to PX4 uORB topics.
+  All motors / actuators are blocked, but internal software is fully operational.
 
 The messages are described below (see links for specific detail).
 
@@ -61,7 +65,8 @@ These ports are:
 * UDP Port **14540** is used for communication with offboard APIs.
   Offboard APIs are expected to listen for connections on this port.
 * UDP Port **14550** is used for communication with ground control stations.
-  GCS are expected to listen for connections on this port. *QGroundControl* listens to this port by default.
+  GCS are expected to listen for connections on this port.
+  *QGroundControl* listens to this port by default.
 * The simulator's local TCP Port **4560** is used for communication with PX4.
   PX4 listens to this port, and simulators are expected to initiate the communication by broadcasting data to this port.
 
@@ -115,7 +120,8 @@ The simulation can be further configured via environment variables:
 The syntax described here is simplified, and there are many other options that you can configure via *make* - for example, to set that you wish to connect to an IDE or debugger.
 For more information see: [Building the Code > PX4 Make Build Targets](../setup/building_px4.md#make_targets).
 
-### Run Simulation Faster than Realtime {#simulation_speed}
+<a id="simulation_speed"></a>
+### Run Simulation Faster than Realtime
 
 SITL can be run faster or slower than realtime when using jMAVSim or Gazebo.
 
@@ -147,30 +153,38 @@ make px4_sitl jmavsim
 PX4 SITL and the simulators (jMAVSim or Gazebo) have been set up to run in *lockstep*.
 What this means is that PX4 and the simulator wait on each other for sensor and actuator messages, rather than running at their own speeds.
 
-> **Note** Lockstep makes it possible to [run the simulation faster or slower than realtime](#simulation_speed), and also to pause it in order to step through code. 
+> **Note** Lockstep makes it possible to [run the simulation faster or slower than realtime](#simulation_speed), and also to pause it in order to step through code.
 
 The sequence of steps for lockstep are:
 1. The simulation sends a sensor message [HIL_SENSOR](https://mavlink.io/en/messages/common.html#HIL_SENSOR) including a timestamp `time_usec` to update the sensor state and time of PX4.
 1. PX4 receives this and does one iteration of state estimation, controls, etc. and eventually sends an actuator message [HIL_ACTUATOR_CONTROLS](https://mavlink.io/en/messages/common.html#HIL_ACTUATOR_CONTROLS).
 1. The simulation waits until it receives the actuator/motor message, then simulates the physics and calculates the next sensor message to send to PX4 again.
 
-The system starts with a "freewheeling" period where the simulation sends sensor messages including time and therefore runs PX4 until it has initialized and responds with an actautor message.
+The system starts with a "freewheeling" period where the simulation sends sensor messages including time and therefore runs PX4 until it has initialized and responds with an actuator message.
 
 #### Disable Lockstep Simulation
 
-The lockstep simulation can be disabled if, for example, SITL is to be used with a simulator that does not support this feature. 
+The lockstep simulation can be disabled if, for example, SITL is to be used with a simulator that does not support this feature.
 In this case the simulator and PX4 use the host system time and do not wait on each other.
 
-To disable lockstep in PX4, use `set(ENABLE_LOCKSTEP_SCHEDULER no)` in the [SITL board config](https://github.com/PX4/Firmware/blob/77097b6adc70afbe7e5d8ff9797ed3413e96dbf6/boards/px4/sitl/default.cmake#L104).
+To disable lockstep in PX4, use `set(ENABLE_LOCKSTEP_SCHEDULER no)` in the [SITL board config](https://github.com/PX4/PX4-Autopilot/blob/77097b6adc70afbe7e5d8ff9797ed3413e96dbf6/boards/px4/sitl/default.cmake#L104).
 
 To disable lockstep in Gazebo, edit [the model SDF file](https://github.com/PX4/sitl_gazebo/blob/3062d287c322fabf1b41b8e33518eb449d4ac6ed/models/plane/plane.sdf#L449) and set `<enable_lockstep>false</enable_lockstep>` (or for Iris edit the [xacro file](https://github.com/PX4/sitl_gazebo/blob/3062d287c322fabf1b41b8e33518eb449d4ac6ed/models/rotors_description/urdf/iris_base.xacro#L22).
 
-To disable lockstep in jMAVSim, remove `-l` in [jmavsim_run.sh](https://github.com/PX4/Firmware/blob/77097b6adc70afbe7e5d8ff9797ed3413e96dbf6/Tools/sitl_run.sh#L75), or make sure otherwise that the java binary is started without the `-lockstep` flag.
+To disable lockstep in jMAVSim, remove `-l` in [jmavsim_run.sh](https://github.com/PX4/PX4-Autopilot/blob/77097b6adc70afbe7e5d8ff9797ed3413e96dbf6/Tools/sitl_run.sh#L75), or make sure otherwise that the java binary is started without the `-lockstep` flag.
 
-### Startup Scripts {#scripts}
+<a id="scripts"></a>
+### Startup Scripts
 
 Scripts are used to control which parameter settings to use or which modules to start.
-They are located in the [ROMFS/px4fmu_common/init.d-posix](https://github.com/PX4/Firmware/tree/master/ROMFS/px4fmu_common/init.d-posix) directory, the `rcS` file is the main entry point. See [System Startup](../concept/system_startup.md) for more information.
+They are located in the [ROMFS/px4fmu_common/init.d-posix](https://github.com/PX4/PX4-Autopilot/tree/master/ROMFS/px4fmu_common/init.d-posix) directory, the `rcS` file is the main entry point.
+See [System Startup](../concept/system_startup.md) for more information.
+
+### Simulating Failsafes and Sensor/Hardware Failure 
+
+The [SITL parameters](../advanced/parameter_reference.md#sitl) can also be used to simulate common sensor failure cases, including low battery, loss of GPS or barometer, gyro failure, increased GPS noise etc.  (e.g. [SIM_GPS_BLOCK](../advanced/parameter_reference.md#SIM_GPS_BLOCK) can be set to simulate GPS failure).
+
+Additionally (and with some overlap), [Simulate Failsafes](../simulation/failsafes.md) explains how to trigger safety failsafes.
 
 
 ## HITL Simulation Environment
@@ -181,7 +195,8 @@ The HITL Simulation Environment in documented in: [HITL Simulation](../simulatio
 
 ## Joystick/Gamepad Integration
 
-*QGroundControl* desktop versions can connect to a USB Joystick/Gamepad and send its movement commands and button presses to PX4 over MAVLink. This works on both SITL and HITL simulations, and allows you to directly control the simulated vehicle.
+*QGroundControl* desktop versions can connect to a USB Joystick/Gamepad and send its movement commands and button presses to PX4 over MAVLink.
+This works on both SITL and HITL simulations, and allows you to directly control the simulated vehicle.
 If you don't have a joystick you can alternatively control the vehicle using QGroundControl's onscreen virtual thumbsticks.
 
 For setup information see the *QGroundControl User Guide*:
@@ -196,9 +211,11 @@ For setup information see the *QGroundControl User Guide*:
 PX4 supports capture of both still images and video from within the [Gazebo](../simulation/gazebo.md) simulated environment.
 This can be enabled/set up as described in [Gazebo > Video Streaming](../simulation/gazebo.md#video).
 
-The simulated camera is a gazebo plugin that implements the [MAVLink Camera Protocol](https://mavlink.io/en/protocol/camera.html)<!-- **Firmware/Tools/sitl_gazebo/src/gazebo_geotagged_images_plugin.cpp -->. PX4 connects/integrates with this camera in *exactly the same way* as it would with any other MAVLink camera:
+The simulated camera is a gazebo plugin that implements the [MAVLink Camera Protocol](https://mavlink.io/en/protocol/camera.html)<!-- **PX4-Autopilot/Tools/sitl_gazebo/src/gazebo_geotagged_images_plugin.cpp -->.
+PX4 connects/integrates with this camera in *exactly the same way* as it would with any other MAVLink camera:
 1. [TRIG_INTERFACE](../advanced/parameter_reference.md#TRIG_INTERFACE) must be set to `3` to configure the camera trigger driver for use with a MAVLink camera
-   > **Tip** In this mode the driver just sends a [CAMERA_TRIGGER](https://mavlink.io/en/messages/common.html#CAMERA_TRIGGER) message whenever an image capture is requested. For more information see [Camera](https://docs.px4.io/en/peripherals/camera.html).
+   > **Tip** In this mode the driver just sends a [CAMERA_TRIGGER](https://mavlink.io/en/messages/common.html#CAMERA_TRIGGER) message whenever an image capture is requested.
+     For more information see [Camera](https://docs.px4.io/master/en/peripherals/camera.html).
 1. PX4 must forward all camera commands between the GCS and the (simulator) MAVLink Camera.
    You can do this by starting [MAVLink](../middleware/modules_communication.md#mavlink) with the `-f` flag as shown, specifying the UDP ports for the new connection.
    ```
@@ -232,7 +249,7 @@ The [mavlink-router](https://github.com/intel/mavlink-router) can be used to rou
 
 To route packets between SITL running on one computer (sending MAVLink traffic to localhost on UDP port 14550), and QGC running on another computer (e.g. at address `10.73.41.30`) you could:
 
-- Start *mavlink-router* with the following command: 
+- Start *mavlink-router* with the following command:
   ```
   mavlink-routerd -e 10.73.41.30:14550 127.0.0.1:14550
   ```
@@ -257,7 +274,7 @@ To route packets between SITL running on one computer (sending MAVLink traffic t
 The [mavlink](../middleware/modules_communication.md#mavlink_usage) module routes to *localhost* by default, but you can specify an external IP address to broadcast to using its `-t` option.
 
 This should be done in various configuration files where `mavlink start` is called.
-For example: [/ROMFS/px4fmu_common/init.d-posix/rcS](https://github.com/PX4/Firmware/blob/master/ROMFS/px4fmu_common/init.d-posix/rcS).
+For example: [/ROMFS/px4fmu_common/init.d-posix/rcS](https://github.com/PX4/PX4-Autopilot/blob/master/ROMFS/px4fmu_common/init.d-posix/rcS).
 
 
 ### SSH Tunneling

@@ -1,12 +1,16 @@
 # PX4 Development Guide ({{ book.px4_version }})
 
-[![Releases](https://img.shields.io/badge/release-{{ book.px4_version }}-blue.svg)](https://github.com/PX4/Firmware/releases) [![Discuss](https://img.shields.io/badge/discuss-px4-ff69b4.svg)](http://discuss.px4.io/) [![Slack](https://px4-slack.herokuapp.com/badge.svg)](http://slack.px4.io)
+[![Releases](https://img.shields.io/badge/release-{{ book.px4_version }}-blue.svg)](https://github.com/PX4/PX4-Autopilot/releases) [![Discuss](https://img.shields.io/badge/discuss-px4-ff69b4.svg)](http://discuss.px4.io/) [![Slack](https://px4-slack.herokuapp.com/badge.svg)](http://slack.px4.io)
 
-> **Información** Esta guía es principalmente para los desarrolladores de software e integradores de hardware. Para volar, construir y modificar vehículos usando el hardware soportado ver la [Guía del usuario de PX4](https://docs.px4.io/en/).
+> **Warning** This guide has been [merged into the PX4 User Guide](http://localhost:8080/px4_user_guide/en/development/development.html). It is now frozen for contributions and may be out of date. Please make any further edits, updates and translations in the user guide.
 
-Esta guía explica cómo:
+<span></span>
 
-* Obtener una [configuración minima de desarrollo](setup/config_initial.md), [compilar el código fuente de PX4 ](setup/building_px4.md) y desplegar en los [numerosos autopilotos soportados](https://docs.px4.io/en/flight_controller/).
+> **Info** This guide is for primarily for software developers and (new) hardware integrators. To fly, build and modify vehicles using supported hardware see the [PX4 User Guide](https://docs.px4.io/master/en/).
+
+This guide explains how to:
+
+* Get a [minimum developer setup](setup/config_initial.md), [build PX4 from source](setup/building_px4.md) and deploy on [numerous supported autopilots](https://docs.px4.io/master/en/flight_controller/).
 * Entender la [Arquitectura del sistema PX4](concept/architecture.md) y otros conceptos básicos.
 * Aprender a modificar el flight stack y el middleware: 
   * Modificar algoritmos de vuelo y añadir nuevos [modos de vuelo](concept/flight_modes.md).
@@ -17,7 +21,7 @@ Esta guía explica cómo:
 * [Simular](simulation/README.md), [probar](test_and_ci/README.md) y [depurar](debug/README.md) PX4.
 * Comunicar/integrar con APIs externas.
 
-## Support {#support}
+## Support
 
 [Support](contribute/support.md) provide links to the [discussion boards](http://discuss.px4.io/) and other support channels.
 
@@ -37,7 +41,9 @@ There are Chinese and Korean [translations](contribute/docs.md#translation) of t
 
 ![Gitbook Language Selector](../assets/gitbook/gitbook_language_selector.png)
 
-## Calendar & Events {#calendar}
+<a id="calendar"></a>
+
+## Calendar & Events
 
 The *Dronecode Calendar* shows important events for platform developers and users. Select the links below to display the calendar in your timezone (and to add it to your own calendar):
 
